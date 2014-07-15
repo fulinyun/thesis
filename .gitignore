@@ -55,3 +55,17 @@ docs/_build/
 # Vim temp file
 *.swp
 
+# IPython Notebook checkpoints
+.ipynb_checkpoints
+
+# LaTeX stuff:
+*.aux
+*.lof
+*.log
+*.lot
+*.toc
+*.pdf
+
+# Markdown examples
+Part 4 - Markdown Cells.ipynb
+
