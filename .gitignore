@@ -65,7 +65,13 @@ docs/_build/
 *.lot
 *.toc
 *.pdf
+*.dvi
+*.bbl
+*.blg
 
 # Markdown examples
 Part 4 - Markdown Cells.ipynb
+
+# Thesis manual
+rpithesis-doc.pdf
 
