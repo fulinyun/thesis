@@ -72,6 +72,8 @@ docs/_build/
 # Markdown examples
 Part 4 - Markdown Cells.ipynb
 
-# Thesis manual
+# Thesis manual and sample files
 rpithesis-doc.pdf
+rpichap1.tex
+rpichap2.tex
 
