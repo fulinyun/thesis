@@ -5,6 +5,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
  
 \chapter{INTRODUCTION}
+The scope of this thesis is limited to the provenance capturing task in the scenario of preparing research publications. It is interesting and critical to study provenance capturing in the context of computational experiments run on distributed systems, but this is not the focus of this thesis. It is assumed in this thesis that provenance information on the publication preparation process alone, not necessarily accompanied with provenance of computational experiment results, is useful to make the publications credible.
+
+Research publication preparation has its own workflow that is very different from the extensively studied computational experiment workflows. One significant feature of the publication preparing process is that human authors are so much involved in the process that their activities are indispensable provenance information and need to be recorded. In the computational experiment settings, however, human beings are only marginally involved as operators who start the experiments and read the results, i.e., they only appear at both ends of the workflow and rarely perform as key components in the middle, so we do not see human factors discussed in existing literature, where the focus is put on software componnents forming the computational workflow.
+
 Authors of a research publication have all the resources to record everything happened which leads to the work, but provenance pieces are scattered throughout the whole process of creating the final publication. For example, to create a tabular summary of a dataset, authors need to first use some download software package such as wget to download the dataset from a certain place online, and then use some data viewing software package to study the dataset, followed by creating the summary table with some table making software package. During this process of table creation, we would recognize more or less the following provenance pieces.
 \begin{itemize}
 \item What download software package was used, including its name, distribution and version.
