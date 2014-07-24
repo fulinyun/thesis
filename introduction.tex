@@ -5,39 +5,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
  
 \chapter{INTRODUCTION}
+Authors of a research publication have all the resources to record everything happened which leads to the work, but provenance pieces are scattered throughout the whole process of creating the final publication. For example, to create a tabular summary of a dataset, authors need to first use some download software package such as wget to download the dataset from a certain place online, and then use some data viewing software package to study the dataset, followed by creating the summary table with some table making software package. During this process of table creation, we would recognize more or less the following provenance pieces.
+\begin{itemize}
+\item What download software package was used, including its name, distribution and version.
+\item Where the dataset was downloaded, including its URL.
+\item When the dataset downloading activity started and ended.
+\item Who executed the downloading operation.
+\item The information about the data viewing software package used.
+\item The time period of the dataset studying activity.
+\item Who studied the dataset.
+\item The information about the table making software package.
+\item The time period of making the summary table.
+\item Who created the table.
+\end{itemize}
+Figure~\cite{prov-pieces} illustrates how these pieces of provenance information scatter all over the creation process of the summary table.
+\begin{figure}
+\centering
+\includegraphics{}
+\caption{How provenance information scatters throughout a table creation process}
+\end{figure}
+All these pieces of information can be captured by the authors if they are informed of the list of information items they need to record and they pay sufficient attention at certain time points where certain information pieces are available, but to capture them, the authors would get distracted from their writing and table creation work quite often. Given that writing research papers is resource intensive and requires concentration, capturing provenance during writing brings no immediate benefit but lowers the productivity of the authors, so authors do not have incentives to record provenance unless they are required to do so.
 
 \cite{jarvis2010importance}
 
-Please refer to Figure~\ref{myfig}.  % Note \label command below
-
-\begin{figure}
-\centering
-\vspace{2.0in} % normally the command here would be \includegraphics
-\caption{This is the Caption for Figure 1 make it long to illustrate
-how it looks when wrapped around to the next line}
-\label{myfig}  % the \label command comes AFTER the caption
-\end{figure}
-
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
- 
-\begin{table}
-\caption[This is the Caption for Table 1]
-            {This is the Caption for Table 1 \cite{Freire2014}}
-%  Note entry in [] for list of tables; you don't want the citation in the LOT.
-\begin{center}
-\begin{tabular}{lll}
-Here's       & an          & example  \\
-of           & a           & table    \\
-floated      & with        & the      \\
-\verb+table+ & environment & command.
-\end{tabular}
-\end{center}
-\end{table}
- 
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
  
 \section{This is a Section Heading}
  
