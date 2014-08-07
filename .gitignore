@@ -84,3 +84,13 @@ model/doap.rdf
 model/rdf.ttl
 model/rdf-schema.ttl
 
+# default ipython profile stuff
+notebook/profile/README
+notebook/profile/profile_default/
+notebook/profile/profile_thesis/ipython_config.py
+notebook/profile/profile_thesis/ipython_nbconvert_config.py
+notebook/profile/profile_thesis/ipython_qtconsole_config.py
+notebook/profile/profile_thesis/security/
+notebook/profile/profile_thesis/startup/
+notebook/profile/profile_thesis/static/
+
