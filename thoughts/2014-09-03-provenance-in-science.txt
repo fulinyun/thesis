@@ -1,0 +1,4 @@
+In scientific works: documenting provenance includes linking a range of observations and model output, research activities, people and organizations involved in the production of scientific findings with the supporting datasets and methods used to generate them
+-- Marshall's research statement
+
+Are domain/scientific concepts such as observation and model output at another level from the research publications? (Where the latter contains concepts such as title, author, chapter, paragraph, figure, table, etc.)
