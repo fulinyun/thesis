@@ -8,3 +8,5 @@ For how many times is a certain usage pattern gonna happen? This question is usu
 
 How can we evaluate a specialized model? How can we decide if it is under-specialized, proper, or over-specialized? Are there standard process or theory to follow in order to decide in which category our model falls?
 
+Another example of specialization is institutional manuals for the same piece of software. They incorporate institutional context into them to get to really short and coherent and practical guides.
+
