@@ -1,0 +1,1 @@
+general considerations of provenance include provenance capturing, representation, storage, query, and visualization. I am focusing on capturing, extending existing representations, and maybe talking a little bit on storage.

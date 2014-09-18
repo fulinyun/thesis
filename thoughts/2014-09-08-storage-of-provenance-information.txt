@@ -1,0 +1,1 @@
+The storage of the captured provenance information can follow different styles. It can be stored as attachments to the final document/publication/paper/report to yield a self-contained publishing product, or provenance information across different papers can be stored and indexed in a centralized manner to enable search and discovery.

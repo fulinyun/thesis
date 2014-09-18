@@ -1,0 +1,2 @@
+What provenance information to capture? If the author tinker around a lot to experiment different visualizations of the same data, only the final visualization matters. How about data derived from different processing/manipulating sequence? Should we record all sequences or just record the sequence used to derive the data shown in the publication? Probably just the latter succinct sequence. 
+

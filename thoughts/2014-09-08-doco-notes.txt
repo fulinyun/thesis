@@ -1,0 +1,26 @@
+The Pattern Ontology
+Describing documents by means of their structural components
+
+based on patterns for XML documents -- Does each of the elements below have a counterpart in my model for research publications? Are these classes applicable to research publications?
+
+structured elements can contain other elements.
+
+non-structured elements cannot contain other elements.
+
+textual element can have textual content in their content models.
+
+non-textual element cannot have textual content in their content models.
+
+marker elements can contain neither text nodes nor elements.
+
+flat elements can contain text nodes but no elements.
+
+bucket elements can contain other elements but no text nodes.
+
+atom elements can contain textual content and no other elements.
+
+atom elements are disjoint with field elements.
+
+field elements are defined to literal metadata or text that is not really part of the document body.
+
+
