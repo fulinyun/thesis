@@ -10,3 +10,5 @@ How can we evaluate a specialized model? How can we decide if it is under-specia
 
 Another example of specialization is institutional manuals for the same piece of software. They incorporate institutional context into them to get to really short and coherent and practical guides.
 
+DoCO the Document Components Ontology seems the only part of SPAR I need to know. It is based on Discourse Elements, Structural Patterns, and the SALT Rhetorical Ontology. What do these three mean? What do these three ontologies have?
+
