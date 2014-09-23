@@ -2,3 +2,12 @@ In scientific works: documenting provenance includes linking a range of observat
 -- Marshall's research statement
 
 Are domain/scientific concepts such as observation and model output at another level from the research publications? (Where the latter contains concepts such as title, author, chapter, paragraph, figure, table, etc.)
+
+Provenance: Origin or source from which something comes, intention for use, who/what generated for, manner of manufacture, history of subsequent owners, sense of place and time of manufacture, production or discovery, documented in detail sufficient to allow reproducibility
+Knowledge provenance: enrich with ontologies and ontology-aware tools
+--Deborah's lecture slide #9 for provenance in Semantic eScience 2011
+
+Reproducibility can be easy to implement: if we mean to reproduce the report itself: we just need to hard code all the manuscripts, figures and tables. But that's not useful: no difference from directly copying the PDF report file. So what is a useful reproduction? How original should the materials provided in provenance be? Generated figures and tables are not useful. Data used in the figures and tables and visualization code and table layout code are kind of interesting. Actually visualization code and layout code are optional since the contents are already included in the "data in use" section in provenance. More original materials are the whole dataset where the authors pick the data used by figures and tables from. Readers get to know how data from the whole dataset are filtered, aggregated, calibrated, etc. to become the data used in the report. processing (filtering+aggregation+calibration) code and parameters are useful in this case because they change the contents, not just their representations. 
+
+Is reproducing the exact computational environment required to ensure the reproduction of the reported results? or to argue that the results are actually not reproducible? If the workflow is described well enough, we don't need to reproduce the whole computational environment to reproduce the results. Abstract processing steps are all we need.
+

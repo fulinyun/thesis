@@ -1,0 +1,3 @@
+ontology design patterns are developed under the assumption that there exist classes of problems that can be
+solved by applying common solutions
+

@@ -1,0 +1,12 @@
+in PAV we focus
+on the provenance of a digital resource in terms of its
+relationships with other digital resources and agents involved
+in their creation, authoring and manipulation,
+and we abstract away from the description of the activities
+(process) that manipulate and transform the digital
+resources.
+
+createdOn, createdBy, createdWith should be grouped together: qualifiedCreation.
+
+rdf:Seq rdf:_1, rdf:_2 can be used to describe a list of authors whose appearing order is significant.
+
