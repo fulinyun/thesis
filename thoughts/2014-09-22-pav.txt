@@ -10,3 +10,5 @@ createdOn, createdBy, createdWith should be grouped together: qualifiedCreation.
 
 rdf:Seq rdf:_1, rdf:_2 can be used to describe a list of authors whose appearing order is significant.
 
+annotation: textual descriptions
+

@@ -1,2 +1,10 @@
 What provenance information to capture? If the author tinker around a lot to experiment different visualizations of the same data, only the final visualization matters. How about data derived from different processing/manipulating sequence? Should we record all sequences or just record the sequence used to derive the data shown in the publication? Probably just the latter succinct sequence. 
 
+some important provenance -- about data themselves: where the original data come from and how they are calibrated, filtered and aggregated to become the data reported in the publication.
+
+not so important provenance -- not about data themselves: the parameters and programming code for table and image rendering, the tinkering-around experimental data processing sequences that do not lead to the reported final data products.
+
+maybe important but not quite capturable or helpful in reproducing the results: the details of the computational environments. No one is likely to reproduce the exact same environment. Exposing such environments via Web services would be useful. Portable computational environments such as Python Virtual Environments supported by the tool virtualenv would be really helpful. The readers are not restricted by the functions provided by the Web services created by someone else. They have the full control of their computational environments. Two important credibility tests: exact same environment as the authors used, absolute freedom on what to do in the environment.
+
+so reproducibiliy does not merely mean readers can reproduce the exact same result as reported in the publication, it rather means that readers get a compatible environment as the authors were used to produce the reported results and are free to do whatever they want to do with that environment, including reproducing exactly the reported results.
+

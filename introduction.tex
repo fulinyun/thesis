@@ -5,7 +5,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
  
 \chapter{INTRODUCTION}
-The scope of this thesis is limited to the provenance capturing task in the scenario of preparing research publications. It is interesting and critical to study provenance capturing in the context of computational experiments run on distributed systems, but this is not the focus of this thesis. It is assumed in this thesis that provenance information on the publication preparation process alone, not necessarily accompanied with provenance of computational experiment results, is useful to make the publications credible.
+The scope of this thesis is limited to the provenance capturing task in the scenario of preparing research publications. It is interesting and critical to study provenance capturing in the context of computational experiments run on distributed systems, but this is not the focus of this thesis. It is assumed in this thesis that provenance information on the publication preparation process alone, not necessarily accompanied with provenance of computational experiment results, is useful to make the publications credible and reproducible enough.
+
+Before the reason for this no-need-for-computational-provenance assumption is explained, I first talk about what ``provenance in research publication preparation'' means. 
 
 Research publication preparation has its own workflow that is very different from the extensively studied computational experiment workflows. One significant feature of the publication preparing process is that human authors are so much involved in the process that their activities are indispensable provenance information and need to be recorded. In the computational experiment settings, however, human beings are only marginally involved as operators who start the experiments and read the results, i.e., they only appear at both ends of the workflow and rarely perform as key components in the middle, so we do not see human factors discussed in existing literature, where the focus is put on software componnents forming the computational workflow.
 
@@ -25,17 +27,19 @@ Authors of a research publication have all the resources to record everything ha
 Figure~\cite{prov-pieces} illustrates how these pieces of provenance information scatter all over the creation process of the summary table.
 \begin{figure}
 \centering
-\includegraphics{}
+% \includegraphics{}
 \caption{How provenance information scatters throughout a table creation process}
 \end{figure}
 All these pieces of information can be captured by the authors if they are informed of the list of information items they need to record and they pay sufficient attention at certain time points where certain information pieces are available, but to capture them, the authors would get distracted from their writing and table creation work quite often. Given that writing research papers is resource intensive and requires concentration, capturing provenance during writing brings no immediate benefit but lowers the productivity of the authors, so authors do not have incentives to record provenance unless they are required to do so. The benefit of having provenance information captured and properly stored comes later when some readers of the publication would like to better understand, validate and/or reproduce the published results, usually with an intention to use the results for further research.
 
-On the other hand\cite{jarvis2010importance}
+So we see that provenance of research publication preparation shows its importance some time after the publications have been created, although its importance has already been widely recognized by readers and the future selves of authors. The problem is that provenance gets lost, piece by piece, after the creation of publications, at a rate depending on how well the authors keep or memorize the details of the publication preparation process.
 
- 
+
+
 \section{This is a Section Heading}
  
 This is a sentence to take up space and look like text.
+What do you think will happen if you type four dashes in a row: a----b
 This is a sentence to take up space and look like text.
 This is a sentence to take up space and look like text.
  

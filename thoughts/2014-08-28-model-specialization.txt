@@ -12,3 +12,6 @@ Another example of specialization is institutional manuals for the same piece of
 
 DoCO the Document Components Ontology seems the only part of SPAR I need to know. It is based on Discourse Elements, Structural Patterns, and the SALT Rhetorical Ontology. What do these three mean? What do these three ontologies have?
 
+2014-09-24
+I thought of another example of model specialization this morning: it's about greetings. A "how are you" requires the person greeted a much more momemtum to tell the greeter how s/he is than a "how was the thesis proposal you attended yesterday?" 
+

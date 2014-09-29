@@ -1,3 +1,22 @@
-ontology design patterns are developed under the assumption that there exist classes of problems that can be
-solved by applying common solutions
+ontology design patterns are developed under the assumption that there exist classes of problems that can be solved by applying common solutions
+
+@incollection{gangemi2009ontology,
+  title={Ontology design patterns},
+  author={Gangemi, Aldo and Presutti, Valentina},
+  booktitle={Handbook on Ontologies},
+  pages={221--243},
+  year={2009},
+  publisher={Springer}
+}
+
+typology of OPs, meaning classification of OPs?
+patterns: background, definition, communication means? related work beyond ontology engineering, exemplification, creation, usage principles.
+what are tasks expressed as competency questions or scenarios?
+
+what is a concrete example of an ontology design pattern? use a qualified class to describe properties of a property? 
+
+a competency question is a typical query that an expert might want to submit to a knowledge base of its target domain for a certain task. -- query, domain, task
+.
+
+the time indexed person role CP is a specialization of the n-ary property CP in my view. A person plays a certain role during a certain period of time, so the period of time is a property of the plays-the-role-of property. QualifiedRole is another possible solution to the task. I prefer the qualified role solution since it does not require creating a class for a property. It just enhances an existing class to enable it to contain more information.
 
