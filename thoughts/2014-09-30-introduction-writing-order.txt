@@ -15,7 +15,7 @@ State that in this thesis, we will:
 the importance of provenance shows when some reader would like to validate or reproduce the reported results. reproduce and validate are closely related. in the narrow meaning, reproducibility means being able to recreate the exact same results as reported in the publication. In a wider sense, reproducibility means being able to recreate the computational environment used by the authors to get the reported results.
 
 what provenance means in this thesis:
- - pointers to the source data, such as downloading URLs and landing Web pages describing the source data, along with operational information such as the filtering, calibrating analyzing, and aggregating operations performed on the source data to lead to the final reported results. 
+ - pointers to the source data, such as downloading URLs and landing Web pages describing the source data, along with operational information such as the filtering, calibrating, analyzing, and aggregating operations performed on the source data to lead to the final reported results. But how about the human contributors? owner? contributor? originator? people responsible? 
  - (optional) a computational environment enabling the same set or a superset of the operations leading to the reported results. This environment does not provide any more information, but it saves readers' efforts to implement the operations, so it is optional but desirable. It is also desirable that this environment has a certain degree of flexibility, by allowing readers to perform something different from the sequence of operations leading to the reported results. 
 
 The environment could consist of a set of programs ready to run, or library functions ready to be used by programs invoking them.
