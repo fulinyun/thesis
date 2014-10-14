@@ -2,3 +2,12 @@ maybe important but not quite capturable or helpful in reproducing the results: 
 
 so reproducibiliy does not merely mean readers can reproduce the exact same result as reported in the publication, it rather means that readers get a compatible environment as the authors used to produce the reported results and are free to do whatever they want with that environment, including reproducing exactly the same results as reported in the publication.
 
+http://www.slideshare.net/carolegoble/ismb2013-keynotecleangoble?qid=27c17b78-a9e2-482f-81b3-226bb87360ba&v=qf1&b=&from_search=10 #17: reproduce is same experiment, different set up (what does "same experiment" mean? How same should it be? does parameter tuning make a different experiment?)
+related concepts:
+repeat: same experiment, same lab
+replicate: same experiment different lab
+reuse: different experiment some of same
+reuse is irrelevant to this thesis
+repeat is not the focus -- writer's activity
+how are repeat and replicate related? read "chris-drummond-replicability is not reproducibility"
+
