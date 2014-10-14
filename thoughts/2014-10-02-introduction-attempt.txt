@@ -1,0 +1,16 @@
+1. what provenance means in this thesis
+According to Oxford English Dictionary, provenance is the chronology of the ownership, custody or location of a historical object. This thesis focuses on provenance in scientific works, so in this thesis, the word \emph{provenance} means the linkage among a range of observations and model output, research activities, people and organizations involved in the production of scientific findings, along with the supporting datasets and methods used to generate these findings
+-- Marshall's research statement
+
+provenance means information about data, their steward activities, and agents involved in the production of results reported in research publications, as well as the linkage among such data, activities and agents. Here \emph{data} may come from observations, model runs or repositories supporting data reuse; data steward activities include semantic, syntactical and physical change; \emph{agents} are people and organizations relevant to the data at any phase of the data lifecycle.
+
+
+
+tim clark's micropublication: a statement with its complete supporting argument, consisting of all relevant evidence, interpretations, discussion and challenges brought forward in support of or opposition to it. trustworthiness related features, this thesis focuses on reproducibility related features.
+
+
+
+This thesis talks about data provenance, which has two main aspects, namely ownership and stewardship of the data. 
+
+people who are responsible for the data or operations: not quite "owners". What should I call them? "data steward": http://en.wikipedia.org/wiki/Data_steward.
+
