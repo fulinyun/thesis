@@ -1,1 +1,13 @@
 wasassociatedwith: an agent is held responsible for an activity
+activity is a very general concept, what are the domain specific activities in research publication preparation?
+- focus on reported results generation process, don't be trivial
+- source data download, transform, visualize, describe, discuss. the data product after transform and before visualize is the reported results. transform is compute, which is based on a certain computational environment including code running infrastructure ((virtual) machines, libraries, along with their configurations), ready-to-run application (e.g. built application and console script) or source code+building environment, 
+  - domain specific transformations such as filtering, selecting, slicing, calibration, ... could be added to domain specific models to better fit domain specific user groups.
+  - domain independent transformation representations might be useful for multi-diciplinary research projects. these representations describe actual mathematical transformations performed. Nobody uses them in his/her domain, just for cross-domain communication purposes.
+  - gcis seems better than ecoop for a running example to illustrate the idea of domain specific transformations and domain independent transformation representations.
+
+wasAssociatedWith is a very general linkage between an activity and an agent, what are the domain specific associations in research publication preparation?
+-
+
+prov:Agent's subclasses: prov:Organization , prov:Person , prov:SoftwareAgent
+responsible can be specialized also. But that is included in the specialized properties of wasAssociatedWith.
