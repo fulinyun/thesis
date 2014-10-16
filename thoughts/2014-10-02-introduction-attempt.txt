@@ -1,9 +1,17 @@
-1. what provenance means in this thesis
-According to Oxford English Dictionary, provenance is the chronology of the ownership, custody or location of a historical object. This thesis focuses on provenance in scientific works, so in this thesis, the word \emph{provenance} means the linkage among a range of observations and model output, research activities, people and organizations involved in the production of scientific findings, along with the supporting datasets and methods used to generate these findings
--- Marshall's research statement
+\usepackage{ulem}
 
-provenance means information about data, their steward activities, and agents involved in the production of results reported in research publications, as well as the linkage among such data, activities and agents. Here \emph{data} may come from observations, model runs or repositories supporting data reuse; data steward activities include semantic, syntactical and physical change; \emph{agents} are people and organizations relevant to the data at any phase of the data lifecycle.
+% 1. what provenance means in this thesis
+According to Oxford English Dictionary, provenance is the chronology of the ownership, custody or location of a historical object. This thesis focuses on provenance for research publications, or scientific works, so in this thesis, the word \emph{provenance} % \sout{means the linkage among a range of observations and model output, research activities, people and organizations involved in the production of scientific findings, along with the supporting datasets and methods used to generate these findings
+% -- Marshall's research statement
 
+% provenance }
+means information about data, their steward activities, and agents involved in the production of results reported in research publications, as well as the linkage among such data, activities and agents. Here \emph{data} may come from observations, model runs or repositories supporting data reuse; data steward activities include semantic, syntactical and physical changes of data; \emph{agents} are people, organizations and software agents relevant to the data at any phase of the data lifecycle; \emph{results} are a kind of data that are the final products reported in papers.
+
+Semantic changes of data mean the changes in the actual content of data. Examples include data analysis (changing from source data to (aggregated) analysis results), data comparison (changing from two pieces of data to their comparison results), data verification (from data to their verification results) and data transformation. 
+
+Syntactical changes of data mean the changes in serialization of data. A typical example is changing data serialized in XML to JSON without changing the actual content of the data.
+
+Physical changes of data mean changes in locations, character encodings and accessibility of data. For example, data downloaded from an online source are the result of changing the locations of the original data (now they are in two places). When the location of a piece of textual data changes, the character encoding might change as well if the source and target storages follow different encoding schemes. Changes of data sharing permissions are a kind of physical changes that change the accessibility of data. 
 
 
 tim clark's micropublication: a statement with its complete supporting argument, consisting of all relevant evidence, interpretations, discussion and challenges brought forward in support of or opposition to it. trustworthiness related features, this thesis focuses on reproducibility related features.
