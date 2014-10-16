@@ -1,0 +1,16 @@
+provenance -- last three years reproducibility pops up with provenance understandability
+transparency -> provenance -> understandability <=> reproducibility
+https://esipfed.webex.com/esipfed/ldr.php?RCID=e1bb81e1c71371cd763f357c1781de65  23:13
+overall it's about scientific verifiability
+earth science specific activities: data access, data discovery, data analysis, data sharing, data comparison, data verification, data transformation.
+data is a kind of entity
+softwareAgent
+runtimeContext
+45:08
+subclass, superclass, additional attributes(key value cardinality)
+dataset, platform, instrument, sensor, software, algorithm, document, processStep, softwareAgent, runtimeContext, download
+prov.readthedocs.org
+http://www.w3c.org/TR/prov-implementations/ tools, focus on prov-n
+
+is the change of data sharing (permissions) physical? syntactical? semantic?
+should be considered physical change, because it changes the way of propagation of the data. I should define physical change to fit this fact.
