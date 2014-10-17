@@ -18,7 +18,7 @@ Provenance helps answer questions such as \emph{What data are the reported resul
 
 % reproducibility, replicability, repeat, reuse
 % 2014-09-29-reproducibility.txt
-\cite{drummond2009replicability}
+Reproducibility does not only mean the readers' capability to perform exactly the same data steward activities as the authors did, but also the capability of carrying out different experiments to validate the scientific work \cite{drummond2009replicability}. 
 
 
 
