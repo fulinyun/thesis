@@ -5,58 +5,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
  
 \chapter{INTRODUCTION}
-The scope of this thesis is limited to the provenance capturing task in the scenario of preparing research publications. It is interesting and critical to study provenance capturing in the context of computational experiments run on distributed systems, but this is not the focus of this thesis. It is assumed in this thesis that provenance information on the publication preparation process alone, not necessarily accompanied with provenance of computational experiment results, is useful to make the publications credible and reproducible enough.
+\section{What does provenance mean in this thesis}
+According to Oxford English Dictionary, provenance is the chronology of the ownership, custody or location of a historical object. This thesis focuses on provenance for research publications, or scientific works, so in this thesis, the word \emph{provenance} means information about data, their steward activities, and agents involved in the production of results reported in research publications, as well as the linkage among such data, activities and agents. Here \emph{data} may come from observations, model runs or repositories supporting data reuse; \emph{data steward activities} include semantic, syntactical and physical changes of data; \emph{agents} are people, organizations and software agents relevant to the data and their steward activities at any phase of the data lifecycle; \emph{results} are a specialkind of data that are the final products reported in papers.
 
-Before the reason for this no-need-for-computational-provenance assumption is explained, I first talk about what ``provenance in research publication preparation'' means. 
+Semantic changes of data mean the changes in the actual content of data. Examples include data analysis (changing from source data to (aggregated) analysis results), data comparison (changing from two pieces of data to their comparison results), data verification (from data to their verification results) and data transformation. 
 
-Research publication preparation has its own workflow that is very different from the extensively studied computational experiment workflows. One significant feature of the publication preparing process is that human authors are so much involved in the process that their activities are indispensable provenance information and need to be recorded. In the computational experiment settings, however, human beings are only marginally involved as operators who start the experiments and read the results, i.e., they only appear at both ends of the workflow and rarely perform as key components in the middle, so we do not see human factors discussed in existing literature, where the focus is put on software componnents forming the computational workflow.
+Syntactical changes of data mean the changes in serialization of data. A typical example is changing data serialized in XML to JSON without changing the actual content of the data.
 
-Authors of a research publication have all the resources to record everything happened which leads to the work, but provenance pieces are scattered throughout the whole process of creating the final publication. For example, to create a tabular summary of a dataset, authors need to first use some download software package such as wget to download the dataset from a certain place online, and then use some data viewing software package to study the dataset, followed by creating the summary table with some table making software package. During this process of table creation, we would recognize more or less the following provenance pieces.
-\begin{itemize}
-\item What download software package was used, including its name, distribution and version.
-\item Where the dataset was downloaded, including its URL.
-\item When the dataset downloading activity started and ended.
-\item Who executed the downloading operation.
-\item The information about the data viewing software package used.
-\item The time period of the dataset studying activity.
-\item Who studied the dataset.
-\item The information about the table making software package.
-\item The time period of making the summary table.
-\item Who created the table.
-\end{itemize}
-Figure~\cite{prov-pieces} illustrates how these pieces of provenance information scatter all over the creation process of the summary table.
-\begin{figure}
-\centering
-% \includegraphics{}
-\caption{How provenance information scatters throughout a table creation process}
-\end{figure}
-All these pieces of information can be captured by the authors if they are informed of the list of information items they need to record and they pay sufficient attention at certain time points where certain information pieces are available, but to capture them, the authors would get distracted from their writing and table creation work quite often. Given that writing research papers is resource intensive and requires concentration, capturing provenance during writing brings no immediate benefit but lowers the productivity of the authors, so authors do not have incentives to record provenance unless they are required to do so. The benefit of having provenance information captured and properly stored comes later when some readers of the publication would like to better understand, validate and/or reproduce the published results, usually with an intention to use the results for further research.
+Physical changes of data mean changes in locations, character encodings and accessibility of data. For example, data downloaded from an online source are the result of changing the locations of the original data (now they are in two places). When the location of a piece of textual data changes, the character encoding might change as well if the source and target storages follow different encoding schemes. Changes of data sharing permissions are a kind of physical changes that change the accessibility of data. 
 
-So we see that provenance of research publication preparation shows its importance some time after the publications have been created, although its importance has already been widely recognized by readers and the future selves of authors. The problem is that provenance gets lost, piece by piece, after the creation of publications, at a rate depending on how well the authors keep or memorize the details of the publication preparation process.
+\section{Why is provenance important in scientific works}
+Provenance helps answer questions such as \emph{What data are the reported results based on, and where does this piece of data come from}, \emph{Have the data been modified, in what ways} \cite{davidson2008provenance}, which are critical for readers of research publications to understand and reproduce the reported results, thus they make the scientific work verifiable. 
 
-Some of the details are important to the credibility and reproducibility of the reported results in the publications. For example, where the original data come from and how they are filtered, calibrated and aggregated to become the data reported in the publications would be considered important in most cases. Other details such as the program code and/or the parameters for the table and image visualizing the final data product would not be so important as the provenance of the data themselves.
+% reproducibility, replicability, repeat, reuse
+% 2014-09-29-reproducibility.txt
+Reproducibility does not only mean the readers' capability to perform exactly the same data steward activities as the authors did, but also the capability of carrying out different experiments to validate the scientific work \cite{drummond2009replicability}. 
 
 
 
-\section{This is a Section Heading}
- 
-This is a sentence to take up space and look like text.
-What do you think will happen if you type four dashes in a row: a----b
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
- 
-\subsection{This is a Subsection Heading} 
- 
-This is a sentence to take up space and look like text.
-This is a sentence to take up space \cite{anotherbook}.
-This is a sentence to take up space and look like text.
- 
-\subsubsection{This is a Subsubsection Heading}
-This is a sentence to take up space and look like text.
-This is a sentence to take up space and look like text.
-Text before the footnote.\footnote{Here's the text of the footnote.}
-Text after the footnote. 
-This is a sentence to take up space and look like text.
 
 %%% Local Variables: 
 %%% mode: latex
