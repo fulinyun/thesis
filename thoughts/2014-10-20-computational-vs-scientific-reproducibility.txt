@@ -1,0 +1,16 @@
+As \cite{drummond2009replicability} pointed out, scientific reproducibility means the ability to perform different experiments to get to the same scientific finding. The difference between experiments enhances the trustworthiness of the finding. How can provenance improve scienfitic reproducibility? Authors do not know what experiments the others are going to perform to get to the same finding. May I assume that the others are gonna perform similar experiments as the authors did? Only under this assumption are library functions and documentation useful for scientific reproducibility. Differences come from 
+- parameter tuning
+- change of function application order
+- introduction of new functions
+- new source data
+- new scientific approach
+Different final data products will be generated.
+
+define computational reproducibility: for recover, quickly replicate performed experiments, rerun models, nothing to do with science?
+easily repeat the experiment -- does this have value? Distrust should not be encouraged, but if easy, quick checks of the published results come cheaply, it helps particular readers who are really interested in correctness of the results. It helps find errors accidentally elude authors' scrutinies and the peer review process. It also accelerates experiments for the future selves of the authors by allowing them to easily make changes to their previous experiments to design new ones.
+
+When authors no longer maintain their code and documentation, one, even the authors themselves are not likely to repeat the experiment if not given sufficient provenance information.
+
+Provenance enables readers to try out alternative operations at various points of the data processing workflow.
+
+Collecting provenance information is not the ultimate goal by itself. What we want is scientific verifiability. Provenance plays an important role in achieving this goal. 
