@@ -1,0 +1,8 @@
+reproduce data products for scientific research to use -- reproducibility of data products.
+reproducibility of scientific conclusions -- perform different experiments to generate usually different data products to validate the same conclusion.
+replicate experiments -- perform same sequence of operations on the same original data to get hopefully the same data product, namely the reported result.
+reproduce data products and replicate experiments are both replicate data processing workflow
+replicate environment
+making it easy to verify data products
+verify: actually did what they said they had done -- provenance can help
+validate: what they did actually supports the conclusion they made -- provenance cannot help
