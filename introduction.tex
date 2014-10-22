@@ -14,14 +14,19 @@ Syntactical changes of data mean the changes in serialization of data. A typical
 
 Physical changes of data mean changes in locations, character encodings and accessibility of data. For example, data downloaded from an online source are the result of changing the locations of the original data (now they are in two places). When the location of a piece of textual data changes, the character encoding might change as well if the source and target storages follow different encoding schemes. Changes of data sharing permissions are a kind of physical changes that change the accessibility of data. 
 
+All these changes are performed by agents, mostly software agents. \comment{expand 2014-10-20-agents.txt}
+
 \section{Why is provenance important in scientific works}
-Provenance helps answer questions such as \emph{What data are the reported results based on, and where does this piece of data come from}, \emph{Have the data been modified, in what ways} \cite{davidson2008provenance}, which are critical for readers of research publications to understand and reproduce the reported results, thus they make the scientific work verifiable. 
+With richer and richer provenance information, a piece of scientific work would get the following desirable features in order, namely \emph{transparency}, \emph{replicability} and \emph{reproducibility}. At the very basic level, provenance helps answer questions such as \emph{What data are the reported results based on, and where does this piece of data come from}, \emph{Have the data been modified, in what ways} \cite{davidson2008provenance}, which makes a piece of scientific work \emph{transparent}, meaning the readers have access to the knowledge of the data, their steward activities and associated agents. \comment{could be expanded} With richer provenance on data steward activities and software agents, readers have the ability to perform the same experiments carried out by the authors, making the work \emph{replicable}, meaning the same experiment can be carried out in a different lab \comment{how to cite carole goble's ismb 2013 keynote?}. The final goal of provenance is to enable readers to carry out different experiments to validate the same scientific conclusion that the original experiment tries to justify, which is, according to \cite{drummond2009replicability}, \emph{reproducibility}.
 
-% reproducibility, replicability, repeat, reuse
-% 2014-09-29-reproducibility.txt
+The first feature, transparency, not only increases the trustworthiness of the scientific work by making the research process leading to the publication open to public scrutiny, but also reveals the work that would otherwise not be recognized, such as the development, configuration, integration and deployment of software for experiments. \cite{goble2014better} \comment{what does this paper say about the meaning of crediting software engineers?}
+
+Here replicability and reproducibility are defined as in \cite{drummond2009replicability}. In the last decade, the word \emph{reproducibility} pops up a lot in discussions about provenance. For example, Altintas et al., in \cite{altintas2004kepler}, claims that scientific research is generally held to be of good provenance when it is documented in detail sufficient to allow reproducibility, and Boose et al., in \cite{boose2007ensuring}, pointed out that data sets are reliable when the process used to create them are reproducible and analyzable for defects. Drummond pointed out in \cite{drummond2009replicability} that \emph{reproducibility} in the sense of carrying out the same experiments by different researchers should actually be called \emph{replicability}. 
 Reproducibility does not only mean the readers' capability to perform exactly the same data steward activities as the authors did, but also the capability of carrying out different experiments to validate the scientific work \cite{drummond2009replicability}. 
+\cite{goble2014better}
+\comment{read 2014-10-20-computational-vs-scientific-reproducibility.txt and 2014-09-29-reproducibility.txt}
 
-
+\comment{read 2014-09-30-introduction-writing-order.txt}
 
 
 %%% Local Variables: 
