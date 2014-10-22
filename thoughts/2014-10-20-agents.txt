@@ -1,1 +1,9 @@
-All these changes are performed by agents, mostly software agents such as XXX through function calls, XXX Useful information about software agents include source code, 
+All these changes are performed by agents, mostly software agents such as software tools, programs using library functions and command line scripts, through running software in command line, GUI or interactive mode, function invocations, and script running.
+
+Information about people and organization agents tells the readers who owns, is responsible for, or should get credit for the publication and the data and software it used, which makes it possible to recognize and reward not only the publication authors, but also data and software producers. Recognition of these people or organizations benefits all researchers with better data and software \cite{parsons2010data, goble2014better}. \comment{better reference for data citation?}
+
+
+Useful information about software agents, other than their owners, responsible parties and contributors, falls into two categories. The first one is static information such as source code and documentation. This kind of information is needed for readers of the publications to understand and reuse the software to \emph{reproduce} the scientific conclusions. The second category of software agent information is dynamic information, i.e., information associated with activities these agents perform. Examples include their running environments such as library dependencies and system environment variable values, and configurations such as parameters and command line arguments, at each time they run. Such information plays an important role in \emph{replicating} computational experiments.
+
+Note that the two words \emph{reproduce} and \emph{replicate} are used carefully here, whose meanings will be discussed in detail in the next section.
+
