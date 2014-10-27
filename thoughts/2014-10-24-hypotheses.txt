@@ -1,0 +1,17 @@
+1: The developed ontology, namely PROV-PUB-O, is useful in the use case of modeling research publication preparation process.
+1.1: PROV-PUB-O is more useful than PROV-O in the use case.
+1.2: Domain specific subclasses of PROV-O classes are more useful than PROV-O classes in the use case.
+1.3: Subproperties of prov:wasAssociatedWith are more useful than itself in the use case.
+1.4: Properties are more useful than rhetorical concepts in DoCO, the Document Components Ontology, in describing publication components. ("abs a Section; isAbstractOf article" vs. "abs a Abstract; isPartOf article.")
+(1.5): Data steward activity classes defined specifically for the earth science domain are more useful to earth science professionals than the general data steward activity class.
+(1.6): Domain independent activity classes are more useful to non-earth science professionals than domain specific activity classes.
+
+2: The proposed mechanism, which 1) does not require explicit input from authors and 2) allows authors to work in their familiar environments, to record necessary provenance to replicate the research publication, is useful in capturing provenance for research publications.
+2.1: It is possible to implement the proposed mechanism.
+2.2: Capturing provenance with this mechanism is more useful than capturing provenance with the workflow systems.
+2.3: The minimum set of provenance relevant to the replication of research publications is more useful than the full description of the research publication preparing process in reproducing the scientific idea behind the reported results.
+
+3: The implemented platform satisfies the requirements indicated by the mechanism.
+3.1: The platform does not require explicit input from authors to capture provenance for research publications.
+3.2: The platform is more useful than workflow systems for carrying out operations in research publication preparation process.
+3.3: The platform captures sufficient provenance for replicating research publications.
