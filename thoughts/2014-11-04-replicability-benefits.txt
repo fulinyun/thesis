@@ -1,0 +1,5 @@
+does replicability help with communication and cooperation?
+readers may want to modify parameters, change input data, inspect source code as they replicate the computations done by the authors. schwab2000making
+
+
+allowing readers to make these changes and rerun the computations enables them to easily base their work on previous researchers' in the way of performing similar computational experiments. 

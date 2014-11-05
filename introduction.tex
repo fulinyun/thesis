@@ -22,7 +22,24 @@ With richer and richer provenance information, a piece of scientific work would 
 
 The first feature, transparency, not only increases the trustworthiness of the scientific work by making the research process leading to the publication open to public scrutiny, but also reveals the work that would otherwise not be recognized, such as the development, configuration, integration and deployment of software for experiments \cite{goble2014better}.
 
-Here \emph{replicability} and \emph{reproducibility} are defined as in \cite{drummond2009replicability}. In the last decade, the word \emph{reproducibility} pops up a lot in discussions about provenance. For example, Altintas et al., in \cite{altintas2004kepler}, claims that scientific research is generally held to be of good provenance when it is documented in detail sufficient to allow reproducibility, and Boose et al., in \cite{boose2007ensuring}, pointed out that \begin{quote}data sets are reliable when the process used to create them are reproducible and analyzable for defects.\end{quote} \comment{These are sentences copied from Wikipedia, need to fix citations.} Drummond pointed out in \cite{drummond2009replicability} that \emph{reproducibility} in the sense of carrying out the same experiments by different researchers should actually be called \emph{replicability}. 
+Here \emph{replicability} and \emph{reproducibility} are defined as in \cite{drummond2009replicability}. In the last decade, the word \emph{reproducibility} pops up a lot in discussions about provenance. For example, 
+%Altintas et al., in \cite{altintas2004kepler}, claims that scientific research is generally held to be of good provenance when it is documented in detail sufficient to allow reproducibility, and 
+Boose et al., in \cite{boose2007ensuring}, pointed out that
+\begin{quote}data sets are reliable when the process used to create them are reproducible and analyzable for defects.\end{quote}
+Drummond pointed out in \cite{drummond2009replicability} that \emph{reproducibility} in the sense of carrying out the same experiments by different researchers should actually be called \emph{replicability}.
+
+Schwab et al. in \cite{schwab2000making} argue that the readers can usually identify the parameter they want to modify, the input data that they want to exchange, or the source code that they want to inspect after analyzing the execution of the original experiment. Based on this argument, we believe that replications of experiments help readers to do different experiments.
+
+In other words, reproducibility can be viewed as a spectrum of readers' increasing ability to perform more and more different experiments from the original one. Here is an example of a list of actions readers can take based on the original experiments, in the ascending order of reproducibility:
+\begin{itemize}
+\item parameter tuning
+\item change of function application order
+\item introduction of new functions
+\item use of new source data
+\item use of new scientific approach
+\end{itemize}
+We can see that provenance supports all these actions by providing the original experiment, including the static and dynamic information of the software agents involved and the data used.
+% from 2014-10-20-computational-vs-scientific-reproducibility.txt
 
 
 Reproducibility does not only mean the readers' capability to perform exactly the same data steward activities as the authors did, but also the capability of carrying out different experiments to validate the scientific work \cite{drummond2009replicability}. 
