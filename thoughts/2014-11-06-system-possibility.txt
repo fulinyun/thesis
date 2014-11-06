@@ -1,0 +1,12 @@
+why is tools that
+- have the proper ontology for research publications,
+- support automatic capturing of provenance, and
+- support the functions required for research publication preparation
+possible to develop?
+
+To prove that it is possible, we look at the provenance needed to replicate the deterministic experiment performed by the authors. Although it is hard to measure how useful such provenance is to help reproduce the scientific conclusion the experiment is trying to support, provenance sufficient for replication usually is also sufficient for readers to perform similar experiments by tuning parameters, exchanging the order of applying functions, or changing the source data. So we argue that an ontology sufficient for experiment replication is a proper ontology for research publications.
+
+item by item analyze provenance whether automatically capturable
+
+assume that general purpose system independent programming languages are sufficient to implement all functions required in research publication preparation.
+

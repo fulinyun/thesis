@@ -18,7 +18,7 @@ Note that the two words \emph{reproduce} and \emph{replicate} are used carefully
 
 
 \section{Why is provenance important in scientific works}
-With richer and richer provenance information, a piece of scientific work would get the following desirable features in order, namely \emph{transparency}, \emph{replicability} and \emph{reproducibility}. At the very basic level, provenance helps answer questions such as \emph{``What data are the reported results based on, and where does this piece of data come from''}, \emph{``Have the data been modified, in what ways''} \cite{davidson2008provenance}, which makes a piece of scientific work \emph{transparent}, meaning the readers have access to the knowledge of the data, their steward activities and associated agents. With richer provenance on data steward activities and software agents, readers have the ability to perform the same experiments carried out by the authors, making the work \emph{replicable}, meaning the same experiment can be carried out in a different lab, according to Goble's keynote presentation at ISMB/ECCB 2013. The final goal of provenance is to enable readers to carry out different experiments to validate the same scientific conclusion that the original experiment tries to justify, which is, according to \cite{drummond2009replicability}, \emph{reproducibility}.
+With sufficiently rich provenance information, a piece of scientific work would get the following two desirable features, namely \emph{transparency} and \emph{reproducibility}. At the very basic level, provenance helps answer questions such as \emph{``What data are the reported results based on, and where does this piece of data come from''}, \emph{``Have the data been modified, in what ways''} \cite{davidson2008provenance}, which makes a piece of scientific work \emph{transparent}, meaning the readers have access to the knowledge of the data, their steward activities and associated agents. With richer provenance on data steward activities and software agents, readers have the ability to perform the same experiments carried out by the authors, making the work \emph{replicable}, meaning the same experiment can be carried out in a different lab, according to Goble's keynote presentation at ISMB/ECCB 2013. The final goal of provenance is to enable readers to carry out different experiments to validate the same scientific conclusion that the original experiment tries to justify, which is, according to \cite{drummond2009replicability}, \emph{reproducibility}.
 
 The first feature, transparency, not only increases the trustworthiness of the scientific work by making the research process leading to the publication open to public scrutiny, but also reveals the work that would otherwise not be recognized, such as the development, configuration, integration and deployment of software for experiments \cite{goble2014better}.
 
@@ -28,7 +28,7 @@ Boose et al., in \cite{boose2007ensuring}, pointed out that
 \begin{quote}data sets are reliable when the process used to create them are reproducible and analyzable for defects.\end{quote}
 Drummond pointed out in \cite{drummond2009replicability} that \emph{reproducibility} in the sense of carrying out the same experiments by different researchers should actually be called \emph{replicability}.
 
-Schwab et al. in \cite{schwab2000making} argue that the readers can usually identify the parameter they want to modify, the input data that they want to exchange, or the source code that they want to inspect after analyzing the execution of the original experiment. Based on this argument, we believe that replications of experiments help readers to do different experiments.
+Schwab et al. in \cite{schwab2000making} argue that the readers can usually identify the parameter they want to modify, the input data that they want to exchange, or the source code that they want to inspect after analyzing the execution of the original experiment. Based on this argument, we believe that replications of experiments help readers to do different experiments. In fact, exact replication is impossible since the times of performing experiments must differ, so we treat replication as a special case of reproduction where readers perform really similar experiments as the original one the authors did.
 
 In other words, reproducibility can be viewed as a spectrum of readers' increasing ability to perform more and more different experiments from the original one. Here is an example of a list of actions readers can take based on the original experiments, in the ascending order of reproducibility:
 \begin{itemize}
@@ -38,13 +38,49 @@ In other words, reproducibility can be viewed as a spectrum of readers' increasi
 \item use of new source data
 \item use of new scientific approach
 \end{itemize}
-We can see that provenance supports all these actions by providing the original experiment, including the static and dynamic information of the software agents involved and the data used.
+We can see that provenance of the original experiment supports all these actions by providing the static and dynamic information of the software agents involved and the data used.
+% \comment{treat replicability as a special case of reproducibility}
 % from 2014-10-20-computational-vs-scientific-reproducibility.txt
 
 
-Reproducibility does not only mean the readers' capability to perform exactly the same data steward activities as the authors did, but also the capability of carrying out different experiments to validate the scientific work \cite{drummond2009replicability}. 
-\cite{goble2014better}
-\comment{read 2014-10-20-computational-vs-scientific-reproducibility.txt and 2014-09-29-reproducibility.txt}
+% how difficult and anti-motivated its capturing is to the authors, stating the authoring workflow here. Say that currently authors lack both the ability and the motivation to capture provenance for their publications, given the currently available tools. 
+\section{Why is it hard for the authors to record provenance}
+Although provenance plays an important role in the transparency and reproducibility of scientific works, it is hard to obtain due to its spatial and temporal distribution.
+
+It is a fallacy that the authors do not have the knowledge of everything happened during the process of the research work. They actually have, at certain times, all the knowledge of provenance that is sufficient for replication of the work. Some pieces of the provenance are just so transient that if they do not get recorded at the right time, they get lost forever.
+
+For example, to create a tabular summary of a dataset, authors need to first use some download software package such as wget to download the dataset from a certain place online, and then use some data viewing software package to study the dataset, followed by creating the summary table with some table making software package. During this process of table creation, we would recognize more or less the following provenance pieces.
+\begin{itemize}
+\item What download software package was used, including its name, distribution and version.
+\item Where the dataset was downloaded, including its URL.
+\item When the dataset downloading activity started and ended.
+\item Who executed the downloading operation.
+\item The information about the data viewing software package used.
+\item The time period of the dataset studying activity.
+\item Who studied the dataset.
+\item The information about the table making software package.
+\item The time period of making the summary table.
+\item Who created the table.
+\end{itemize}
+Figure~\cite{prov-pieces} illustrates how these pieces of provenance information scatter all over the creation process of the summary table.
+\begin{figure}
+\label{prov-pieces}
+\centering
+\includegraphics[scale=0.5]{prov-pieces}
+\caption{How provenance information scatters throughout a table creation process}
+\end{figure}
+All these pieces of information can be captured by the authors if they are informed of the list of information items they need to record and they pay sufficient attention at certain time points where certain information pieces are available, but to capture them, the authors would get distracted from their writing and table creation work quite often. Given that writing research papers is resource intensive and requires concentration, capturing provenance during writing brings no immediate benefit but lowers the productivity of the authors, so authors do not have incentives to record provenance unless they are required to do so. The benefit of having provenance information captured and properly stored comes later when some readers of the publication would like to better understand, validate and/or reproduce the published results, usually with an intention to use the results for further research.
+
+So we see that provenance of research publication preparation shows its importance some time after the publications have been created, although its importance has already been widely recognized by readers and the future selves of authors. The problem is that provenance gets lost, piece by piece, after the creation of publications, at a rate depending on how well the authors keep or memorize the details of the publication preparation process.
+
+\section{Possibility of developing tools to alleviate the situation}
+We argue that it is possible to develop tools to alleviate the situation that important provenance gets lost due to lack of timely capturing. These tools just need to:
+\begin{itemize}
+\item have the knowledge of provenance that is necessary to capture,
+\item support a provenance capturing mechanism that requires very little explicit input from the authors, and
+\item support a wide range of functions authors need to use to prepare research publications.
+\end{itemize}
+These tools are possible to develop because information about data, their steward activities, and agents
 
 \comment{read 2014-09-30-introduction-writing-order.txt}
 
