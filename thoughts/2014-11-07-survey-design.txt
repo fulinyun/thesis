@@ -1,0 +1,12 @@
+use a website to collect data from earth scientists to validate my hypotheses. can I get data from scientists in other domains?
+
+and think about collecting people's opinions.
+
+how can we collect opinions from those busy scientists? I ignore surveys. they just ask for my opinions and don't give me anything. review an ontology? impossible. what can a survey bring to the survey takers? statistical information of past survey takers.
+
+https://www.surveymonkey.com/blog/en/blog/2012/04/13/10-online-survey-tips/
+
+provenance/top10servey-best-practices.pdf
+
+http://www.surveymedic.com/how-to-maximize-survey-participation-appealing-to-survey-takers/
+
