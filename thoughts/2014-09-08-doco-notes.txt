@@ -1,5 +1,5 @@
 The Pattern Ontology
-Describing documents by means of their structural components
+Describing documents by means of their structural components -- I'll just call it a pattern ontology for document structure
 
 based on patterns for XML documents -- Does each of the elements below have a counterpart in my model for research publications? Are these classes applicable to research publications?
 
@@ -23,4 +23,10 @@ atom elements are disjoint with field elements.
 
 field elements are defined to literal metadata or text that is not really part of the document body.
 
+
+discourse elements ontology and SALT (semantically annotated latex) framework \cite{groza2007salt} both present the idea of rhetoric elements and how they reside in the rhetorical structure of a document. 
+
+rhetorical structure theory: It
+explains coherence by postulating a hierarchical, connected structure of texts, in which
+every part of a text has a role, a function to play, with respect to other parts in the text. \cite{taboada2006rhetorical}
 
