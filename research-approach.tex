@@ -2,15 +2,40 @@
 \section{PROV-PUB-O: a provenance ontology for research publications}
 This section presents the approach to the creation of an ontology for capturing provenance in the process of preparing research publications. The ontology is divided into two parts. 
 
-The first part describes the structure of a research publication. We base our work on the Document Components Ontology (DoCO), which is one of the Semantic Publishing and Referencing Ontologies (SPAR). SPAR focuses a lot on modeling citations and bibliographic references. Four out of the eight ontologies in SPAR deal with citations and bibliographic references. (They are CiTO, the Citation Typing Ontology, FaBiO, the FRBR-aligned Bibliographic Ontology, BiRO, the Bibliographic Reference Ontology, and C4O, the Citation Counting and Context Characterization Ontology.) So SPAR is good for modeling the linkage between publications. In this thesis we focus on the reproducibility of a certain publication, so we do not delve deep into citations and bibliographic references as they have nothing to do with the computational experiments presented in the current publication. We model the structure of a research publication because experimental results must reside somewhere in the publication. 
+The first part describes the structure of a research publication. We base our work on the Document Components Ontology (DoCO), which is one of the Semantic Publishing and Referencing Ontologies (SPAR). SPAR focuses a lot on modeling citations and bibliographic references. Four out of the eight ontologies in SPAR deal with citations and bibliographic references. (They are CiTO, the Citation Typing Ontology, FaBiO, the FRBR-aligned Bibliographic Ontology, BiRO, the Bibliographic Reference Ontology, and C4O, the Citation Counting and Context Characterization Ontology.) So SPAR is good for modeling the linkage between publications. In this thesis we focus on the reproducibility of a certain publication, so we do not delve deep into citations and bibliographic references as they have nothing to do with the computational experiments presented in the current publication. We model the structure of a research publication because experimental results must reside somewhere in the publication. Textual elements in the publication provide contextual information and explanation for the reported results. Although these elements are not parts of the process leading to the reported results, they are documentation that helps readers to correctly interpret the results, so we include structural elements of research publications in the provenance.
 
+The second part describes the process leading to the reported results. It is a specialization of the W3C Provenance Ontology (PROV-O) for the use case of research publication preparation. 
+
+Hypothesis to justify: PROV-PUB-O, is useful in the use case of modeling research publication preparation process.
+
+\subsection{Publication structure modeling}
+Hypotheses to justify: Domain specific subclasses of PROV-O classes are more useful than PROV-O classes in the use case.
+
+Properties are more useful than rhetorical concepts in DoCO, the Document Components Ontology, in describing publication components. ("abs a Section; isAbstractOf article" vs. "abs a Abstract; isPartOf article.")
+
+\subsection{Result generating process modeling}
+Hypotheses to justify: PROV-PUB-O is more useful than PROV-O in the use case.
+
+Subproperties of prov:wasAssociatedWith are more useful than itself in the use case.
 
 \section{Automatic provenance capturing mechanism} 
-\cite{freire2014reproducibility}
-\cite{groth2006architecture}
+VisTrails \cite{freire2014reproducibility}
+Architecture for provenance systems \cite{groth2006architecture}
 
+Hypotheses to justify: Capturing provenance with this mechanism is more useful than capturing provenance with the workflow systems.
+
+\comment{Compare Groth's architecture with the proposed mechanism}
 
 \section{A proof-of-concept platform}
+Hypotheses:
+
+3: The implemented platform satisfies the requirements indicated by the mechanism.
+
+3.1: The platform does not require explicit input from authors to capture provenance for research publications.
+
+3.2: The platform is more useful than workflow systems for carrying out operations in research publication preparation process.
+
+3.3: The platform captures sufficient provenance for replicating research publications.
 
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
