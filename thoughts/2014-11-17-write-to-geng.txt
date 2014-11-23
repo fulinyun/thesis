@@ -1,0 +1,10 @@
+The goal of my research is to record models and analyses used, their execution order and runtime parameters during the generation of the reported results in research publications, so that readers can easily re-execute the "scientific workflow" to replicate the data transformations, or make changes to the workflow (e.g., tune parameters, change the order of steps) to carry out different workflows to better understand the scientific idea supported by the reported results.
+
+The importance of recording models and analyses information for research publications is widely agreed, but the authors lack the motivation to record the necessary information because that is an extra burden for them to bear on top of the already complicated data analysis and paper writing tasks.
+
+My approach to recording such information is to develop a platform that authors can interactively program with (like the programming environment of MATLAB, code is input in IN cells and results are fedback in OUT cells). The platform automatically records the necessary information (such as dependencies) for the authors each time a code snippet is executed, so the author can save the interactive programming session and publish it as an attachment to his/her publication, and readers can re-execute the code in the session because necessary information for replication goes with the publication.
+
+What I need from you is the feedback from the perspective of a science practitioner. What does "doing real science" look like? What are the steps you need to follow to lead to the reported results (mainly in the forms of figures and tables)? How do you feed data into models? Is it like running a program that takes a multi-dimensional data value array as its input? Does it sound reasonable to coordinate the workflow leading to the results on one platform?
+
+Thanks a lot for your time!
+
