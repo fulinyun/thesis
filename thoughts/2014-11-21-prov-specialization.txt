@@ -1,0 +1,10 @@
+This semester, my work has been focusing on ontology specialization, to be specific, specializing PROV-O for the preparing process of research publications. To capture activities such as source data download, data analysis and reporting results such as plotting figures and creating tables. 
+
+While the W3C Provenance ontology is good for modeling provenance in general, and quite easy for provenance practitioners to use, this ontology maybe is not that intuitive to domain scientists who study the climate, or the ocean, etc. I make the assumption that specialized ontologies are more easy for domain scientists to use than the general provenance ontology.
+
+A big challenge lies in the evaluation part. to test the hypothesis "the specialized ontology is more useful than the original general one." I need to design surveys and collect data from reasonable groups of people such as earth science practitioners, people doing the actual work producing papers and reproducing other researchers' experimental results.
+
+
+alvaro and james have done surveys to gather user feedbacks for their research work
+
+
