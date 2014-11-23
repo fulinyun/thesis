@@ -1,0 +1,2 @@
+why not just provenance for data analysis? we want data analysis provenance in the context of publication preparation, sort of like "data processing + documentation" mixture. put together data processing steps and descriptive paragraphs/sections/chapters enables readers to better understand the purpose of the steps.
+
