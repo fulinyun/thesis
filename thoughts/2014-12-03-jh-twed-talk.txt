@@ -1,0 +1,12 @@
+3:44 -- John's introduction starts
+4:40 -- Jim's talk starts
+33:54 -- video pauses
+41:05 -- restarts
+
+companies are adopting semantic web technologies -- involve human beings back in the loop
+from learning to human markup
+there are good reasons they don't want their learning algorithms to do certain things (getting 90,92% correct is hard) but want human beings to do
+structured data schemata are adopted by governments
+extract stuff from text, xml files sitting somewhere, not building things with these data, how do we visualize that? what queries do we wanna ask against the extracted data?
+discuss scaling with the ontology spectrum
+light structure reconciliation
