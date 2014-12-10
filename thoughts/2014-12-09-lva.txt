@@ -1,0 +1,1 @@
+a general ontology specialized for a specific domain: jargons commonly used in that domain are used in the specialized ontology to improve usability.
