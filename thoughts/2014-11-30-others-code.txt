@@ -1,0 +1,10 @@
+Are source code from other researchers really helpful? Students could reuse the code but they still need to figure out how to adapt the code for their own purposes. Maybe they would end up developing their own code from scratch.
+
+Programming is a critical skill enabling a researcher to work independently, to implement his/her own ideas, or to demonstrate the ideas.
+
+But having others' code does not eliminate the programming practice opportunities, rather it saves the time to re-implement the stuff that has already been done and enable researchers to better focus on new stuff based on the stuff that has already been done.
+
+In fact source code from other researchers might be good tutorial materials for researchers who would like to excel in programming with a certain language. Good programmers read and reuse a lot of other people's code, which enables them to quickly grasp the gists of the source code. Quick reuse of software code could become the new critical skill for researchers.
+
+NASA software reuse maturity measurements/benchmarks/matrix
+
