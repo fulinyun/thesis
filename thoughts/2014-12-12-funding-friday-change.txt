@@ -1,0 +1,2 @@
+The big change from the original plan for FUNding Friday project is that we switch from technology driven i.e. IPython Notebook driven project to a model driven i.e. PROV-PUB-O driven project. So executable provenance graph instead of IPython Notebooks magic functions becomes the new hero.
+

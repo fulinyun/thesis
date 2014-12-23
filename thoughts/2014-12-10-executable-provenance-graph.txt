@@ -1,0 +1,19 @@
+an entity wasGeneratedBy an activity: too general to reproduce, what activity are we talking about?
+change of data
+- physical
+  + download, copy
+- syntactical
+  + format, preprocess to get rid of unnecessary whitespaces
+- semantic
+  + calibration, transformation, analysis, comparison, verification
+what are the jargons used in a specific science community? such as earth science?
+what are the parameters/arguments critical to the repitition of these changes of data?
+
+what form of data usage are we talking about?
+an activity could analyse a data product, which is a special kind of usage, to generate another data product.
+in PROV-O we could only say the activity uses the original data product to generate the new one, while in the specialized ontology, we could say that an analysis activity analyze the old data to generate the new one. If the semantics of the analysis activity along with its parameters are carefully defined, this piece of provenance sequence would be repeatable.
+
+So this is the power of the specialized ontology, not only is it helpful in describing, but the provenance graph described is also executable.
+
+what's the difference between an executable povenance graph and a workflow? former: w3c recommendation, open standard, semantics defined; latter: a piece of software, 
+

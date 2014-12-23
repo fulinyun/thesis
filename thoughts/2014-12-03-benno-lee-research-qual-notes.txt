@@ -1,0 +1,10 @@
+delta based data version tracking is not that effective for transformations.
+operational delta could be effective, but need a unified operation model to represent and manage changes.
+snapshot can be combined with (operational) delta to save milestones.
+
+source code are easy to track when no restructuring and reformatting are involved.
+
+when dataset changes, supporting tools also need to change.
+
+DOIs work because there's an infrastructure.
+

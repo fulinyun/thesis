@@ -1,0 +1,6 @@
+Towards Executable Provenance Graphs for Reported Results in Research Publications
+
+Results in research publications often are not replicable because the publications and results described in the publications are separated from the underlying collection and analysis of data. Using general provenance ontologies such as PROV-O, the new W3C standard adopted in 2013, proves to be an effective way to keep track of the lineage of the source data and the changing processes leading to the final results.
+
+This poster presents how we are extending PROV-O to create a specialized provenance model for the replication of the process from data transformation to reporting of results in research publications. The proposed model can even be used to validate the scientific conclusions by allowing readers to adapt existing experiments reported in the papers and carry out their own studies.
+

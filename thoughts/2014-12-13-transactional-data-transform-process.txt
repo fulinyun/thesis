@@ -1,0 +1,8 @@
+sample transactional data process:
+original data: first column is dates, second column textual information about the transaction, third column cost.
+process: calculate the total cost for each season (3 months) from Oct, 2011 to Dec, 2014. Also concatenate the textual information for each season.
+original record: (date, text, cost)
+after transformation: (season, concatenated_text, seasonal_cost)
+process description: select season(date) as season, sum(text, " ") as concatenated_text, sum(cost) as seasonal_cost group by season(date).
+season(date): if(date > 9/30/2011 && date < 1/1/2012) then "fall 2011";
+		else if (...) ...
