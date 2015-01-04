@@ -8,6 +8,7 @@ for a specific group of users: geoscience practitioners.
 
 could reproducibility equate the existence of executable provenance graph?
 
+need to design tasks for the proof of usefulness for subclasses and subproperties.
 
 1.1: PROV-PUB-O is more useful than PROV-O in the use case.
 1.2: Domain specific subclasses of PROV-O classes are more useful than PROV-O classes in the use case.
