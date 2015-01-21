@@ -9,6 +9,9 @@ The second part describes the process leading to the reported results. It is a s
 Hypothesis to justify: PROV-PUB-O, is useful in the use case of modeling research publication preparation process.
 
 \subsection{Publication structure modeling}
+Document structure models such as the Document Components Ontology (DoCO)\footnote{DoCO, the Document Components Ontology: http://purl.org/spar/doco} are usually based on structural patterns \cite{di2014dealing} and rhetorical structure theory (RST) \cite{taboada2006rhetorical}. Here we take DoCO as an example. DoCO defines structural (e.g. block, inline, paragraph, section, chapter, etc. -- meaning what it looks like) as well as rhetorical (e.g. introduction, discussion, acknowledgements, reference list, figure, appendix, etc. -- meaning what it means) document components. We can see that a specific part of a document may play multiple roles under this ``structural+rhetorical'' framework. For example, the ``introduction'' part of a paper is usually a chapter, but theoretically it can be a section or even just a paragraph. But just look at how we call this ``introduction'' part -- we call it ``introduction \emph{of} a paper'', i.e., an introduction part is always \emph{of something}. It does not make sense to have a ``floating'' introduction attached to nothing.
+
+
 Hypotheses to justify: Domain specific subclasses of PROV-O classes are more useful than PROV-O classes in the use case.
 
 Properties are more useful than rhetorical concepts in DoCO, the Document Components Ontology, in describing publication components. ("abs a Section; isAbstractOf article" vs. "abs a Abstract; isPartOf article.")
