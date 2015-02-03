@@ -108,6 +108,25 @@ static and dynamic information of the software agents involved and the data used
 
 
 % how difficult and anti-motivated its capturing is to the authors, stating the authoring workflow here. Say that currently authors lack both the ability and the motivation to capture provenance for their publications, given the currently available tools. 
+\subsection{Pervasiveness of computational methods and lack of transparency in them}
+Table~\ref{table:jasa} shows how many articles in June issues of Journal of the American Statistical Association (JASA), the flagship journal for statistical research in the United States, used computational methods, as well as how many of them made their code publicly available.
+\begin{table}
+	\begin{tabular}{r|cc}
+		JASA June & Computational Articles & Code Publicly Available \\ 
+		\hline 1996 & 9 of 20 & 0\% \\ 
+		 2006 & 33 of 35 & 9\% \\ 
+		 2009 & 32 of 32 & 16\% \\ 
+		 2011 & 29 of 29 & 21\% \\  
+	\end{tabular} 
+	\caption{Number of articles using computational methods and their code availability in June issues of Journal of the American Statistical Association in 1996, 2006, 2009 and 2011. Courtesy Victoria Stodden.}
+	\label{table:jasa}
+\end{table}
+We can see from the table that using computational methods is the trend. Virtually every article published at JASA in the past 5 years uses computational methods, but very few of them are exposing code to the public.
+In her talk in 2011 \cite{stodden2011establishing}, the author argued that the lack of transparency is hurting the credibility of scientific research.
+
+In the area of biomedical research, Bustin in \cite{bustin2015reproducibility} pointed out that there is increasing concern about the reliability of biomedical research, with recent articles suggesting that up to 85\% of research funding is wasted. A string of five articles and an editorial printed in the Lancet in early 2014 addressed the issue of lack of reliability of findings of basic research when they are translated into clinical practice. \comment{paraphrase the quoted text} The first article considers research priorities and questions
+their relevance for human health in the context of a worldwide investment in biomedical research of around US\$240 billion [3]. The second highlights the usual absence of detailed written protocols for and poor documentation of research and comments on the systematic preference for quantity rather than quality, and novelty rather than reliability [4]. The third article discusses the modern approach to the regulation, governance, and man- agement of biomedical research and emphasises how inefficient management can easily compromise the interests of patients and public [5]. The fourth points out that a large percentage of health research-associated protocols, full study reports and participant-level datasets are rarely available, that there is selec- tive reporting of methods and results and that this leads to the introduction of bias, detrimentally effects the care of patients and wastes huge amounts of research funding [6]. The final article re- emphasises the absolute requirement for accurate, exhaustive and transparent reporting and notes that whilst reporting guidelines are important, they are all much less adopted and adhered to than they should be [7]. Finally, the editorial discusses the consistent and colossal failure of initially promising research findings to translate into improvements in health in light of the many, economic, polit- ical, social and cultural factors that influence researchers, funders, regulators, institutions and companies [8]. The authors make the revolutionary suggestion that rather than using journal impact factors to assess academics, it might be more constructive to gauge the methodological rigour, transparency of reporting and repro- ducibility of results of their output, which would of course facilitate the publication of more reliable and biologically relevant data.
+
 \section{Why is it hard for the authors to record provenance}
 Although provenance plays an important role in the transparency and reproducibility of scientific 
 works, it is hard to obtain due to its easy-to-miss characteristics as well as its spatial and temporal distributions.
