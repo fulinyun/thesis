@@ -1,0 +1,21 @@
+https://www.youtube.com/watch?v=V1zjILI5eMo
+
+4:58
+Why do we like reproducibility?
+
+- provides (a way to generate) evidence of correctness
+- enables re-use, modification, extension, ...
+- exposes methods, which might be interesting and instructive
+- gut feeling that transparency and openness are good
+
+claim: reproducibility is a tool, not a primary goal.
+
+might accomplish some of these goals without it, but it's a very powerful tool.
+
+--Philip Stark from UC Berkeley
+
+
+"really reproducible research" inspired by Stanford Professor Jon Claerbout:
+"The idea is: an article about computational science in a scientific publication is not the scholarship itself, it is merely advertising of the scholarship. The actual scholarship is the complete ... set of instructions [and data] which generated the figures."
+--David Donoho, 1998.
+
