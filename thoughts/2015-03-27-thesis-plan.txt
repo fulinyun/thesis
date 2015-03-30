@@ -1,0 +1,31 @@
+Hi Peter, 
+
+Thanks for the plan template! Here is the detailed plan:
+
+Step 1: Now-April 15th. - Thesis proposal write-up.
+
+Step 2: April 15th.-early May - Make appointments with committee members.
+
+Step 3: April 15th.-end of April - Make thesis proposal talk slides, arrange a practice talk.
+
+Step 4: Early May - Thesis proposal talk.
+
+Step 5: May-Oct. - Finish proposed work on evaluation, finish thesis.
+
+  Step 5.1: May-June - Detail the data munging task; detail the objective metrics to evaluate ontology usability; prove the usability of PROV-PUB-O with the objective metrics.
+
+  Step 5.2: July-Aug. - Complete data munging task detailing; more objective metric detailing and more usability proving; design user survey to validate objective metric based ontology usability evaluation.
+
+  Step 5.3: Sep-Oct. - Complete objective metric detailing and usability proving.
+
+  Step 5.4: Nov. - Finalize user survey, and then defence prep.
+
+Step 6: Before Nov. 20th. - Prepare for defence talk.
+
+Step 7: Before Nov. 20th. - Defence.
+
+Step 8: Before early Dec. - Submit thesis. (for Dec 2014 graduates, thesis submission deadline is 12/5/2014, so this year's deadline should be around 12/5/2015.)
+
+Thanks,
+Linyun
+
