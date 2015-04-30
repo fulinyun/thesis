@@ -110,12 +110,34 @@ The hypothesis we would like to justify here is that sub-properties of prov:used
 \subsection{Ontology usability evaluation approach}
 \label{subsec:evaluation}
 \comment{We need to find a recurring scientific data analytics task as our use case. Then analyze the pros and cons of using general and specialized provenance ontologies.}
-The first paper \cite{gruninger1995methodology} 
 
-G{\'o}mez-P{\'e}rez in her paper \cite{gomez2001evaluation} published in 2001 pointed out the lack of interest in evaluation issues in the ontological engineering community at that time. From then on, quite a lot of work has been done in the field of ontology evaluation. \comment{I guess...} For example, \cite{hartmann2005d1} mentioned OntoMetric \cite{lozano2003selection} and OntoClean \cite{guarino2002evaluating} \comment{...}. A survey of ontology evaluation \cite{brank2005survey} Qood \cite{gangemi2006qood} OntoQA \cite{tartir2005ontoqa} Ontology metrics design \cite{vrandevcic2007design} Unit tests for ontologies \cite{vrandevcic2006unit}. However, few of these studies deal with the usability evaluation of ontologies. 
+Nowadays many ontologies are written in Resource Description Framework Schema \cite{brickley2000resource} (RDFS) or Web Ontology Language \cite{mcguinness2004owl} (OWL). The evaluation of ontologies, however, has been paid attention to long before the introduction of these two ontology languages. For example, Gr{\"u}ninger et al in their paper \cite{gruninger1995methodology} proposes a method to check the completeness of an ontology with respect to a set of competency questions. Competency questions are the questions that the ontology is designed to answer, so this approach checks whether ``the right things are done''.
+
+Not much work follow the trend. G{\'o}mez-P{\'e}rez in her paper \cite{gomez2001evaluation} published in 2001 pointed out the lack of interest in evaluation issues in the ontological engineering community at that time. She also pointed out that tools, tutorials and case studies are critical for ontology engineers to assess the usability of an existing ontology. Unfortunately the paper does not give an example of ontology usability evaluation, it instead evaluates the Standard-Unit Ontology in terms of consistency, completeness and conciseness. From then on, quite a lot of work has been done in the field of ontology evaluation. For example, Lozano-Tello et al present the \emph{ONTOMETRIC} method \cite{lozano2003selection,lozano2004ontometric}, which compares ontologies with a taxonomy of
+160 characteristics organized in a multilevel framework. At the top level, there are five basic aspects. These are: the \emph{content} of the ontology and the
+organization of their contents, the \emph{language}
+in which it is implemented, the \emph{methodology}
+that has been followed to develop it,
+the software \emph{tools} used to build and edit
+the ontology, and the \emph{costs} that the ontology
+will be necessary in a certain project. For each ontology under consideration, the ONTOMETRIC method basically calculates the weighted sum of the scores given to each of the leaf node characteristics of this tree-shaped framework. Aggregated scores are obtained for sub-tree roots as the calculation ascending each level along the tree, so the final score is finally available at the root node. Hartmann et al in \cite{hartmann2005d1} pointed out the following two usability issues of ONTOMETRIC:
+\begin{itemize}
+	\item Specifying the characteristics of an ontology
+	is complicated and takes time
+	\item Assessing
+	the characteristics is quite subjective (from the
+	project managers' viewpoint)
+\end{itemize} and OntoClean \cite{guarino2002evaluating} \comment{...}. A survey of ontology evaluation \cite{brank2005survey} Qood \cite{gangemi2006qood} OntoQA \cite{tartir2005ontoqa} Ontology metrics design \cite{vrandevcic2007design} Unit tests for ontologies \cite{vrandevcic2006unit}. However, few of these studies deal with the usability evaluation of ontologies. 
 
 The few work dealing with ontology usability evaluation includes \cite{casellas2009ontology}, which used System Usability Scale \cite{brooke1996sus} to evaluate the usability of the Ontology of Professional Judicial Knowledge (See Chapter 2 of \cite{casellas2009ontology} for a good introduction of the ontology). 
 
+\cite{bikakis2013xml} Figure~\ref{fig:timeline} 
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{XMLSemanticWebW3CTimeline}
+	\caption[XML and Semantic Web W3C Standards Timeline]{XML and Semantic Web W3C Standards Timeline}
+	\label{fig:timeline}
+\end{figure}
 
 \subsubsection{Objective vs. subjective ontology evaluation}
 
