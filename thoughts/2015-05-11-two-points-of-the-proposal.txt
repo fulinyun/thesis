@@ -1,0 +1,5 @@
+so two points in this proposal: research reproducibility and ontology evaluation. 
+How are these two related? well research reproducibility and the trend (timeline of the papers 
+I reviewed), really reproducible research requires a common provenance ontology that is 
+expressive enough to record information detailed enough for replication of computational 
+experiments. An ontology useful and usable has more chance to become the common ontology.
