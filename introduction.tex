@@ -1,4 +1,5 @@
 \chapter{INTRODUCTION}
+\label{introduction}
 \section{What does provenance mean in this thesis}
 According to Oxford English Dictionary, provenance is the chronology of the ownership, custody or 
 location of a historical object. For digital artifacts, the Provenance Working Group of World Wide 
@@ -136,7 +137,7 @@ Stodden in \cite{stodden2014enabling} pointed out that digital scholarly objects
 
 \comment{review Gentleman 2007 and Donoho 2009}
 
-The earliest work on research reproducibility we have found so far is in the after dinner talk by Jon Claerbout at National Research Council meeting on High Performance Computing in Seismology on October 2nd, 1994\footnote{Seventeen years of super computing and other problems in seismology. Available at http://sepwww.stanford.edu/sep/jon/nrc.html. Accessed on May 10th, 2015.}, where Claerbout stated his famous slogan ``in engineering, a published paper is an advertisement of scholarship'', which Buckheit et al later paraphrased as 
+The earliest work on research reproducibility we have found so far is in the after dinner talk by Jon Claerbout at National Research Council meeting on High Performance Computing in Seismology on October 2nd, 1994\footnote{Seventeen years of super computing and other problems in seismology. Available at http://sepwww.stanford.edu/sep/jon/nrc.html. Accessed on May 10th, 2015.}, where Claerbout stated his famous slogan ``in engineering, a published paper is an advertisement of scholarship'', which Buckheit and Donoho later paraphrased as 
 \begin{quote}
 	An article about computational science in a scientific publication is \emph{not} the
 	scholarship itself, it is merely \emph{advertising} of the scholarship. The actual scholarship is the 
@@ -247,8 +248,8 @@ Sufficient functionality is guaranteed because provenance aware versions of the 
 
 To wrap up, our provenance capturing tools are provenance aware versions of existing tools used by authors of research publications. These tools get the knowledge of necessary provenance needed from the domain ontologies, and capture provenance as the authors are using the software to prepare publications -- no need to ask the authors to explicitly note down anything they have done because all they have done are already captured at the time of doing.
 
-\section{Contributions of this thesis}
-In this thesis, we propose a paradigm of preparing research publications to overcome the problems associated with provenance capturing, namely lack of awareness of necessary provenance items and lack of incentive to capture provenance in a timely manner. The paradigm is to create publications with libraries that transparently capture the proper provenance information on a portable platform.
+\section{Contributions of the proposed work}
+The grand goal of the thesis is to propose a paradigm of preparing research publications to overcome the problems associated with provenance capturing, namely lack of awareness of necessary provenance items and lack of incentive to capture provenance in a timely manner. The paradigm is to create publications with libraries that transparently capture the proper provenance information on a portable platform.
 
 The proper provenance information to be captured is defined in an ontology designed to model the preparing process of research publications. Although there are general ontologies for provenance\footnote{PROV-O: The PROV Ontology. Available at http://www.w3.org/TR/prov-o/} and for publications and citations\footnote{Introduction to SPAR. Available at http://sempublishing.sourceforge.net/}, ontologies describing the process of publication preparation do not exist yet. The hypothesis to justify for this contribution is that the developed ontology is more useful than existing ontologies in the use case of modeling research publication preparation process.
 %Unlike models for computational experiments, the ontology presented in this thesis pays special attention to the human factor in the process, which is a significant feature of the publication preparing process compared with the computational experiment workflows. The provenance capturing mechanism is driven by the ontology.
@@ -258,14 +259,20 @@ Transparent provenance capturing means the authors do not need to explicitly inp
 
 A portable platform is a software package or a Web application that runs on some environment that is available on all the popular computational systems, such as a Java program which runs on the Java Virtual Machine, a Python program which runs with the Python interpreter, or a Web based application written in HTML, JavaScript and/or PHP scripts which runs on any of the mainstream Web browsers. Preparing research publications based entirely on a portable platform eliminates the necessity of capturing provenance down to the computer system level. Two desirable features for the platform are that 1) it should supply all the functions needed in creating research publications, and 2) these functions can be used in a way that is similar to the software packages the author is used to working with. To ensure the first feature, the platform needs to be extensible, better if it already has a strong development community to supply a plethora of evolving modules. The second feature requires that the platform supports popular interactive editing modes widely accepted in the research community. Examples include those seen in research software packages such as MATLAB and R. The hypothesis to justify for this part is that the implemented platform fulfills the requirements placed by the transparent provenance mechanism, so it really is a proof-of-concept prototype. 
 
-To sum up, contributions of this thesis are:
+To sum up, contributions of the proposed work are:
 \begin{itemize}
-\item the creation of an ontology for capturing provenance in the process of research publication preparation;
+\item the creation of an ontology for capturing provenance in the process of research publication preparation, along with an objective evaluation;
 \item the proposal of a provenance capturing mechanism driven by the ontology. The mechanism makes the provenance capturing actions transparent to the authors of research publications; and 
 \item the implementation of a provenance aware publication preparing platform prototype that reflects most of the desired features for the proposed provenance capturing mechanism.
 \end{itemize}
 
-The remainder of this thesis is organized as follows. Chapter 2 presents the research approach in detail. Survey results justifying the effectiveness of the approach are given in Chapter 3. Chapter 4 discusses related work. Further discussions about this work and conclusions are given in Chapter 5, and future work is discussed in Chapter 6.
+At the time of proposal, the focus will be on the design of the provenance capturing ontology and the evaluation method of it.
+
+The remainder of this proposal is organized as follows. Chapter \ref{research-approach} presents the proposed research approach in detail. 
+%Survey results justifying the effectiveness of the approach are given in Chapter \ref{survey-results}. 
+Chapter \ref{related-work} discusses related work,
+%. Further discussions about this work and conclusions are given in Chapter \ref{discussions-and-conclusions}
+and future work is discussed in Chapter \ref{future-work}.
 
 %%% Local Variables: 
 %%% mode: latex
