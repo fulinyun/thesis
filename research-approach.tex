@@ -5,7 +5,7 @@ This section presents the approach to the creation of an ontology for capturing 
 
 The first part --- Section~\ref{subsec:structure} --- describes the structure of a research publication. We base our work on the Document Components Ontology (DoCO), which is one of the Semantic Publishing and Referencing Ontologies (SPAR). SPAR focuses a lot on modeling citations and bibliographic references. Four out of the eight ontologies in SPAR deal with citations and bibliographic references. (They are CiTO, the Citation Typing Ontology, FaBiO, the FRBR-aligned Bibliographic Ontology, BiRO, the Bibliographic Reference Ontology, and C4O, the Citation Counting and Context Characterization Ontology.) So SPAR is good for modeling the linkage between publications. 
 
-In this thesis we focus on the reproducibility of a certain publication, so we do not delve deep into citations and bibliographic references as they have nothing to do with the computational experiments presented in the current publication. 
+In this proposal we focus on the reproducibility of a certain publication, so we do not delve deep into citations and bibliographic references as they have nothing to do with the computational experiments presented in the current publication. 
 
 We model the structure of a research publication because experimental results must reside somewhere in the publication. Textual elements in the publication provide contextual information and explanation for the reported results. Although these elements are not parts of the process leading to the reported results, they are documentation that help readers to correctly interpret the results, so we include structural elements of research publications in the provenance.
 
@@ -102,11 +102,11 @@ The specialized ontology is not only helpful in describing the provenance, but i
 
 The hypothesis we would like to justify here is that sub-properties of prov:used are more useful than prov:used itself in the use case of creating executable provenance graphs in the domain of earth science.
 
-\subsubsection{Workflow vs. provenance semantics}
+%\subsubsection{Workflow vs. provenance semantics}
 
-\subsubsection{Executable provenance graphs}
+%\subsubsection{Executable provenance graphs}
 
-\subsubsection{Ontology as software}
+%\subsubsection{Ontology as software}
 
 \subsection{Ontology usability evaluation approach}
 \label{subsec:evaluation}
@@ -114,7 +114,7 @@ The hypothesis we would like to justify here is that sub-properties of prov:used
 
 Nowadays many ontologies are written in Resource Description Framework Schema \cite{brickley2000resource} (RDFS) or Web Ontology Language \cite{mcguinness2004owl} (OWL). The evaluation of ontologies, however, has been paid attention to long before the introduction of these two ontology languages. For example, Gr{\"u}ninger et al in their paper \cite{gruninger1995methodology} proposes a method to check the completeness of an ontology with respect to a set of competency questions. Competency questions are the questions that the ontology is designed to answer, so this approach checks whether ``the right things are done''. Back then, ontologies are defined with first-order logic (or equivalently, in Knowledge Interchange Format (KIF)), so the authors formalized competency questions also with first-order logic and evaluate the ontology in question by proving completeness theorems with respect to these formal competency questions.
 
-As more and more ontologies became available online, attention is paid to the evaluation of ontologies for the purpose of selecting an existing ontology to reuse in a new application. A popular way to do this kind of evaluation is to define several criteria for decision making, evaluate the ontology in question on each of them, giving a numerical score, and compute the overall score for the ontology as a weighted sum of its per-criterion scores. This group of approaches is called \emph{multiple-criteria approaches} in \cite{brank2005survey}. For example, Fox et al in \cite{fox1995organisation} proposed a set of criteria including \emph{generality}, \emph{completeness}, \emph{perspicuity}, etc.; G{\'o}mez-P{\'e}rez in her paper \cite{gomez2001evaluation} published in 2001 pointed out the lack of interest in evaluation issues in the ontological engineering community at that time. She also pointed out that tools, tutorials and case studies are critical for ontology engineers to assess the usability of an existing ontology. Unfortunately the paper does not give an example of ontology usability evaluation, it instead evaluates the Standard-Unit Ontology in terms of consistency, completeness and conciseness; Lozano-Tello et al present the \emph{ONTOMETRIC} method \cite{lozano2003selection,lozano2004ontometric}, which compares ontologies with a taxonomy of
+As more and more ontologies became available online (see Figure~\ref{fig:timeline} for a timeline of Semantic Web standards, and \cite{bikakis2013xml} for the details), attention is paid to the evaluation of ontologies for the purpose of selecting an existing ontology to reuse in a new application. A popular way to do this kind of evaluation is to define several criteria for decision making, evaluate the ontology in question on each of them, giving a numerical score, and compute the overall score for the ontology as a weighted sum of its per-criterion scores. This group of approaches is called \emph{multiple-criteria approaches} in \cite{brank2005survey}. For example, Fox et al in \cite{fox1995organisation} proposed a set of criteria including \emph{generality}, \emph{completeness}, \emph{perspicuity}, etc.; G{\'o}mez-P{\'e}rez in her paper \cite{gomez2001evaluation} published in 2001 pointed out the lack of interest in evaluation issues in the ontological engineering community at that time. She also pointed out that tools, tutorials and case studies are critical for ontology engineers to assess the usability of an existing ontology. Unfortunately the paper does not give an example of ontology usability evaluation, it instead evaluates the Standard-Unit Ontology in terms of consistency, completeness and conciseness; Lozano-Tello et al present the \emph{ONTOMETRIC} method \cite{lozano2003selection,lozano2004ontometric}, which compares ontologies with a taxonomy of
 160 characteristics organized in a multilevel framework. At the top level, there are five basic aspects. These are: the \emph{content} of the ontology and the
 organization of their contents, the \emph{language}
 in which it is implemented, the \emph{methodology}
@@ -130,15 +130,6 @@ will be necessary in a certain project. For each ontology under consideration, t
 	project managers' viewpoint)
 \end{itemize} 
 
-Different from the studies mentioned above, Burton-Jones et al proposed a set of 10 objective metrics at 4 different levels of a semiotic framework in \cite{burton2005semiotic}. Their work supports objective evaluation of ontologies, which does not require experts' review of the ontologies in questions. 
-
-In \cite{gangemi2006qood}, Gangemi et al organized the criteria for ontology evaluation and selection with a semiotic meta-ontology called $O^2$ and the \emph{oQual} evaluation ontology which involves concepts and relations relevant to ontology evaluation and selection. Therefore, evaluation based on the oQual ontology goes beyond the mere calculation of a weighted sum, but also contains reasoning based on the evaluation ontology. \comment{to read: OntoQA \cite{tartir2005ontoqa} (schema- and instance- level metrics) Ontology metrics design \cite{vrandevcic2007design} Unit tests for ontologies \cite{vrandevcic2006unit}.} 
-
-However, few of these studies deal with the usability evaluation of ontologies. 
-
-The few work dealing with ontology usability evaluation includes \cite{casellas2009ontology}, which used System Usability Scale \cite{brooke1996sus} to evaluate the usability of the Ontology of Professional Judicial Knowledge (See Chapter 2 of \cite{casellas2009ontology} for a good introduction of the ontology). 
-
-\cite{bikakis2013xml} Figure~\ref{fig:timeline} 
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{XMLSemanticWebW3CTimeline}
@@ -146,26 +137,24 @@ The few work dealing with ontology usability evaluation includes \cite{casellas2
 	\label{fig:timeline}
 \end{figure}
 
-\subsubsection{Objective vs. subjective ontology evaluation}
+Different from the studies mentioned above, Burton-Jones et al proposed a set of 10 objective metrics at 4 different levels of a semiotic framework in \cite{burton2005semiotic}. Their work supports objective evaluation of ontologies, which does not require experts' review of the ontologies in questions. 
 
-\section{Automatic provenance capturing mechanism} 
-VisTrails \cite{freire2014reproducibility}
-Architecture for provenance systems \cite{groth2006architecture}
+In \cite{gangemi2006qood}, Gangemi et al organized the criteria for ontology evaluation and selection with a semiotic meta-ontology called $O^2$ and the \emph{oQual} evaluation ontology which involves concepts and relations relevant to ontology evaluation and selection. Therefore, evaluation based on the oQual ontology goes beyond the mere calculation of a weighted sum, but also contains reasoning based on the evaluation ontology. \comment{to read: OntoQA \cite{tartir2005ontoqa} (schema- and instance- level metrics) Ontology metrics design \cite{vrandevcic2007design} Unit tests for ontologies \cite{vrandevcic2006unit}.} 
 
-Hypotheses to justify: Capturing provenance with this mechanism is more useful than capturing provenance with the workflow systems.
+However, few of these studies deal with the usability evaluation of ontologies. 
 
-\comment{Compare Groth's architecture with the proposed mechanism}
+The few work dealing with ontology usability evaluation includes \cite{casellas2009ontology}, which used System Usability Scale \cite{brooke1996sus} to evaluate the usability of the Ontology of Professional Judicial Knowledge (See Chapter 2 of \cite{casellas2009ontology} for a good introduction of the ontology).
 
-\section{A proof-of-concept platform}
-Hypotheses:
+We propose an objective evaluation measurement based on the Halstead complexity measures (\cite{halstead1977elements}, paraphrased in \cite{weyuker1988evaluating}), and we choose the task of data preparation for our evaluation. Data preparation loosely means indexing, organizing and optimizing data so they become structured in a form that 1) people can use and 2) software can consume. Figure~\ref{fig:data-analytics} shows how data preparation is related to other data analytics tasks. It is also called data munging and a sense of it could be obtained via reading any textbook talking about a data processing oriented programming language such as Perl \cite{cross2001data}.
 
-3: The implemented platform satisfies the requirements indicated by the mechanism.
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{data-analytics.png}
+	\caption{Data analytics levels\footnote{http://tw.rpi.edu/media/latest/DataAnalytics2015_week1a.ppt [Retrived on May 11th, 2015]}}
+	\label{fig:data-analytics}
+\end{figure}
 
-3.1: The platform does not require explicit input from authors to capture provenance for research publications.
 
-3.2: The platform is more useful than workflow systems for carrying out operations in research publication preparation process.
-
-3.3: The platform captures sufficient provenance for replicating research publications.
 
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
