@@ -154,7 +154,24 @@ We propose an objective evaluation measurement based on the Halstead complexity 
 	\label{fig:data-analytics}
 \end{figure}
 
+The basic idea is: provenance ontologies are used in software tools capturing provenance and reproducing the process of a certain task such as data preparation, so to evaluate the usability of such ontologies, we look at the complexity of software tools built on them. The less complex the software, the more usable the ontology.
 
+\begin{itemize}
+\item $\eta_1 = $Number of distinct operators.
+\item $\eta_2 = $Number of distinct operands.
+\item $N_1 = $Total number of operators.
+\item $N_2 = $Total number of operands.
+\end{itemize}
+%The program volume is defined to be
+%\begin{equation}
+%V = (N_1+N_2) \log_2(\eta_1+\eta_2).
+%\end{equation}
+An approximate formula for programming effort as a measure of program complexity is:
+\begin{equation}
+E = \frac{\eta_1N_2(N_1+N_2)\log_2(\eta_1+\eta_2)}{2\eta_2}.
+\end{equation}
+
+We choose the Halstead measure because the comparison of programming on top of different ontologies is mostly about the number and types of operations, rather than data flows (e.g., Oviedo in \cite{oviedo1993control} proposed a measure based on program data flows).
 
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
