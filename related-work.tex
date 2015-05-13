@@ -27,27 +27,29 @@ Donoho et al in \cite{donoho2009reproducible} pointed out that current computati
 \end{quote}
 In other words, conducting research in a reproducible manner hurts productivity in the heat of a project, although years from now, we ourselves, not remembering the myriad small details that accumulated in our minds during this project, will become such strangers.
 
+Gentleman and Lang in \cite{gentleman2007statistical} proposed the idea of a \emph{research compendium}. A compendium can include several \emph{dynamic documents} that are mixtures of text and code. They also implemented a prototype by using a modified version of the \texttt{noweb} markup \cite{ramsey1994literate} to write dynamic documents, writing text chunks in a modified version of \LaTeX and writing code in R. Dynamic documents are processed with Sweave \cite{leisch2002sweave} and compendiums are represented as R packages.
 
+Other discussions to come after proposal... (or now:)
 
 \section{Provenance capturing approaches}
 \cite{groth2009recording} presents five characteristics of provenance information, namely immutable, meaning intact after creation, attributable, meaning clear responsibility, autonomously creatable, meaning created by the most appropriate agent, finalizable, meaning clear timing of completeness, and process reflecting, meaning able to reflect the whole process leading to the final product. It also presents the concept of p-assertions first defined in \cite{groth2006architecture} and the six key actors in provenance-aware systems, namely application, sender, receiver, asserter, recorder and provenance store.
 
 \cite{miles2011prime} presents a provenance question driven methodology for provenance capturing.
 
-Workflow systems such as VisTrails \cite{freire2014reproducibility}, Kepler \cite{ludascher2006scientific}, Taverna \cite{wolstencroft2013taverna} and ReproZip \cite{chirigati2013reprozip}.
-
-Gentleman and Lang in \cite{gentleman2007statistical} proposed the idea of a \emph{research compendium}. A compendium can include several \emph{dynamic documents} that are mixtures of text and code. They also implemented a prototype by using a modified version of the \texttt{noweb} markup \cite{ramsey1994literate} to write dynamic documents, writing text chunks in a modified version of \LaTeX and writing code in R. Dynamic documents are processed with Sweave \cite{leisch2002sweave} and compendiums are represented as R packages.
+Workflow systems such as VisTrails \cite{freire2014reproducibility}, Kepler \cite{ludascher2006scientific}, Taverna \cite{wolstencroft2013taverna} and ReproZip \cite{chirigati2013reprozip} will be discussed in detail in the final thesis.
 
 \section{Provenance for research publications}
 \subsection{Models for publication structure}
-\cite{taboada2006rhetorical} rhetorical structure theory
-\cite{groza2007salt} semantically annotate \LaTeX \ source files so that roles played by each part of the publication are made explicit.
+\cite{taboada2006rhetorical} covers rhetorical structure theory
+\cite{groza2007salt} semantically annotates \LaTeX \ source files so that roles played by each part of the publication are made explicit.
 \cite{clark2013micropublications} micropublications: a semantic model for claims, evidence, arguments and annotations in biomedical communications.
-\subsection{Models for Publication Preparing Process}
-PROV-O
-ProvONE\footnote{http://vcvcomputing.com/provone/provone.html}
+And more to come after proposal...
 
-\section{Ontology usability measurements}
+\subsection{Models for Publication Preparing Process}
+PROV-O\footnote{http://www.w3.org/TR/prov-o/} and ProvONE\footnote{http://vcvcomputing.com/provone/provone.html} will be discussed later.
+
+\section{Ontology usability evaluation}
+Ontology usability evaluation is an aspect of the more general task of ontology evaluation. As mentioned in \ref{subsec:evaluation}, ontology evaluation starts with checking completeness and consistency of ontologies (e.g., \cite{gruninger1995methodology}), so called \emph{deductive approaches} in \cite{brank2005survey}.\comment{???} very few work has been done to compare ontologies in terms of how useful they are to certain tasks. 
 the Severity Ratings for Usability Problems\footnote{http://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/ [Retrieved April 12th, 2015]}
 
 %%% Local Variables: 
