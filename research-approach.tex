@@ -173,6 +173,21 @@ E = \frac{\eta_1N_2(N_1+N_2)\log_2(\eta_1+\eta_2)}{2\eta_2}.
 
 We choose the Halstead measure because the comparison of programming on top of different ontologies is mostly about the number and types of operations, rather than data flows (e.g., Oviedo in \cite{oviedo1993control} proposed a measure based on program data flows).
 
+We draw our data preparing operations from the R programming language. The assumption is that R is a data processing oriented programming language and the operations covered by R are typical for data processing.
+
+So the operations we are looking at are:
+\begin{itemize}
+	\item importing data from a file (be it a text file, an Excel spreadsheet, an XML file, or a netCDF file),
+	\item webscraping,
+	\item annotating datasets,
+	\item combining objects into a vector,
+	\item combining objects as columns or rows.
+\end{itemize}
+
+Currently we are picking typical data preparation tasks and describing them as combinations of the operations mentioned above. The plan is to calculate Halstead complexity values for programs based on PROV-PUB-O and directly on PROV-O for each hypothesis listed in the previous subsection to validate it.
+
+We originally planned to also describe the automatic provenance capturing mechanism and the proof-of-concept platform in this chapter. But the PROV-PUB-O part expands unexpectedly well and we decided to focus on it and move the other two sections to the future work chapter.
+
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
 %\begin{figure}
