@@ -38,7 +38,7 @@ In light of this relational perspective of rhetorical types, we make the followi
 	\item The sro:Abstract class is changed to the pub:abstract property, whose domain is (doco:Chapter or doco:Section) and (dcterms:isPartOf some doco:BodyMatter or doco:FrontMatter), and range is pub:Document. The prefix sro expands to http://salt.semanticauthoring.org/ontologies/sro\# and stands for SALT (Semantically Annotated \LaTeX \cite{groza2007salt}) Rhetorical Ontology. The prefix doco expands to http://purl.org/spar/doco/, and the prefix dcterms expands to http://purl.org/dc/terms/, meaning DCMI (Dublin Core$^{\textregistered}$ Metadata Initiative) Metadata Terms\footnote{DCMI Metadata Terms: http://dublincore.org/documents/dcmi-terms/}. Finally, the prefix pub is for PROV-PUB-O, which is under development and not published yet.
 	\item The sro:Background class is changed to the pub:background property, whose domain is (doco:Chapter or doco:Section) and (dcterms:isPartOf some doco:BodyMatter), and range is pub:Document. 
 	\item Classes sro:Conclusion, sro:Contribution, sro:Discussion, sro:Evaluation, sro:Motivation, sro:Scenario are changed in the same manner as sro:Background. Note that these classes are different from sro:Abstract in that they cannot be part of the front matter component of a document.
-	\item The class deo:Acknowledgements \comment{not sure yet.} The prefix deo here expands to http://purl.org/spar/deo/ and stands for the Discourse Elements Ontology\footnote{The Discourse Elements Ontology: http://purl.org/spar/deo}.
+	%\item The class deo:Acknowledgements \comment{not sure yet.} The prefix deo here expands to http://purl.org/spar/deo/ and stands for the Discourse Elements Ontology\footnote{The Discourse Elements Ontology: http://purl.org/spar/deo}.
 \end{itemize}
 
 The hypotheses to justify here is that properties are more useful than rhetorical concepts in DoCO for describing publication components. We plan to conduct user survey to collect opinions about pairs of RDF statement groups such as
@@ -68,7 +68,8 @@ In a specific domain of interest, a lot more contextual information that is comm
 For example, Figure~\ref{fig:gcis} shows what a typical provenance graph fragment looks like if it is created by reusing PROV-O.
 \begin{figure}
 	\includegraphics[width=\textwidth]{gcis-prov.png}
-	\caption{Provenance graph fragment encoded in PROV-O \comment{to delete the caption inside the figure}}
+	\caption{Provenance graph fragment encoded in PROV-O}
+	%\comment{to delete the caption inside the figure}
 	\label{fig:gcis}
 \end{figure}
 The example is drawn from the Global Change Information System: Information Model and Semantic Application Prototypes (GCIS-IMSAP) project\footnote{Global Change Information System: Information Model and Semantic Application Prototypes: http://tw.rpi.edu/web/project/gcis-imsap}. The project models and captures provenance information for the recent National Climate Assessment (NCA) draft report\footnote{The full draft for public review is available at http://downloads.globalchange.gov/nca/nca3-drafts/NCAJan11-2013-publicreviewdraft-fulldraft.pdf} of the US Global Change Research Program (USGCRP).
@@ -97,7 +98,8 @@ The specialized ontology is not only helpful in describing the provenance, but i
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{prov-pub-o.png}
-	\caption{Illustrated sample provenance graph in PROV-PUB-O \comment{to replace this figure with a more developed one}}
+	\caption{Illustrated sample provenance graph in PROV-PUB-O}
+	%\comment{to replace this figure with a more developed one}
 \end{figure}
 
 The hypothesis we would like to justify here is that sub-properties of prov:used are more useful than prov:used itself in the use case of creating executable provenance graphs in the domain of earth science.
@@ -110,7 +112,7 @@ The hypothesis we would like to justify here is that sub-properties of prov:used
 
 \subsection{Ontology usability evaluation approach}
 \label{subsec:evaluation}
-\comment{We need to find a recurring scientific data analytics task as our use case. Then analyze the pros and cons of using general and specialized provenance ontologies.}
+%\comment{We need to find a recurring scientific data analytics task as our use case. Then analyze the pros and cons of using general and specialized provenance ontologies.}
 
 Nowadays many ontologies are written in Resource Description Framework Schema \cite{brickley2000resource} (RDFS) or Web Ontology Language \cite{mcguinness2004owl} (OWL). The evaluation of ontologies, however, has been paid attention to long before the introduction of these two ontology languages. For example, Gr{\"u}ninger et al in their paper \cite{gruninger1995methodology} proposes a method to check the completeness of an ontology with respect to a set of competency questions. Competency questions are the questions that the ontology is designed to answer, so this approach checks whether ``the right things are done''. Back then, ontologies are defined with first-order logic (or equivalently, in Knowledge Interchange Format (KIF)), so the authors formalized competency questions also with first-order logic and evaluate the ontology in question by proving completeness theorems with respect to these formal competency questions.
 
@@ -139,7 +141,8 @@ will be necessary in a certain project. For each ontology under consideration, t
 
 Different from the studies mentioned above, Burton-Jones et al proposed a set of 10 objective metrics at 4 different levels of a semiotic framework in \cite{burton2005semiotic}. Their work supports objective evaluation of ontologies, which does not require experts' review of the ontologies in questions. 
 
-In \cite{gangemi2006qood}, Gangemi et al organized the criteria for ontology evaluation and selection with a semiotic meta-ontology called $O^2$ and the \emph{oQual} evaluation ontology which involves concepts and relations relevant to ontology evaluation and selection. Therefore, evaluation based on the oQual ontology goes beyond the mere calculation of a weighted sum, but also contains reasoning based on the evaluation ontology. \comment{to read: OntoQA \cite{tartir2005ontoqa} (schema- and instance- level metrics) Ontology metrics design \cite{vrandevcic2007design} Unit tests for ontologies \cite{vrandevcic2006unit}.} 
+In \cite{gangemi2006qood}, Gangemi et al organized the criteria for ontology evaluation and selection with a semiotic meta-ontology called $O^2$ and the \emph{oQual} evaluation ontology which involves concepts and relations relevant to ontology evaluation and selection. Therefore, evaluation based on the oQual ontology goes beyond the mere calculation of a weighted sum, but also contains reasoning based on the evaluation ontology. 
+%\comment{to read: OntoQA \cite{tartir2005ontoqa} (schema- and instance- level metrics) Ontology metrics design \cite{vrandevcic2007design} Unit tests for ontologies \cite{vrandevcic2006unit}.} 
 
 However, few of these studies deal with the usability evaluation of ontologies. 
 
