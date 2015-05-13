@@ -49,9 +49,33 @@ And more to come after proposal...
 PROV-O\footnote{http://www.w3.org/TR/prov-o/} and ProvONE\footnote{http://vcvcomputing.com/provone/provone.html} will be discussed later.
 
 \section{Ontology usability evaluation}
-Ontology usability evaluation is an aspect of the more general task of ontology evaluation. As mentioned in \ref{subsec:evaluation}, ontology evaluation starts with checking completeness and consistency of ontologies (e.g., \cite{gruninger1995methodology}), so called \emph{deductive approaches} in \cite{brank2005survey}.\comment{???} very few work has been done to compare ontologies in terms of how useful they are to certain tasks. 
-the Severity Ratings for Usability Problems\footnote{http://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/ [Retrieved April 12th, 2015]}
+Ontology usability evaluation is an aspect of the more general task of ontology evaluation. As mentioned in \ref{subsec:evaluation}, ontology evaluation starts with checking completeness, consistency and conciseness of ontologies (e.g., \cite{gruninger1995methodology} and \cite{gomez2001evaluation}), so called \emph{deductive approaches} in 
 
+To select an existing ontology to reuse in a new application, \emph{multiple-criteria approaches} (named by Brank et al in \cite{brank2005survey}) were developed. Ontologies are evaluated by several criteria and scores are given per criteria. An overall score of the ontology then could be calculated as the weighted sum of per-criteria scores. For example, Lozano-Tello et al presented the \emph{ONTOMETRIC} method in \cite{lozano2003selection,lozano2004ontometric}, which evaluates ontologies with a taxonomy of
+160 characteristics organized in a multilevel framework. At the top level, there are five basic aspects. These are: 
+\begin{itemize}
+	\item the \emph{content} of the ontology and the
+	organization of their contents,
+	\item the \emph{language}
+	in which it is implemented, 
+	\item the \emph{methodology}
+	that has been followed to develop it,
+	\item the software \emph{tools} used to build and edit
+	the ontology, and 
+	\item the \emph{costs} that the ontology
+	will be necessary in a certain project.
+\end{itemize} 
+As mentioned by Hartmann et al in \cite{hartmann2005d1}, this method requires a substantial amount of time to specify the relevant criteria and the scores are given quite subjectively.
+
+Burton-Jones et al proposed an objective metric in \cite{burton2005semiotic}, where a set of 10 objective metrics at 4 different levels of a semiotic framework was presented. For example, at the \emph{syntactic} level, \emph{lawfulness} is defined as the total number of breached rules divided by the number of statements in the ontology, and \emph{richness} as the total number of syntactic features used in the ontology divided by the total number of available features in the ontology language. See Table 4 in \cite{burton2005semiotic} for the details of all the metrics. Since all the metrics used are objective, this approach does not require experts' review of the ontologies. However, the evaluation only gives the general quality of the ontology, which may have nothing to do with how well the ontology fits a certain task.
+
+An really interesting work, although still not able to answer the ``how well it fits'' question, is \cite{gangemi2006qood}, where Gangemi et al organized the criteria for ontology evaluation and selection with a semiotic meta-ontology called $O^2$ and the \emph{oQual} evaluation ontology which involves concepts and relations relevant to ontology evaluation and selection. Therefore, evaluation based on the oQual ontology goes beyond the mere calculation of a weighted sum, but also contains reasoning based on the evaluation ontology. For example, the two criteria, namely \emph{explicitness} and \emph{computational efficiency} could be detected as conflicting by this approach because the former goal indicates high rate of cycles in the ontology but the latter indicates low rate of cycles. (See Figure 4 in \cite{gangemi2006qood} for the details.) Such a reasoning mechanism sheds more light than mere scores on the trade-offs to consider for the selection of ontologies.
+
+The few work dealing with ontology usability evaluation includes \cite{casellas2009ontology}, which used System Usability Scale \cite{brooke1996sus} to evaluate the usability of the Ontology of Professional Judicial Knowledge (See Chapter 2 of \cite{casellas2009ontology} for a good introduction of the ontology).
+
+We also plan to look at the Severity Ratings for Usability Problems\footnote{http://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/ [Retrieved April 12th, 2015]}
+
+The approach we propose to develop is based on the intuition that better ontologies enable simpler software to accomplish a certain task, so we could evaluate the usability of ontologies by looking at the complexity of necessary software based on them.
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: t
