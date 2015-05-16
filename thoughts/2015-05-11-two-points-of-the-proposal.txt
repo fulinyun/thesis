@@ -3,3 +3,7 @@ How are these two related? well research reproducibility and the trend (timeline
 I reviewed), really reproducible research requires a common provenance ontology that is 
 expressive enough to record information detailed enough for replication of computational 
 experiments. An ontology useful and usable has more chance to become the common ontology.
+
+authors on research reproducibility have the implicit indication that reproducibility inevitably
+takes pain to achieve. my work is trying to show that this pain can actually be relieved.
+
