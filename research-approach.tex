@@ -82,7 +82,7 @@ Such information is quite useful for the general public to know the process of g
 	\item How ``dataset/103'' was derived from ``dataset/TOPEX-POSEIDON'', e.g., what changes were made on what part of the original dataset to generate the derived one.
 	\item How ``activity/.../TOPEX-POSEIDON'' used ``platform/TOPEX-POSEIDON'' to generate ``dataset/TOPEX-POSEIDON'', e.g., whether an algorithm and/or a model was used to deal with the raw data from the platform, what parameter values were used to run the algorithm and/or model.
 \end{itemize} 
-We define our provenance ontology for research publications, called PROV-PUB-O, by specializing the "activity" class and the "used" property in PROV-O to make the ontology suitable for capturing executable provenance in research publications.
+We define our provenance ontology for research publications, called PROV-PUB-O, by specializing the ``activity'' class and the ``used'' property in PROV-O to make the ontology suitable for capturing executable provenance in research publications.
 
 Note that ``wasDerivedFrom'' do not need to be specialized because ``e1 wasDerivedFrom e2'' is a shortcut for ``a1 used e1; a1 generated e2'', where e1, e2 are PROV-O entities and a1 is an PROV-O activity. Neither do ``wasGeneratedBy'' since how an activity used its input entities already contains all the information needed for replicating the generation. The property ``wasGeneratedBy'' merely points out the output entity of the activity.
 
