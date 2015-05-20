@@ -1,0 +1,9 @@
+user interface ---> ontology
+usability specialists ---> ontology experts
+established usability principles ---> SUS
+with 5 evaluators, the total number of usability problems can be estimated with standard deviation being 0.11
+as long as the difference between PROV-O and PROV-PUB-O exceeds 11%, we would pick the correct winner.
+
+Reference:
+Nielsen, Jakob, and Landauer, Thomas K.: "A mathematical model of the finding of usability problems," Proceedings of ACM INTERCHI'93 Conference (Amsterdam, The Netherlands, 24-29 April 1993), pp. 206-213.
+
