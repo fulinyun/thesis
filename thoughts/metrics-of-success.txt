@@ -1,0 +1,11 @@
+about metrics of success
+is the "useful and usable" result based on 5 evaluators' review a valid sign of success?
+
+wide spreading is not a good metrics either, since it does not necessarily mean good quality of the ontology.
+so we cannot say that the ontology is successful because it is now being used by this many researchers/projects.
+
+
+what can this work bring to the community?
+
+
+scope of this work? a single user edits a part of a publication should be the simplest scenario.
