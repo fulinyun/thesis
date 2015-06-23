@@ -1,0 +1,6 @@
+if we are to design OUS (ontology usability scale), what questions should we put in a pool with a size of say 50?
+
+from there we will select those provoking agreements on extreme attitudes.
+
+we could apply the pool of 50 questions to TWC ontologies such as GCIS, ECOOP, SemantEco, VSTO, ...
+
