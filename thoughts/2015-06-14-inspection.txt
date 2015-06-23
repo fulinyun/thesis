@@ -1,0 +1,17 @@
+inspection: manually detect defects in both executable and non-executable materials. 
+For executable materials, testing should be possible.
+PROV-PUB-O is non-executable, EPGs written in PROV-PUB-O are executable.
+Testing could be performed on EPGs. **Test cases** could be written, etc.
+**Usability principles** are needed for inspecting PROV-PUB-O. (nielsen's heuristic evaluation)
+
+ontologies are more like programming languages, how do we evaluate programming languages? any usability principles to use for programming languages? -- read nielsen's heuristic evaluation
+
+usability inspections are for "human-computer dialogues", I could take a look at the principles used for dialogues. but programming language inspection principles are probably more relevant.
+
+One legitimate way to evaluate languages is to ask whether a given language meets the needs of a given user community.
+-- http://courses.cs.washington.edu/courses/cse341/02sp/concepts/evaluating-languages.html
+
+[hollingsed and novick 2007]: usability inspection methods after 15 years
+
+from ontology to interactive system: IDE+ontology = system, the usability of the system could be evaluated with the 9 heuristics in [Nielsen 1994].
+
