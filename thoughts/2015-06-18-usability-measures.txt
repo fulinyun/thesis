@@ -1,0 +1,49 @@
+what is the relationship between usability measures and SUS?
+
+usability measures are inspired by heuristic usability inspection, which is used to find usability problems, but usability measures are not used to find usability problems but give scores to ontologies!!!
+
+SUS is one of usability measures!!!
+
+Likert scales are indicators of usability measures!!!
+
+definition of usability from ISO 9241-11 (Guidance on
+usability, published on 1998, two years after SUS was published but it was mentioned in SUS): 
+the extent to which a product can be
+used by specified users to achieve specified goals with
+effectiveness, efficiency and satisfaction in a specified
+context of use
+The terms are further defined as follows:
+Effectiveness: the accuracy and completeness with which
+users achieve specified goals -- the ability of users to complete tasks using the system, and the quality of
+the output of those tasks
+Efficiency: the resources expended in relation to the
+accuracy and completeness with which users achieve
+goals
+Satisfaction: freedom from discomfort, and positive
+attitude to the use of the product
+Context of use: characteristics of the users, tasks and the
+organizational and physical environments
+Goal: intended outcome
+Task: activities required to achieve a goal
+
+but am I using the whole definition and only the definition?
+
+looks like I am more biased towards efficiency -- the resources required to achieve the goal.
+
+SUS looks more biased towards satisfaction: not effectiveness, not efficiency, just a score.
+
+So what do I mean by "usability" in the thesis? looks like all the three aspects in the iso standard: effectiveness, efficiency and satisfaction (sus)
+
+specified users: ontology experts or double experts (both ontology and domain experts)
+specified goals: describe the 14 sections of the "our changing climate" chapter of NCA 2014.
+tasks: describe activities, describe entities.
+organizational and physical environments: daily working environment, at their convenient time slots.
+
+see what SUS claims its focus (whether it has anything to do with satisfaction): Brooke defined usability as "a general quality of the appropriateness to a purpose of any particular artefact", in 1996, i.e., two years before ISO 9241-11 was published. However, a draft ISO document was already available at that time and it was mentioned in Brooke 1996. It is a real complete, but general, usability measure. The generation of this scale (selecting 10 items from a pool of 50, alternating positive and negative items, selecting items provoking general agreement of extreme attitudes to them) is very inspiring in developing questionnaires for evaluations. e.g., developing OUS (ontology usability scale) ;) such a scale should be used after usage but before debriefing and discussion.
+
+respondents should be asked to record their immediate response to each item (no long time thinking), and to mark the center point if they cannot respond to an item.
+
+effectiveness = accuracy and completeness: they describe in the right way? they are able to describe every thing?
+
+efficiency: time
+
