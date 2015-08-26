@@ -1,0 +1,38 @@
+let's get into this mess of incorporating doco stuff into the ecoop ontology. so where to start? 
+ecoop:document has figure doco:figure
+does doco have data properties such as "has figure"?
+
+would a general one such as "has part" be enough here?
+
+should we directly reuse ecoop:hasFigure? or even ecoop:Figure (instead of doco:Figure)?
+
+OK, I am reading doco.owl, I see dcterms:hasPart, it has a subproperty pattern:contains.
+let's list the concepts we are interested in:
+figure, image, table, (listing), 
+(document), chapter, section, paragraph, sentence, 
+inline, block -- what do they mean? see http://www.w3.org/TR/html401/struct/global.html#h-7.5.3, but we probably don't care if an element starts on a new line or not. To locate a plot, section, chapter or even document would be enough, so let's omit inline and block here, we need only section and chapter
+data, data set, 
+
+and the properties:
+hasAbstract, hasIntroduction, 
+
+gcis ontology: http://cmapspublic3.ihmc.us/rid=1MCJMLST0-1G0CSWH-2YH4/GCIS_Ontology_v1_2.cmap
+
+gcis ontology is specifically tailored for nca reports. i should use pub instead of using gcis concepts.
+
+@prefix bib: <http://zeitkunst.org/bibtex/0.1/bibtex.owl#> .
+
+bib:Entry is a good starting point for something citable: a document, an article, a report, a chapter, etc.
+
+there is no doco:Document class, so start with bib:Entry seems a good ida
+
+@prefix doco: <http://purl.org/spar/doco/> .
+
+isIntroductionOf should have range pattern:Structured
+
+@prefix pattern: <http://www.essepuntato.it/2008/12/pattern#> .
+
+cmaps are for illustrating sample usage of an ontology, an arrowed line connecting two concepts just represents one possible usage, and has nothing to do with the domain and range of the property in the middle.
+
+we need ttl files to strictly define an ontology.
+

@@ -1,0 +1,6 @@
+maybe for most of the cases, prov:used would be enough, but whenever possible, the use of pub:analyzed, pub:transformed and pub:verified is encouraged. prov:qualifiedUsage can do this, common usages are encoded as pub: properties as convenient shortcuts.
+
+a data change may have several source data, use several libraries, and generate several data products.
+
+do we wanna classify usage? what are the types of usages? datasets are used as raw materials, libraries are used as data processing recipes (or just menus), it seems that "transformed", "verified" and "analyzed" are already good categories of "used".
+
