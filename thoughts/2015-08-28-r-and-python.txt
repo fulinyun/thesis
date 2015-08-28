@@ -1,0 +1,8 @@
+i wanna check if doco:Image exists, for a figure may contain several images with different provenance. "which image" labels could easily be dc(terms) annotations.
+
+the real big issue is about r and python, [benestad 2015] provides complete code in r to reproduce 38 contrarian papers on global warming research. how will the code work with ipython notebook? i could image a SemanticChange instance has something like a sequentially ordered steps encoded in the form of rdf:List(?), each step needs to point out its running environment such as its running platform and dependencies.
+
+"executable" means unambiguous. the description given by an executable provenance graph should describe the process precisely without any ambiguity. the process is potentially automatable, but not necessarily automated now.
+
+about granularity of process steps. in [benestad 2015 supporting material], Humlum.et.al.2011() is the r function call for the whole process of the computations performed in [Hunlum 2011]. we certainly want more fine-grained step descriptions. it is up to the author (and peer reviewers) to decide which granularity level is appropriate.
+
