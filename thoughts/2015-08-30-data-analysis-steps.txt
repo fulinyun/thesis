@@ -1,0 +1,8 @@
+steps in a typical data analysis (from r in action p4)
+1 import data
+2 prepare, explore and clean data
+3 fit a statistical model -- calculate the parameter values of the model
+4 evaluate the model fit -- with metrics such as the sum of squared errors
+5 cross-validate the model -- with different slices of data?
+6 evaluate model prediction on new data -- with a certain fitness metric
+7 produce report
