@@ -6,3 +6,5 @@ the real big issue is about r and python, [benestad 2015] provides complete code
 
 about granularity of process steps. in [benestad 2015 supporting material], Humlum.et.al.2011() is the r function call for the whole process of the computations performed in [Hunlum 2011]. we certainly want more fine-grained step descriptions. it is up to the author (and peer reviewers) to decide which granularity level is appropriate.
 
+attributes(gisp2)["url"] is the source from which the data were obtained, and attributes(gisp2)["date"] the date.
+
