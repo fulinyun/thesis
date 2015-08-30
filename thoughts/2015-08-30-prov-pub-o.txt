@@ -1,0 +1,7 @@
+use subclasses of bib:Entry to describe pub:Document types.
+
+pub:Document, pub:Chapter, pub:Section are container of pub:Figure and pub:Table, not necessarily prov:Entity
+
+r data structures are intermediate entities (subclasses of prov:Entity), it seems nobody has created an ontology for R data structures, i could create a fairly primitive one as a plug-in for prov-pub-o.
+
+directory and url should be properties of dataset instances, instead of classes.
