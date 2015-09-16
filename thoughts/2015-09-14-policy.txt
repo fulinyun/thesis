@@ -1,0 +1,25 @@
+policy = decision making -- whether to allow access, whether to allow performing a certain operation, whether to 
+issue documents to people, whether the quality of service reaches a certain level, whether a person is eligible to 
+receive certain rewards...
+
+policy is also rules and triggers -- if-then-else rules such as certain events must be logged, a user must change his/her 
+password when something happens, 
+
+in short, policy is making decisions and take actions during the decision making process.
+
+"policies act both as decision support systems and as
+declarative behavior specifications"
+
+trust management: decide the requester is trusted or not, and thus the service is allowed or denied.
+
+reputation calculation: ratings, no certifying authorities.
+
+in the area of research publications, decisions are whether to accept research papers, whether to make the paper/
+its associated scripts public/accessible to certain groups of people. 
+
+Currently process recording for every figure in a paper is usually not required due to 1) the burden it brings to the authors, and 2) the extra 
+workload on the reviewers' side. To clear the burden, the recording and reviewing of figure generation processes need to be easy for both authors 
+and reviewers, or even better to be fully automatic. 
+
+valid provenance for figures and tables could be a factor for the consideration towards, or even a prerequisite for the acceptance of papers.
+
