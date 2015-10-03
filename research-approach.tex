@@ -1,5 +1,9 @@
 \chapter{RESEARCH APPROACH}
 \label{research-approach}
+
+% three requirements of the proposed authoring paradigm
+
+
 \section{PROV-PUB-O: a provenance ontology for research publications}
 This section presents the approach to the creation of an ontology for capturing provenance in the process of preparing research publications. The ontology is divided into two parts. 
 
@@ -148,48 +152,67 @@ However, few of these studies deal with the usability evaluation of ontologies.
 
 The few work dealing with ontology usability evaluation includes \cite{casellas2009ontology}, which used System Usability Scale \cite{brooke1996sus} to evaluate the usability of the Ontology of Professional Judicial Knowledge (See Chapter 2 of \cite{casellas2009ontology} for a good introduction of the ontology).
 
-We propose an objective evaluation measurement based on the Halstead complexity measures (\cite{halstead1977elements}, paraphrased in \cite{weyuker1988evaluating}), and we choose the task of data preparation for our evaluation. Data preparation loosely means indexing, organizing and optimizing data so they become structured in a form that 1) people can use and 2) software can consume. Figure~\ref{fig:data-analytics} shows how data preparation is related to other data analytics tasks\footnote{http://tw.rpi.edu/media/latest/DataAnalytics2015\_week1a.ppt [Retrived on May 11th, 2015]}. It is also called data munging and a sense of it could be obtained via reading any textbook talking about a data processing oriented programming language such as Perl \cite{cross2001data}.
+\section{Automatic provenance capturing mechanism}
+% recap the three requirements
 
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{data-analytics.png}
-	\caption{Data analytics levels}
-	\label{fig:data-analytics}
-\end{figure}
+% front end supporting multiple programming languages and extensible
 
-The basic idea is: provenance ontologies are used in software tools capturing provenance and reproducing the process of a certain task such as data preparation, so to evaluate the usability of such ontologies, we look at the complexity of software tools built on them. The less complex the software, the more usable the ontology.
+% capturing mechanism that does not require user involvement
 
-\begin{itemize}
-\item $\eta_1 = $Number of distinct operators.
-\item $\eta_2 = $Number of distinct operands.
-\item $N_1 = $Total number of operators.
-\item $N_2 = $Total number of operands.
-\end{itemize}
-%The program volume is defined to be
+
+
+\section{A proof-of-concept platform}
+% front end -- Jupyter notebooks
+
+% provenance capturing mechanism: parse Jupyter notebooks to extract provenance and construct provenance graphs
+
+% resulting provenance graph: reproducibility check, bad node search
+
+
+
+
+%We propose an objective evaluation measurement based on the Halstead complexity measures (\cite{halstead1977elements}, paraphrased in \cite{weyuker1988evaluating}), and we choose the task of data preparation for our evaluation. Data preparation loosely means indexing, organizing and optimizing data so they become structured in a form that 1) people can use and 2) software can consume. Figure~\ref{fig:data-analytics} shows how data preparation is related to other data analytics tasks\footnote{http://tw.rpi.edu/media/latest/DataAnalytics2015\_week1a.ppt [Retrived on May 11th, 2015]}. It is also called data munging and a sense of it could be obtained via reading any textbook talking about a data processing oriented programming language such as Perl \cite{cross2001data}.
+%
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=\linewidth]{data-analytics.png}
+%	\caption{Data analytics levels}
+%	\label{fig:data-analytics}
+%\end{figure}
+%
+%The basic idea is: provenance ontologies are used in software tools capturing provenance and reproducing the process of a certain task such as data preparation, so to evaluate the usability of such ontologies, we look at the complexity of software tools built on them. The less complex the software, the more usable the ontology.
+%
+%\begin{itemize}
+%\item $\eta_1 = $Number of distinct operators.
+%\item $\eta_2 = $Number of distinct operands.
+%\item $N_1 = $Total number of operators.
+%\item $N_2 = $Total number of operands.
+%\end{itemize}
+%%The program volume is defined to be
+%%\begin{equation}
+%%V = (N_1+N_2) \log_2(\eta_1+\eta_2).
+%%\end{equation}
+%An approximate formula for programming effort as a measure of program complexity is:
 %\begin{equation}
-%V = (N_1+N_2) \log_2(\eta_1+\eta_2).
+%E = \frac{\eta_1N_2(N_1+N_2)\log_2(\eta_1+\eta_2)}{2\eta_2}.
 %\end{equation}
-An approximate formula for programming effort as a measure of program complexity is:
-\begin{equation}
-E = \frac{\eta_1N_2(N_1+N_2)\log_2(\eta_1+\eta_2)}{2\eta_2}.
-\end{equation}
-
-We choose the Halstead measure because the comparison of programming on top of different ontologies is mostly about the number and types of operations, rather than data flows (e.g., Oviedo in \cite{oviedo1993control} proposed a measure based on program data flows).
-
-We draw our data preparing operations from the R programming language. The assumption is that R is a data processing oriented programming language and the operations covered by R are typical for data processing.
-
-So the operations we are looking at are:
-\begin{itemize}
-	\item importing data from a file (be it a text file, an Excel spreadsheet, an XML file, or a netCDF file),
-	\item webscraping,
-	\item annotating datasets,
-	\item combining objects into a vector,
-	\item combining objects as columns or rows.
-\end{itemize}
-
-Currently we are picking typical data preparation tasks and describing them as combinations of the operations mentioned above. The plan is to calculate Halstead complexity values for programs based on PROV-PUB-O and directly on PROV-O for each hypothesis listed in the previous subsection to validate it.
-
-We originally planned to also describe the automatic provenance capturing mechanism and the proof-of-concept platform in this chapter. But the PROV-PUB-O part expands unexpectedly well and we decided to focus on it and move the other two sections to the future work chapter.
+%
+%We choose the Halstead measure because the comparison of programming on top of different ontologies is mostly about the number and types of operations, rather than data flows (e.g., Oviedo in \cite{oviedo1993control} proposed a measure based on program data flows).
+%
+%We draw our data preparing operations from the R programming language. The assumption is that R is a data processing oriented programming language and the operations covered by R are typical for data processing.
+%
+%So the operations we are looking at are:
+%\begin{itemize}
+%	\item importing data from a file (be it a text file, an Excel spreadsheet, an XML file, or a netCDF file),
+%	\item webscraping,
+%	\item annotating datasets,
+%	\item combining objects into a vector,
+%	\item combining objects as columns or rows.
+%\end{itemize}
+%
+%Currently we are picking typical data preparation tasks and describing them as combinations of the operations mentioned above. The plan is to calculate Halstead complexity values for programs based on PROV-PUB-O and directly on PROV-O for each hypothesis listed in the previous subsection to validate it.
+%
+%We originally planned to also describe the automatic provenance capturing mechanism and the proof-of-concept platform in this chapter. But the PROV-PUB-O part expands unexpectedly well and we decided to focus on it and move the other two sections to the future work chapter.
 
 %\resetfootnote %this command starts footnote numbering with 1 again.
 
