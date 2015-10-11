@@ -1,0 +1,673 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix dcterms: <http://www.purl.org/dc/terms/>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+
+@prefix doco: <http://purl.org/spar/doco/>.
+@prefix deo: <http://purl.org/spar/deo/>.
+@prefix sro:
+<http://salt.semanticauthoring.org/ontologies/sro#>.
+@prefix bibo: <http://purl.org/ontology/bibo>.
+@prefix bibtex: <http://purl.org/net/nknouf/ns/bibtex#>.
+@prefix pattern:
+<http://www.essepuntato.it/2008/12/pattern#>.
+
+@prefix pub:
+<http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/>.
+
+<http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-p
+ub-s.ttl> a owl:Ontology;
+    dcterms:modified "2015-11-16"^^xsd:date;
+    rdfs:label "PROV-PUB-O/S";
+    dcterms:creator "Linyun Fu <ful2@rpi.edu>";
+    rdfs:comment """
+    PROV-PUB-O/S is a lightweight ontology designed to
+describe the locations of published results such as
+figures, tables, lists and textually described results
+within the structural elements of a research publication.
+The ontology design follows the following principles:
+    - Minimalism on classes --- meaning to make the number
+of constraints to its minimum and only define necessary
+classes to flatten the learning curve, quicken the
+prototyping and iterating processes.
+    - Rich on properties --- meaning to have multiple ways
+of expressing relations among classes, so that users are
+more likely to find a way that is easy to use for them. To
+avoid incomplete query results due to multiple ways of
+relation expression, users can choose to follow one
+particular way but they are not forced by being given only
+one way.
+    - Leave the decision for dependencies to the users ---
+meaning that we do not hard code dependencies to other
+ontologies which force the users to accept them. We just
+provide suggestions in documentation and let the users
+decide whether to accept the suggested dependencies.
+
+    To follow the principle of minialism on classes, only
+definitely necessary classes are defined. Two types of
+classes are considered definitely necessary. The first type
+is containers to contain published results, such as
+publication, chapter and section; the second type is
+published results such as figure, table, list and textually
+described result.
+    
+    To follow the principle of rich on properties, multiple
+ways of expressing part-whole and result-container
+relations are given. In addition to the general
+dcterms:isPartOf and dcterms:hasPart properties, we define
+properties that are specific on their ranges such as
+pub:inPublication, pub:inChapter, pub:inSection,
+pub:hasChapter, pub:hasSection, pub:hasFigure,
+pub:hasTable, pub:hasList and pub:hasText. Also defined are
+properties with role indications such as pub:isAbstractOf,
+pub:isIntroductionOf, pub:isDiscussionOf,
+pub:isRelatedWorkOf, pub:isConclusionOf and
+pub:isAcknowledgementsOf. In the comment (rdfs:comment)
+field of each class, sample usage of these properties are
+given in the "Examples" sections. The idea is not to make
+the users use all of them on each instance, but to let the
+users choose a most comfortable way and adhere to the
+chosen scheme of representing relations. For example, it
+may be decided that only pub:hasChapter, pub:hasSection,
+pub:hasFigure, pub:hasTable, pub:hasList and pub:hasText
+are allowed to use in a certain knowledge base, other
+properties such as pub:inPublication, pub:inChapter and
+pub:inSection are forbidden to ensure some prepared SPARQL
+queries to work properly.
+    
+    To follow the principle of leaving the decision for
+dependencies to the users, subclassing and double-classing
+suggestions are given for each class in PROV-PUB-O/S in
+case the user of the ontology wants to reuse the classes
+and constraints defined in the related ontologies.
+Subclassing means to assert that a class in PROV-PUB-O/S is
+a subclass of a class in one of the related ontologies. For
+example, the user could optionally assert that pub:Chapter
+is a subclass of doco:Chapter to make every instance of
+pub:Chapter automatically also an instance of doco:Chapter.
+Double-classing means to assert that an instance of a
+PROV-PUB-O/S class is also an instance of another class in
+a related ontology. For example, an instance can be
+asserted as both a pub:Publication and a bibo:Document.
+Such suggestions indicate that the assertions are expected
+by the creator of the ontology but not forced. 
+    
+    To give subclassing suggestions, three bridging
+ontologies
+<http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-p
+ub-s-doco.ttl>,
+<http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-p
+ub-s-bibtex.ttl> and
+<http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-p
+ub-s-bibo.ttl> are provided in case a user wants to accept
+all the suggested subclassing links from PROV-PUB-O/S to
+one of its related ontologies. Each bridging ontology is
+exclusively composed of assertions of the form "pub:ClassX
+rdfs:subClassOf ontologyY:ClassZ" such as "pub:Chapter
+rdfs:subClassOf doco:Chapter". 
+    
+    Double-classing suggestions are given in the "Examples"
+section inside comments (rdfs:comment) of each class, since
+they cannot be encoded in the form of bridging ontologies
+because they do not require any assertion at the schema
+level.
+    """.
+    
+# Classes
+
+# Result containers, including publication, chapter and
+section.
+pub:ResultContainer a owl:Class;
+    rdfs:label "Result container";
+    rdfs:comment """
+    A result container is a research publication or a part
+of it, usually a section or a chapter, that contains
+interesting published results. In PROV-PUB-O/S, document
+structure elements are defined not for analyzing document
+structures but for locating interesting research results.
+i.e., they help answer the question "where is this
+table/figure found?"
+    
+    It is not encouraged to directly assert an instance to
+be a result container. Consider asserting it to be one of
+result container's subclasses such as a publication, a
+chapter or a section.
+    """.
+    
+pub:Publication a owl:Class;
+    rdfs:label "Research publication";
+    rdfs:comment """
+    The research publication class represents those things
+which are broadly conceived "research publications". 
+    
+    Consider asserting pub:Publication's also instances of
+bibtex:Entry or one of its subclasses to specify BibTeX
+entry type, or asserting them instances of bibo:Document or
+one of its subclasses to specify document type.
+    
+    Consider asserting pub:Publication to be a subclass of
+bibtex:Entry and/or bibo:Document to make every
+pub:Publication instance automatically also an instance of
+bibtex:Entry and/or bibo:Document.
+
+    Examples:
+    @prefix : <http://example.org/>
+    :publication1 a pub:Publication, bibtex:Article,
+bibo:Document;
+        bibtex:hasTitle "..."; # this and the following
+triples are asserted to satisfy constraints on
+bibtex:Article
+        bibtex:hasYear "2015"^^xsd:nonNegativeInteger;
+        bibtex:hasJournal "...";
+        bibtex:hasAuthor "...".
+
+    """;
+    rdfs:subClassOf pub:ResultContainer.
+    
+pub:Chapter a owl:Class;
+    rdfs:label "Chapter";
+    rdfs:comment """
+    The Chapter class represents chapters in research
+publications. A chapter is usually identified by a
+(numerical) label (with rdfs:label) and/or a caption (with
+pub:caption). An example of a label for a chapter is  This
+class can be used with doco:Chapter through subclassing or
+double-classing. By asserting pub:Chapter to be a subclass
+of doco:Chapter (subclassing), instances of pub:Chapter are
+automatically also instances of doco:Chapter. Instances of
+pub:Chapter can be asserted to be also instances of
+doco:Chapter, one at a time (double-classing).
+    
+    Examples:
+    @prefix : <http://example.org/>
+    :chapter4 a pub:Chapter, doco:Chapter;
+        rdfs:label "Chapter 4";
+        pub:caption "Energy Supply and Use";
+        pub:inPublication :publication2; # this chapter is
+in a publication
+        pub:hasSection :section1; # it has a section in it
+        pub:hasFigure :figure1; # it has a figure in it
+        pub:hasTable :table1; # it has a table in it
+        pattern:contains :paragraph1. # use a property in
+DoCO to reach down to the paragraph level
+    """;
+    rdfs:subClassOf pub:ResultContainer.
+
+pub:Section a owl:Class;
+    rdfs:label "Section";
+    rdfs:comment """
+    This class represents sections and can be used with
+doco:Section through subclassing or double classing. By
+asserting pub:Section to be a subclass of doco:Section
+(subclassing), instances of pub:Section are automatically
+also instances of doco:Section. Instances of pub:Section
+can be asserted to be also instances of doco:Section, one
+at a time (double-classing).
+    
+    Examples: 
+    @prefix : <http://example.org/>
+    :section1 a pub:Section, doco:Section;
+        rdfs:label "Section 4.1";
+        pub:caption "Disruptions from Extreme Weather";
+        pub:inPublication :publication1; # this section is
+in a publication
+        pub:inChapter :chapter4; # this section is in a
+chapter
+        pub:hasSection :section1_1; # it has a subsection
+        pub:hasFigure :figure1; # it has a figure in it
+        pub:hasTable :table1; # it has a table in it
+        pattern:contains :paragraph1. # use a property in
+DoCO to reach down to the paragraph level
+    """;
+    rdfs:subClassOf pub:ResultContainer.
+
+# Published results, including figure, table, list and
+textual description.
+pub:PublishedResult a owl:Class;
+    rdfs:label "Published result";
+    rdfs:comment """
+    This class represents published results including
+figures, tables, lists and textual descriptions. Subclasses
+of this class are expected to be defined by users to
+support more kinds of published results. The property
+pub:hasResult can be used on pub:ResultContainer instances
+to locate data products.
+    """.
+    
+pub:Figure a owl:Class;
+    rdfs:label "Figure";
+    rdfs:comment """
+    Figures are usually identified by their labels and
+captions, i.e., rdfs:label and pub:caption property values.
+An example of a label for a figure is "Figure 4.1", and an
+example of a caption for a figure is "Paths of Hurricanes
+Katrina and Rita Relative to Oil and Gas Production
+Facilities". If used together with doco:Figure, note that a
+doco:Figure cannot be contained (described with
+pattern:contains) by doco:Section or doco:Chapter. In this
+ontology, pub:hasFigure, pub:inSection, pub:inChapter and
+pub:inPublication can be used with pub:Publication,
+pub:Chapter and pub:Section instances to locate figures.
+    
+    Examples:
+    @prefix : <http://example.org/>
+    :figure1 a pub:Figure; # Benefit of double-classing
+with doco:Figure is unclear, so no double-classing here.
+        rdfs:label "Figure 4.1";
+        pub:caption "Paths of Hurricanes Katrina and Rita
+Relative to Oil and Gas Production Facilities";
+        pub:inSection :section1; # the figure is in a
+section
+        pub:inChapter :chapter4; # the figure is in a
+chapter
+        pub:inPublication :publication1. # the figure is in
+a publication
+    """;
+    rdfs:subClassOf pub:PublishedResullt.
+    
+pub:Table a owl:Class;
+    rdfs:label "Table";
+    rdfs:comment """
+    Tables are usually identified by their labels and
+captions, i.e., rdfs:label and pub:caption property values.
+An example of a label for a table is "Table 4.1", and an
+example of a caption for a table is "Changing Energy Use
+for Heating and Cooling Will Vary by Region". If used
+together with doco:Table, note that a doco:Table cannot be
+contained (described with pattern:contains) by doco:Section
+or doco:Chapter. In this ontology, pub:hasTable,
+pub:inSection, pub:inChapter and pub:inPublication can be
+used on pub:Publication, pub:Chapter and pub:Section
+instances to locate tables.
+    
+    Examples:
+    @prefix : <http://example.org/>
+    :table1 a pub:Table; # No double-classing with
+doco:Table here because the benefit is unclear.
+        rdfs:label "Table 4.1";
+        pub:caption "Changing Energy Use for Heating and
+Cooling Will Vary by Region";
+        pub:inSection :section1; # the table is in a
+section
+        pub:inChapter :chapter4; # it is in a chapter
+        pub:inPublication :publication1. # it is in a
+publication
+    """;
+    rdfs:subClassOf pub:PublishedResult.
+    
+pub:List a owl:Class;
+    rdfs:label "Published result in the form of a list";
+    rdfs:comment """
+    Unlike figures and tables, lists may not have labels
+and captions to identify them. It is recommended to use the
+rdfs:label property to give location information. In this
+ontology, pub:hasList, pub:inSection, pub:inChapter and
+pub:inPublication can be used on the proper
+pub:ResultContainer instances to locate lists.
+    
+    Examples:
+    @prefix : <http://example.org/>
+    :list1 a pub:List;
+        rdfs:label "The list at the beginning of Chapter
+4"; # give location information to help identify the list
+        pub:inChapter :chapter4; # the list is in a chapter
+        pub:inPublication :publication1. # it is in a
+publication
+    """;
+    rdfs:subClassOf pub:PublishedResult.
+    
+pub:Text a owl:Class;
+    rdfs:label "Textually described result";
+    rdfs:comment """
+    Results of this kind usually do not have labels and
+captions to identify. It is recommended to use the
+rdfs:label property to give location information. In this
+ontology, pub:hasText, pub:inSection, pub:inChapter and
+pub:inPublication can be used on the proper
+pub:ResultContainer instances to locate textually described
+results.
+    
+    Examples:
+    @prefix : <http://example.org/>
+    :text1 a pub:Text;
+        rdfs:label "The sentence in the last paragraph of
+page 115 saying that coal produced 42% of U.S. electricity
+in 2011";
+        pub:inSection :section1; # the text is found in a
+section
+        pub:inChapter :chapter4; # it is in a chapter
+        pub:inPublication :publication1. # it is in a
+publication
+    """;
+    rdfs:subClassOf pub:PublishedResult.
+    
+# Properties
+
+# is part of relations
+dcterms:isPartOf a rdf:Property;
+    skos:scopeNote "Used to express part-whole relations
+among publications, chapters, sections, figures and
+tables.".
+    
+dcterms:hasPart a rdf:Property;
+    skos:scopeNote "Used to express part-whole relations
+among publications, chapters, sections, figures and
+tables.".
+    
+pub:inPublication a owl:ObjectProperty;
+    rdfs:label "is in publication";
+    rdfs:comment """
+    This property represents the relation of a published
+result or result container being in a certain publication,
+so the range of this property is pub:Publication. We do not
+put any constraint of its domain since we do not know if
+published result and result container cover all the things
+that a user would like to describe to be in a publication.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf;
+    rdfs:range pub:Publication.
+
+pub:inChapter a owl:ObjectProperty;
+    rdfs:label "is in chapter";
+    rdfs:comment """
+    This property is defined in the same way as
+pub:inPublication, except it is for chapter parts and
+results in a chapter.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf;
+    rdfs:range pub:Chapter.
+
+pub:inSection a owl:ObjectProperty;
+    rdfs:label "is in section";
+    rdfs:comment """
+    This property is defined in the same way as
+pub:inPublication, except it is for section parts and
+results in a section.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf;
+    rdfs:range pub:Section.
+
+# is part of relations with role indication, only those
+parts usually played by a section or a chapter are
+included.
+pub:isIntroductionOf a owl:ObjectProperty;
+    rdfs:label "is introduction of";
+    rdfs:comment """
+    This property is introduced to replace the
+deo:Introduction class since a dangling introduction
+instance does not make sense, it must instead "to be the
+introduction of something". One section or chapter or
+something else alone does not qualify itself to be an
+introduction. It is the relation between this section or
+chapter or something else and the thing it introduces that
+makes it "an introduction". We capture this relation with
+the property pub:isIntroductionOf and argue that this is a
+more intuitive way to express the idea than using the
+deo:Introduction class. The introducer is usually a chapter
+or section, but can be something else; the introducee is
+usually a publication, but also can be a chapter or
+something else, so neither domain nor range is asserted for
+pub:isIntroductionOf.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+    
+pub:isAbstractOf a owl:ObjectProperty;
+    rdfs:label "is abstract of";
+    rdfs:comment """
+    This property is introduced to replace the sro:Abstract
+class for the same reason as the replacement of
+deo:Introduction with pub:isIntroductionOf. Unlike some
+other classes such as sro:Background and sro:Conclusion,
+sro:Abstract does not have an equivalent class in DEO. The
+subject of this property is usually a pub:Section, but we
+are not a hundred percent sure whether it can be something
+else; the object of the property is usually a
+pub:Publication, but again we are not sure, so the domain
+and range of pub:isAbstractOf are both left unspecified.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+    
+pub:isBackgroundOf a owl:ObjectProperty;
+    rdfs:label "is background of";
+    rdfs:comment """
+    This property is introduced to replace the
+deo:Background class for the same reason as the replacement
+of deo:Introduction with pub:isIntroductionOf. The subject
+of this property is usually a pub:Chapter, and the object
+usually a pub:Publication, but we are not sure whether they
+can be something else, so the domain and range are both
+left unspecified.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+
+pub:isConclusionOf a owl:ObjectProperty;
+    rdfs:label "is conclusion of";
+    rdfs:comment """
+    This property is introduced to replace the
+deo:Conclusion class for the same reason as the replacement
+of deo:Introduction with pub:isIntroductionOf, and the
+remarks for pub:isBackgroundOf in terms of domain and range
+applies to this property as well. i.e., pub:isConclusionOf
+usually represents a chapter-publication relation.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+    
+pub:isContributionOf a owl:ObjectProperty;
+    rdfs:label "is contribution of";
+    rdfs:comment """
+    This property is introduced to replace the
+deo:Contribution class for the same reason as the
+replacement of deo:Introduction with pub:isIntroductionOf.
+The subject of this property can be a pub:Chapter, a
+pub:Section or a set of paragraphs or sentences, in the
+latter two cases it cannot be described with this ontology.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+    
+pub:isDiscussionOf a owl:ObjectProperty;
+    rdfs:label "is discussion of";
+    rdfs:comment """
+    This property is introduced to replace the
+deo:Discussion class for the same reason as the replacement
+of deo:Introduction with pub:isIntroductionOf, and the
+remarks for pub:isIntroductionOf in terms of domain and
+range applies to this property as well. i.e.,
+pub:isDiscussionOf usually represents a chapter-publication
+or section-chapter relation.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+
+pub:isEvaluationOf a owl:ObjectProperty;
+    rdfs:label "is evaluation of";
+    rdfs:comment """
+    This property is introduced to replace the
+deo:Evaluation class for the same reason as the replacement
+of deo:Introduction with pub:isIntroductionOf, and the
+remarks for pub:isIntroductionOf in terms of domain and
+range applies to this property as well. i.e.,
+pub:isEvaluationOf usually represents a chapter-publication
+or section-chapter relation.    
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+    
+pub:isMotivationOf a owl:ObjectProperty;
+    rdfs:label "is motivation of";
+    rdfs:comment """
+    This property is introduced to replace the
+deo:Motivation class for the same reason as the replacement
+of deo:Introduction with pub:isIntroductionOf, and the
+remarks for pub:isIntroductionOf in terms of domain and
+range applies to this property as well. i.e.,
+pub:isMotivationOf usually represents a chapter-publication
+or section-chapter relation.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+    
+pub:isScenarioOf a owl:ObjectProperty;
+    rdfs:label "is scenario of";
+    rdfs:comment """
+    This property is introduced to replace the deo:Scenario
+class for the same reason as the replacement of
+deo:Introduction with pub:isIntroductionOf, and the remarks
+for pub:isIntroductionOf in terms of domain and range
+applies to this property as well. i.e., pub:isScenarioOf
+usually represents a chapter-publication or section-chapter
+relation.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+    
+pub:isAcknowledgementsOf a owl:ObjectProperty;
+    rdfs:label "is acknowledgements of";
+    rdfs:comment """
+    This property is introduced to replace the
+deo:Acknowledgements class for the same reason as the
+replacement of deo:Introduction with pub:isIntroductionOf,
+and the remarks for pub:isIntroductionOf in terms of domain
+and range applies to this property as well. i.e.,
+pub:isAcknowledgementsOf usually represents a
+chapter-publication or section-chapter relation.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+
+pub:isRelatedWorkOf a owl:ObjectProperty;
+    rdfs:label "is related work of";
+    rdfs:comment """
+    This property is introduced to replace the
+deo:RelatedWork class for the same reason as the
+replacement of deo:Introduction with pub:isIntroductionOf,
+and the remarks for pub:isIntroductionOf in terms of domain
+and range applies to this property as well. i.e.,
+pub:isRelatedWorkOf usually represents a
+chapter-publication or section-chapter relation.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+
+pub:isAppendixOf a owl:ObjectProperty;
+    rdfs:label "is appendix of";
+    rdfs:comment """
+    This property is introduced to replace the
+doco:Appendix class for the same reason as the replacement
+of deo:Introduction with pub:isIntroductionOf, and the
+remarks for pub:isIntroductionOf in terms of domain and
+range applies to this property as well. i.e.,
+pub:isAppendixOf usually represents a chapter-publication
+or section-chapter relation.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+
+pub:isForewordOf a owl:ObjectProperty;
+    rdfs:label "is foreword of";
+    rdfs:comment """
+    This property is introduced to replace the
+doco:Foreword class for the same reason as the replacement
+of deo:Introduction with pub:isIntroductionOf, and the
+remarks for pub:isIntroductionOf in terms of domain and
+range applies to this property as well. i.e.,
+pub:isForewordOf usually represents a chapter-publication
+or section-chapter relation.
+    """;
+    rdfs:subPropertyOf dcterms:isPartOf.
+
+# has part relations
+
+# whole-part relations among publications and document
+parts
+pub:hasChapter a owl:ObjectProperty;
+    rdfs:label "has chapter";
+    rdfs:comment """
+    Used to describe that a publication or something else
+has a chapter as a part. Large publications may have larger
+parts on top of chapters, so the domain of this property is
+left unspecified.
+    """;
+    rdfs:range pub:Chapter;
+    rdfs:subPropertyOf dcterms:hasPart.
+    
+pub:hasSection a owl:ObjectProperty;
+    rdfs:label "has section";
+    rdfs:comment """
+    Used to describe something has a section as a part. A
+section can be a part of another section (itself being a
+subsection), a chapter, a publication or an element not
+defined in this ontology, so the domain of this property is
+left unspecified.
+    """;
+    rdfs:range pub:Section;
+    rdfs:subPropertyOf dcterms:hasPart.
+    
+# has result relations
+pub:hasResult a owl:ObjectProperty;
+    rdfs:label "has result";
+    rdfs:comment """
+    The top property representing the relation between a
+result container (such as a publication, a chapter or a
+section) and a published result (such as a figure or a
+table) it contains.
+    """;
+    rdfs:domain pub:ResultContainer;
+    rdfs:range pub:PublishedResult;
+    rdfs:subPropertyOf dcterms:hasPart.
+    
+pub:hasFigure a owl:ObjectProperty;
+    rdfs:label "has figure";
+    rdfs:comment """
+    This property represents the fact that a result
+container (such as a publication, a chapter or a section)
+contains a figure.
+    """;
+    rdfs:subPropertyOf pub:hasResult;
+    rdfs:range pub:Figure.
+    
+pub:hasTable a owl:ObjectProperty;
+    rdfs:label "has table";
+    rdfs:comment """
+    This property represents the fact that a result
+container (such as a publication, a chapter or a section)
+contains a table.
+    """;
+    rdfs:subPropertyOf pub:hasResult;
+    rdfs:range pub:Table.
+    
+pub:hasList a owl:ObjectProperty;
+    rdfs:label "has list result";
+    rdfs:comment """
+    This property represents the fact that a result
+container (such as a publication, a chapter or a section)
+contains a published result represented in the form of a
+list.
+    """;
+    rdfs:subPropertyOf pub:hasResult;
+    rdfs:range pub:List.
+
+pub:hasText a owl:ObjectProperty;
+    rdfs:label "has textually described result";
+    rdfs:comment """
+    This property represents the fact that a result
+container (such as a publication, a chapter or a section)
+contains a textually described result.
+    """;
+    rdfs:subPropertyOf pub:hasResult;
+    rdfs:range pub:Text.
+    
+
+# Label and caption
+
+rdfs:label a rdf:Property;
+    skos:scopeNote """Used to describe the (numerical)
+label of a figure or table, such as "Figure 4.1" or "Table
+4.2", or give location information for lists and textually
+described results.""".
+
+pub:caption a owl:DatatypeProperty;
+    rdfs:label "caption";
+    rdfs:comment """
+    This annotation represents the caption of a figure or a
+table. It can be used to describe captions of other things,
+so its domain is left unspecified.
+    """;
+    rdfs:range xsd:string.
+    
+    

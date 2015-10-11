@@ -1,0 +1,955 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix ns0: <http://www.w3.org/2003/11/swrl#> .
+
+<http://www.essepuntato.it/2008/12/pattern>
+  a owl:Ontology ;
+  rdfs:label "pattern ontology"@en ;
+  owl:versionInfo "1.4.2"^^xsd:string ;
+  dc11:creator "Angelo Di Iorio"^^xsd:string, "Fabio Vitali"^^xsd:string, "Silvio Peroni"^^xsd:string ;
+  dc11:date "2013-07-16" ;
+  rdfs:comment "An ontology defining formally patterns for segmenting a document into atomic components, in order to be manipulated independently and re-flowed in different contexts."@en ;
+  dc11:title """The Pattern Ontology
+Describing documents by means of their structural components"""@en ;
+  dc11:description """The idea of using patterns to produce reusable and high-quality assets is not new in the literature. Software engineers, architects (as Alexander who first introduced this term) and designers very often use – or rather reuse – patterns to handle problems which recur over and over. Patterns have also been studied to modularize and customize web ontologies (http://ontologydesignpatterns.org). They guarantee the flexibility and maintainability of concepts and solutions in several heterogeneous scenarios.
+
+We've been investigating patterns for XML documents for some time. The overall goal of this research is to understand how the structure of digital documents can be segmented into atomic components, that can be manipulated independently and re-flowed in different contexts. Instead of defining a large number of complex and diversified structures, we have identified a small number of structures/patterns that are sufficient to express what most users need. Our idea is that a low number of patterns are enough to capture the most relevant document structures."""@en ;
+  owl:priorVersion <http://dwellonit.svn.sourceforge.net/viewvc/dwellonit/StructuralPattern/Pattern-1_4.owl> ;
+  owl:backwardCompatibleWith <http://dwellonit.svn.sourceforge.net/viewvc/dwellonit/StructuralPattern/Pattern-1_4.owl> .
+
+dc11:creator a owl:AnnotationProperty .
+dc11:date a owl:AnnotationProperty .
+dc11:description a owl:AnnotationProperty .
+dc11:title a owl:AnnotationProperty .
+rdfs:comment a owl:AnnotationProperty .
+rdfs:label a owl:AnnotationProperty .
+owl:versionInfo a owl:AnnotationProperty .
+<http://www.essepuntato.it/2008/12/pattern#contains>
+  a owl:ObjectProperty ;
+  rdfs:label "contains"@en ;
+  rdfs:comment "A structured element contains another generic element."@en ;
+  rdfs:domain <http://www.essepuntato.it/2008/12/pattern#Structured> ;
+  owl:inverseOf <http://www.essepuntato.it/2008/12/pattern#isContainedBy> .
+
+<http://www.essepuntato.it/2008/12/pattern#containsAsHeader>
+  a owl:ObjectProperty ;
+  rdfs:label "contains as header"@en ;
+  rdfs:comment "A structured element contains another generic element as part of its header."@en ;
+  rdfs:subPropertyOf <http://www.essepuntato.it/2008/12/pattern#contains> ;
+  owl:inverseOf <http://www.essepuntato.it/2008/12/pattern#isContainedByAsHeader> .
+
+<http://www.essepuntato.it/2008/12/pattern#isContainedBy>
+  a owl:ObjectProperty ;
+  rdfs:label "is contained by"@en ;
+  rdfs:comment "An element that is contained by another structured element."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#isContainedByAsHeader>
+  a owl:ObjectProperty ;
+  rdfs:label "is contained by as header"@en ;
+  rdfs:comment "An element is contained by another structured element as part of its header."@en ;
+  rdfs:subPropertyOf <http://www.essepuntato.it/2008/12/pattern#isContainedBy> .
+
+<http://www.essepuntato.it/2008/12/pattern#canContainHeteronymousElements>
+  a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "can contain heteronymous elements"@en ;
+  rdfs:comment "A hierarchical-based entity contains al least two entities having different names."@en ;
+  rdfs:domain <http://www.essepuntato.it/2008/12/pattern#Structured> ;
+  rdfs:range xsd:boolean .
+
+<http://www.essepuntato.it/2008/12/pattern#canContainHomonymousElements>
+  a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "can contain homonymous elements"@en ;
+  rdfs:comment "A hierarchical-based entity contains al least two entities that share the same name."@en ;
+  rdfs:domain <http://www.essepuntato.it/2008/12/pattern#Structured> ;
+  rdfs:range xsd:boolean .
+
+<http://www.essepuntato.it/2008/12/pattern#hasName>
+  a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "has name"@en ;
+  rdfs:comment "The name of a particular element."@en ;
+  rdfs:range xsd:string .
+
+<http://www.essepuntato.it/2008/12/pattern#Atom>
+  a owl:Class ;
+  rdfs:label "atom element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Flat>
+     _:genid3
+   )
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+    owl:someValuesFrom [
+      a owl:Class ;
+      owl:unionOf (
+       <http://www.essepuntato.it/2008/12/pattern#Block>
+       <http://www.essepuntato.it/2008/12/pattern#Inline>
+     )
+    ]
+  ] ;
+  owl:disjointWith <http://www.essepuntato.it/2008/12/pattern#Field> ;
+  rdfs:comment "This class is defined to describe literal text that is part of the document body. Moreover, similarly to Inline, elements following the Atom pattern can only be contained within block or inline elements (and consequently they also cannot be used as root elements of documents). It can contain textual content and no other elements."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Block>
+  a owl:Class ;
+  rdfs:label "block element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Mixed>
+     _:genid14
+   )
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty <http://www.essepuntato.it/2008/12/pattern#contains> ;
+    owl:allValuesFrom [
+      a owl:Class ;
+      owl:unionOf (
+       <http://www.essepuntato.it/2008/12/pattern#Atom>
+       <http://www.essepuntato.it/2008/12/pattern#Inline>
+       <http://www.essepuntato.it/2008/12/pattern#Milestone>
+       <http://www.essepuntato.it/2008/12/pattern#Popup>
+     )
+    ]
+  ] ;
+  owl:disjointWith <http://www.essepuntato.it/2008/12/pattern#Inline> ;
+  rdfs:comment "This class organise the document content as a sequence of nestable elements and text nodes. In particular, elements following this pattern can contain text and other elements compliant with the patterns Inline, Atom, Milestones and Popup, which will be introduced in the following. Furthermore, it is a requirement that block elements are contained only by container and popup elements"@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Bucket>
+  a owl:Class ;
+  rdfs:label "bucket element"@en ;
+  rdfs:subClassOf <http://www.essepuntato.it/2008/12/pattern#NonTextual>, <http://www.essepuntato.it/2008/12/pattern#Structured> ;
+  owl:disjointWith <http://www.essepuntato.it/2008/12/pattern#Marker> ;
+  rdfs:comment "The class of elements that can contain other elements but no text nodes."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Container>
+  a owl:Class ;
+  rdfs:label "container element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Bucket>
+     _:genid27
+   )
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty <http://www.essepuntato.it/2008/12/pattern#contains> ;
+    owl:allValuesFrom [
+      a owl:Class ;
+      owl:unionOf (
+       <http://www.essepuntato.it/2008/12/pattern#Block>
+       <http://www.essepuntato.it/2008/12/pattern#Container>
+       <http://www.essepuntato.it/2008/12/pattern#Field>
+       <http://www.essepuntato.it/2008/12/pattern#Meta>
+     )
+    ]
+  ] ;
+  owl:disjointWith <http://www.essepuntato.it/2008/12/pattern#Popup> ;
+  rdfs:comment "This class concerns the structural organization of a document. Elements following this pattern contain no textual content and contain only elements compliant with the patterns: Meta, Field, Block and any subtype of Container. It is disjointed with the pattern Popup, although they share the same content model."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Field>
+  a owl:Class ;
+  rdfs:label "field element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Flat>
+     _:genid40
+   )
+  ] ;
+  rdfs:comment "This class is defined to describe literal metadata or text that is not really part of the document body, contrarily to its disjointed sibling Atom. Its main difference with Meta is that Field can contain textual content."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Flat>
+  a owl:Class ;
+  rdfs:label "flat element"@en ;
+  rdfs:subClassOf <http://www.essepuntato.it/2008/12/pattern#NonStructured>, <http://www.essepuntato.it/2008/12/pattern#Textual> ;
+  owl:disjointWith <http://www.essepuntato.it/2008/12/pattern#Mixed> ;
+  rdfs:comment "The class of elements that can contain text nodes but no elements."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#HeadedContainer>
+  a owl:Class ;
+  rdfs:label "headed-container element"@en ;
+  rdfs:subClassOf [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Container>
+     _:genid47
+   )
+  ] ;
+  rdfs:comment "This class describes container elements whose content model need to begin with one or more block elements (the heading), specified through the property containsAsHeader."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Inline>
+  a owl:Class ;
+  rdfs:label "inline element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Mixed>
+     _:genid51
+   )
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+    owl:someValuesFrom [
+      a owl:Class ;
+      owl:unionOf (
+       <http://www.essepuntato.it/2008/12/pattern#Block>
+       <http://www.essepuntato.it/2008/12/pattern#Inline>
+     )
+    ]
+  ], [
+    a owl:Restriction ;
+    owl:onProperty <http://www.essepuntato.it/2008/12/pattern#contains> ;
+    owl:allValuesFrom [
+      a owl:Class ;
+      owl:unionOf (
+       <http://www.essepuntato.it/2008/12/pattern#Atom>
+       <http://www.essepuntato.it/2008/12/pattern#Inline>
+       <http://www.essepuntato.it/2008/12/pattern#Milestone>
+       <http://www.essepuntato.it/2008/12/pattern#Popup>
+     )
+    ]
+  ] ;
+  rdfs:comment """This class has the same use and content model of the pattern Block, but differing primarily because a) inline elements can contain other elements compliant with the same pattern while block elements cannot, and b) inline elements must always be contained by other block or inline elements and by no other type of element.
+
+These constraints also imply that inline elements cannot be used as root elements of documents and that the class Block is disjoint with the class Inline (i.e., a markup element cannot be a block and an inline at the same time)."""@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Marker>
+  a owl:Class ;
+  rdfs:label "marker element"@en ;
+  rdfs:subClassOf <http://www.essepuntato.it/2008/12/pattern#NonStructured>, <http://www.essepuntato.it/2008/12/pattern#NonTextual> ;
+  rdfs:comment "The class of elements that can contain neither text nodes nor elements."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Meta>
+  a owl:Class ;
+  rdfs:label "meta element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Marker>
+     _:genid68
+   )
+  ] ;
+  owl:disjointWith <http://www.essepuntato.it/2008/12/pattern#Milestone> ;
+  rdfs:comment "This class describes elements that contain neither other elements nor textual content. Contrarily to the pattern Milestone, which was meant to describe markup elements that impact the document because of their location, the main feature of its disjoint sibling is the mere existence, independently from the position it has within the document. Meta elements convey metadata information about the document or part of it, independently of where they are. Thus, meta elements can be contained only within container elements."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Milestone>
+  a owl:Class ;
+  rdfs:label "milestone element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Marker>
+     _:genid75
+   )
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+    owl:someValuesFrom [
+      a owl:Class ;
+      owl:unionOf (
+       <http://www.essepuntato.it/2008/12/pattern#Block>
+       <http://www.essepuntato.it/2008/12/pattern#Inline>
+     )
+    ]
+  ] ;
+  rdfs:comment """This class describe elements that contain neither other elements nor textual content. Moreover, similarly to Inline, elements following the Milestone pattern can only be contained within block or inline elements (and consequently they also cannot be used as root elements of documents).
+
+The distinctive characteristic of the pattern Milestone is the location it assumes within the document."""@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Mixed>
+  a owl:Class ;
+  rdfs:label "mixed element"@en ;
+  rdfs:subClassOf <http://www.essepuntato.it/2008/12/pattern#Structured>, <http://www.essepuntato.it/2008/12/pattern#Textual> ;
+  rdfs:comment "The class of elements that can contain other elements and text nodes."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#NonStructured>
+  a owl:Class ;
+  rdfs:label "non-structured element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:complementOf <http://www.essepuntato.it/2008/12/pattern#Structured>
+  ] ;
+  rdfs:subClassOf <http://www.essepuntato.it/2008/12/pattern#Pattern> ;
+  owl:disjointWith <http://www.essepuntato.it/2008/12/pattern#Structured> ;
+  rdfs:comment "The class of elements that cannot contain other elements."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#NonTextual>
+  a owl:Class ;
+  rdfs:label "non-textual element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:complementOf <http://www.essepuntato.it/2008/12/pattern#Textual>
+  ] ;
+  rdfs:subClassOf <http://www.essepuntato.it/2008/12/pattern#Pattern> ;
+  owl:disjointWith <http://www.essepuntato.it/2008/12/pattern#Textual> ;
+  rdfs:comment "The class of elements that cannot have textual content in their content models."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Pattern>
+  a owl:Class ;
+  rdfs:label "pattern-based element"@en ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:comment """A structural pattern is an atomic component of a document, that is able to capture a recurrent and well knwon structure of a document.
+
+Any entity belonging to this class is compliant with exactly one structural pattern."""@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Popup>
+  a owl:Class ;
+  rdfs:label "popup element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Bucket>
+     _:genid88
+   )
+  ] ;
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+    owl:someValuesFrom [
+      a owl:Class ;
+      owl:unionOf (
+       <http://www.essepuntato.it/2008/12/pattern#Block>
+       <http://www.essepuntato.it/2008/12/pattern#Inline>
+     )
+    ]
+  ], [
+    a owl:Restriction ;
+    owl:onProperty <http://www.essepuntato.it/2008/12/pattern#contains> ;
+    owl:allValuesFrom [
+      a owl:Class ;
+      owl:unionOf (
+       <http://www.essepuntato.it/2008/12/pattern#Block>
+       <http://www.essepuntato.it/2008/12/pattern#Container>
+       <http://www.essepuntato.it/2008/12/pattern#Field>
+       <http://www.essepuntato.it/2008/12/pattern#Meta>
+     )
+    ]
+  ] ;
+  rdfs:comment "This class defines bucket elements that are only present within block and inline elements. Popup elements are used whenever complex structures need to be placed within content elements such as paragraphs. "@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Record>
+  a owl:Class ;
+  rdfs:label "record element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Container>
+     _:genid105
+     _:genid107
+   )
+  ] ;
+  rdfs:comment "This class describes container elements that can only contain heterogeneous and non repeatable elements."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Structured>
+  a owl:Class ;
+  rdfs:label "structured element"@en ;
+  rdfs:subClassOf <http://www.essepuntato.it/2008/12/pattern#Pattern> ;
+  rdfs:comment "The class of elements that can contain other elements."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Table>
+  a owl:Class ;
+  rdfs:label "table element"@en ;
+  owl:equivalentClass [
+    a owl:Class ;
+    owl:intersectionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Container>
+     _:genid111
+     _:genid113
+   )
+  ] ;
+  rdfs:comment "This class describes container elements that must contain only homogeneous elements (but they can be repeated)."@en .
+
+<http://www.essepuntato.it/2008/12/pattern#Textual>
+  a owl:Class ;
+  rdfs:label "textual element"@en ;
+  rdfs:subClassOf <http://www.essepuntato.it/2008/12/pattern#Pattern> ;
+  rdfs:comment "The class of elements that can have textual content in their content models."@en .
+
+owl:Thing a owl:Class .
+<http://www.essepuntato.it/2008/12/pattern#x> a <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.essepuntato.it/2008/12/pattern#s> a <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.essepuntato.it/2008/12/pattern#y> a <http://www.w3.org/2003/11/swrl#Variable> .
+<urn:swrl#p> a <http://www.w3.org/2003/11/swrl#Variable> .
+<urn:swrl#x> a <http://www.w3.org/2003/11/swrl#Variable> .
+<urn:swrl#y> a <http://www.w3.org/2003/11/swrl#Variable> .
+<urn:swrl#s> a <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.essepuntato.it/2008/12/pattern#z> a <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.essepuntato.it/2008/12/pattern#g> a <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.essepuntato.it/2008/12/pattern#p> a <http://www.w3.org/2003/11/swrl#Variable> .
+<http://www.essepuntato.it/2008/12/pattern#t> a <http://www.w3.org/2003/11/swrl#Variable> .
+_:genid3
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+  owl:allValuesFrom [
+    a owl:Class ;
+    owl:unionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Block>
+     <http://www.essepuntato.it/2008/12/pattern#Inline>
+   )
+  ] .
+
+_:genid14
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+  owl:allValuesFrom [
+    a owl:Class ;
+    owl:unionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Container>
+     <http://www.essepuntato.it/2008/12/pattern#Popup>
+   )
+  ] .
+
+_:genid27
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+  owl:allValuesFrom [
+    a owl:Class ;
+    owl:unionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Container>
+     <http://www.essepuntato.it/2008/12/pattern#Popup>
+   )
+  ] .
+
+_:genid40
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+  owl:allValuesFrom [
+    a owl:Class ;
+    owl:unionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Container>
+     <http://www.essepuntato.it/2008/12/pattern#Popup>
+   )
+  ] .
+
+_:genid47
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#containsAsHeader> ;
+  owl:allValuesFrom <http://www.essepuntato.it/2008/12/pattern#Block> .
+
+_:genid51
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+  owl:allValuesFrom [
+    a owl:Class ;
+    owl:unionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Block>
+     <http://www.essepuntato.it/2008/12/pattern#Inline>
+   )
+  ] .
+
+_:genid68
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+  owl:someValuesFrom [
+    a owl:Class ;
+    owl:unionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Container>
+     <http://www.essepuntato.it/2008/12/pattern#Popup>
+   )
+  ] .
+
+_:genid75
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+  owl:allValuesFrom [
+    a owl:Class ;
+    owl:unionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Block>
+     <http://www.essepuntato.it/2008/12/pattern#Inline>
+   )
+  ] .
+
+_:genid88
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#isContainedBy> ;
+  owl:allValuesFrom [
+    a owl:Class ;
+    owl:unionOf (
+     <http://www.essepuntato.it/2008/12/pattern#Block>
+     <http://www.essepuntato.it/2008/12/pattern#Inline>
+   )
+  ] .
+
+_:genid105
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#canContainHeteronymousElements> ;
+  owl:hasValue true .
+
+_:genid107
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#canContainHomonymousElements> ;
+  owl:hasValue false .
+
+_:genid111
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#canContainHeteronymousElements> ;
+  owl:hasValue false .
+
+_:genid113
+  a owl:Restriction ;
+  owl:onProperty <http://www.essepuntato.it/2008/12/pattern#canContainHomonymousElements> ;
+  owl:hasValue true .
+
+[]
+  a owl:AllDisjointClasses ;
+  owl:members (
+   <http://www.essepuntato.it/2008/12/pattern#HeadedContainer>
+   <http://www.essepuntato.it/2008/12/pattern#Record>
+   <http://www.essepuntato.it/2008/12/pattern#Table>
+ ) .
+
+[]
+  a <http://www.w3.org/2003/11/swrl#Imp> ;
+  ns0:body (
+   _:genid121
+   _:genid125
+   _:genid124
+ ) ;
+  ns0:head ( _:genid127 ) .
+
+_:genid121
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Block> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid124
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid125
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid127
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Block> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+[]
+  a ns0:Imp ;
+  ns0:body (
+   _:genid130
+   _:genid136
+   _:genid133
+   _:genid135
+ ) ;
+  ns0:head ( _:genid138 ) .
+
+_:genid130
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Pattern> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid133
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#g> ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid135
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#g> ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid136
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Textual> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid138
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Textual> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+[]
+  a ns0:Imp ;
+  ns0:head ( _:genid141 ) ;
+  ns0:body (
+   _:genid147
+   _:genid144
+   _:genid146
+ ) .
+
+_:genid141
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Container> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid144
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid146
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid147
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Container> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+[]
+  a ns0:Imp ;
+  ns0:body ( _:genid150 ) ;
+  ns0:head ( _:genid152 ) .
+
+_:genid150
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Record> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid152
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:argument2 false ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#canContainHomonymousElements> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+[]
+  a ns0:Imp ;
+  ns0:head ( _:genid155 ) ;
+  ns0:body (
+   _:genid157
+   _:genid159
+   _:genid161
+ ) .
+
+_:genid155
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Inline> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid157
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Inline> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid159
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid161
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+[]
+  a ns0:Imp ;
+  ns0:head ( _:genid164 ) ;
+  ns0:body (
+   _:genid170
+   _:genid167
+   _:genid169
+ ) .
+
+_:genid164
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Milestone> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid167
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid169
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid170
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Milestone> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+[]
+  a ns0:Imp ;
+  ns0:head ( _:genid173 ) ;
+  ns0:body (
+   _:genid175
+   _:genid177
+   _:genid179
+   _:genid181
+   _:genid183
+ ) .
+
+_:genid173
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:argument2 true ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#canContainHeteronymousElements> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#p> .
+
+_:genid175
+  a ns0:IndividualPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#contains> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#p> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid177
+  a ns0:IndividualPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#contains> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#p> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid179
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid181
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#t> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid183
+  a ns0:BuiltinAtom ;
+  ns0:builtin <http://www.w3.org/2003/11/swrlb#notEqual> ;
+  ns0:arguments (
+   <http://www.essepuntato.it/2008/12/pattern#s>
+   <http://www.essepuntato.it/2008/12/pattern#t>
+ ) .
+
+[]
+  a ns0:Imp ;
+  ns0:head ( _:genid188 ) ;
+  ns0:body (
+   _:genid194
+   _:genid191
+   _:genid193
+ ) .
+
+_:genid188
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Table> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid191
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid193
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid194
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Table> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+[]
+  a ns0:Imp ;
+  ns0:body (
+   _:genid197
+   _:genid199
+   _:genid201
+ ) ;
+  ns0:head ( _:genid203 ) .
+
+_:genid197
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Record> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid199
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid201
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid203
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Record> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+[]
+  a ns0:Imp ;
+  ns0:head ( _:genid206 ) ;
+  ns0:body (
+   _:genid208
+   _:genid212
+   _:genid211
+ ) .
+
+_:genid206
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Meta> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid208
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Meta> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid211
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid212
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+[]
+  a ns0:Imp ;
+  ns0:head ( _:genid215 ) ;
+  ns0:body (
+   _:genid217
+   _:genid223
+   _:genid222
+   _:genid221
+ ) .
+
+_:genid215
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:argument2 true ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#canContainHomonymousElements> ;
+  ns0:argument1 <urn:swrl#p> .
+
+_:genid217
+  a ns0:IndividualPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#contains> ;
+  ns0:argument1 <urn:swrl#p> ;
+  ns0:argument2 <urn:swrl#x> .
+
+_:genid221
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <urn:swrl#s> ;
+  ns0:argument1 <urn:swrl#y> .
+
+_:genid222
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <urn:swrl#s> ;
+  ns0:argument1 <urn:swrl#x> .
+
+_:genid223
+  a ns0:IndividualPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#contains> ;
+  ns0:argument1 <urn:swrl#p> ;
+  ns0:argument2 <urn:swrl#y> .
+
+[]
+  a ns0:Imp ;
+  ns0:body ( _:genid226 ) ;
+  ns0:head ( _:genid228 ) .
+
+_:genid226
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Table> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid228
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:argument2 false ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#canContainHeteronymousElements> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+[]
+  a ns0:Imp ;
+  ns0:head ( _:genid231 ) ;
+  ns0:body (
+   _:genid233
+   _:genid237
+   _:genid236
+ ) .
+
+_:genid231
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Field> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid233
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Field> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid236
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid237
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+[]
+  a ns0:Imp ;
+  ns0:body (
+   _:genid246
+   _:genid241
+   _:genid245
+   _:genid244
+ ) ;
+  ns0:head ( _:genid248 ) .
+
+_:genid241
+  a ns0:IndividualPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#contains> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#y> .
+
+_:genid244
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#z> .
+
+_:genid245
+  a ns0:IndividualPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#contains> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#z> .
+
+_:genid246
+  a ns0:ClassAtom ;
+  ns0:classPredicate <http://www.essepuntato.it/2008/12/pattern#Table> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#x> .
+
+_:genid248
+  a ns0:DatavaluedPropertyAtom ;
+  ns0:propertyPredicate <http://www.essepuntato.it/2008/12/pattern#hasName> ;
+  ns0:argument2 <http://www.essepuntato.it/2008/12/pattern#s> ;
+  ns0:argument1 <http://www.essepuntato.it/2008/12/pattern#y> .
+
