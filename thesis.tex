@@ -22,6 +22,19 @@
 % To restore bold, also include the second line below.
 \usepackage[hang]{caption}      % to indent subsequent lines of captions
 \usepackage{graphicx}
+
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{listings}
+\lstset{
+%	breakatwhitespace=false,
+%	breaklines=true,
+	upquote=true
+}
+
+\usepackage{url}
+\urlstyle{same}
+
 \renewcommand{\captionfont}{\bfseries} % bold caption (needed with caption 
                                        % package to restore boldface.)
 %\includeonly{rpichap1}  % use \includeonly to process only
@@ -29,6 +42,8 @@
 \newcommand{\comment}[1]{\textbf{Linyun: #1}}
 %\newcommand{\comment}[1]{\ } % used to hide all comments
 \begin{document}
+
+\sloppy % never run out of the right margins
 
 %\include{rpititle-mas}   % titlepage material for Master's thesis or project
 \include{title-page}   % titlepage material for PhD thesis 
@@ -41,6 +56,6 @@
 %\include{discussions-and-conclusions} % discussions and conclusions
 \include{future-work} % future work
 \include{bibliography} % bibliography
-%\include{appendix} % appendix
+\include{appendix} % appendix
 
 \end{document}
