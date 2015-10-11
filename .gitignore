@@ -78,15 +78,6 @@ rpithesis-doc.pdf
 rpichap1.tex
 rpichap2.tex
 
-# dcat, dublin core, doap, rdf, rdfs, PROV, SKOS ontologies
-model/dcat.ttl
-model/dcterms.ttl
-model/doap.rdf
-model/rdf.ttl
-model/rdf-schema.ttl
-model/prov.ttl
-model/skos.rdf
-
 # default ipython profile stuff
 notebook/profile/README
 notebook/profile/profile_default/
