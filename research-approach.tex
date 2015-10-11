@@ -47,7 +47,7 @@ Here we take DoCO as an example. DoCO defines structural (e.g. block, inline, pa
 Figure~\ref{fig:doco} shows the components of DoCO and the respective classes included in these components.
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{doco-architecture.png}
-	\caption{Architecture of DoCO, the Document Components Ontology}
+	\caption[Architecture of DoCO]{Architecture of DoCO, the Document Components Ontology}
 	\label{fig:doco}
 \end{figure}
 
@@ -75,7 +75,20 @@ In addition to the changes above, PROV-PUB-O/S is much smaller than DoCO in its 
 \end{itemize}
 This follows the principles of minimalism on classes and rich on properties.
 
-The resulting PROV-PUB-O/S ontology\footnote{PROV-PUB-O/S is not officially published and is temporarily hosted at \url{http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s.ttl}, accessed on October 10th, 2015.} follows a minimalist approach on class definitions to be a small ontology just sufficient for the purpose of describing the results and the parts of the research publications that contain them. 
+The resulting PROV-PUB-O/S ontology\footnote{PROV-PUB-O/S is not officially published and is temporarily hosted at \url{http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s.ttl}, accessed on October 10th, 2015.} follows a minimalist approach on class definitions to be a small ontology just sufficient for the purpose of describing the results and the parts of the research publications that contain them. Figure~\ref{fig:prov-pub-s-classes} and Figure~\ref{fig:prov-pub-s-properties} shows the classes and properties in PROV-PUB-O/S, respectively.
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-s-classes.png}
+	\caption{Classes in PROV-PUB-O/S}
+	\label{fig:prov-pub-s-classes}
+\end{figure}
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-s-properties.png}
+	\caption[Properties in PROV-PUB-O/S]{Properties in PROV-PUB-O/S, where pub:is{Role}Of represents the role indicating properties such as pub:isIntroductionOf, pub:isAbstractOf, etc.}
+	\label{fig:prov-pub-s-properties}
+\end{figure}
+
 
 An important conceptual deviation of PROV-PUB-O/S from DoCO is that in DoCO, tables and figures are considered blocks of documents the same way as chapters and sections, but in PROV-PUB-O/S, they are considered research results instead of normal document parts. Other block elements such as chapters and sections are also considered result containers in PROV-PUB-O/S. They are defined to serve the function of locating interesting results in research publications. We stop our document part modeling at the section level because sections are the most fine-grained elements that have (numerical) labels such as ``Section 2.1.1'' and/or captions such as ``PROV-PUB-O/S: publication structure modeling''. This is not the case for paragraphs and sentences. Note that subsections of a section is also instances of pub:Section. 
 %Minimalism here means to only define a set of ontology elements that must be defined together to ensure their proper function, so PROV-PUB-O/S does not 
