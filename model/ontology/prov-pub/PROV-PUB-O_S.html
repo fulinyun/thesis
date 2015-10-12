@@ -1,0 +1,691 @@
+<!-- saved from url=(0087)http://www.essepuntato.it/lode/owlapi/http://www.essepuntato.it/tmp/1444511615-ontology -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PROV-PUB-O/S</title>
+<title>PROV-PUB-O/S</title>
+<link href="./PROV-PUB-O_S_files/owl.css" rel="stylesheet" type="text/css">
+<link href="./PROV-PUB-O_S_files/Primer.css" rel="stylesheet" type="text/css">
+<link href="./PROV-PUB-O_S_files/rec.css" rel="stylesheet" type="text/css">
+<link href="./PROV-PUB-O_S_files/extra.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="http://eelst.cs.unibo.it/apps/LODE/favicon.ico">
+</head>
+<body data-pinterest-extension-installed="cr1.39.1">
+<div class="head">
+	<h1>PROV-PUB-O/S</h1>
+	<dl>
+		<dt>IRI:</dt>
+		<dd>http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s.ttl</dd>
+	</dl>
+	<dl>
+		<dt>Ontology source in ttl:</dt>
+		<dd><a href="prov-pub-s.ttl">prov-pub-s.ttl</a></dd>
+		<dt>Diagrams:</dt>
+		<dd>
+		<div style="text-align: center">
+			<p><img src="prov-pub-s-classes.png" style="width: 60%; min-width: 25em; max-width: 60em" /><br /><br /></p>
+			<p><strong>Figure 1. Classes in PROV-PUB-O/S</strong><br /><br /><br /></p>
+		</div>
+		<div style="text-align:center">
+			<p><img src="prov-pub-s-properties.png" style="width: 60%; min-width: 25em; max-width: 60em" /><br /><br /></p>
+			<p><strong>Figure 2. Properties in PROV-PUB-O/S, pub:is{Role}Of represents the role indicating properties such as pub:isIntroductionOf, pub:isAbstractOf, etc.</strong><br /><br /><br /></p>
+		</div>
+		</dd>
+		<dt>Bridging ontologies to DoCO, BibTeX and BIBO:</dt>
+		<dd><a href="prov-pub-s-doco.ttl">prov-pub-s-doco.ttl</a></dd>
+		<dd><a href="prov-pub-s-bibtex.ttl">prov-pub-s-bibtex.ttl</a></dd>
+		<dd><a href="prov-pub-s-bibo.ttl">prov-pub-s-bibo.ttl</a></dd>
+		<dt>Usage examples:</dt>
+		<dd><a href="prov-pub-s-examples.ttl">prov-pub-s-examples.ttl</a></dd>
+	</dl>
+</div>
+<hr>
+<h2>Abstract</h2>
+<p>    PROV-PUB-O/S is a lightweight ontology designed to describe the locations of published results such as figures, tables, lists and textually described results within the structural elements of a research publication. The ontology design follows the following principles:</p>
+<p>
+<ul>
+	<li> Minimalism on classes --- meaning to make the number of constraints to its minimum and only define necessary classes to flatten the learning curve, quicken the prototyping and iterating processes.</li>
+	<li>	Rich on properties --- meaning to have multiple ways of expressing relations among classes, so that users are more likely to find a way that is easy to use for them. To avoid incomplete query results due to multiple ways of relation expression, users can choose to follow one particular way but they are not forced by being given only one way.</li>
+	<li>	Leave the decision for dependencies to the users --- meaning that we do not hard code dependencies to other ontologies which force the users to accept them. We just provide suggestions in documentation and let the users decide whether to accept the suggested dependencies.</li>
+</ul>
+</p>
+<p>    To follow the principle of minialism on classes, only definitely necessary classes are defined. Two types of classes are considered definitely necessary. The first type is containers to contain published results, such as publication, chapter and section; the second type is published results such as figure, table, list and textually described result.</p>
+<p>    To follow the principle of rich on properties, multiple ways of expressing part-whole and result-container relations are given. In addition to the general dcterms:isPartOf and dcterms:hasPart properties, we define properties that are specific on their ranges such as pub:inPublication, pub:inChapter, pub:inSection, pub:hasChapter, pub:hasSection, pub:hasFigure, pub:hasTable, pub:hasList and pub:hasText. Also defined are properties with role indications such as pub:isAbstractOf, pub:isIntroductionOf, pub:isDiscussionOf, pub:isRelatedWorkOf, pub:isConclusionOf and pub:isAcknowledgementsOf. In the comment (rdfs:comment) field of each class, sample usage of these properties are given in the "Examples" sections. The idea is not to make the users use all of them on each instance, but to let the users choose a most comfortable way and adhere to the chosen scheme of representing relations. For example, it may be decided that only pub:hasChapter, pub:hasSection, pub:hasFigure, pub:hasTable, pub:hasList and pub:hasText are allowed to use in a certain knowledge base, other properties such as pub:inPublication, pub:inChapter and pub:inSection are forbidden to ensure some prepared SPARQL queries to work properly.</p>
+<p>    To follow the principle of leaving the decision for dependencies to the users, subclassing and double-classing suggestions are given for each class in PROV-PUB-O/S in case the user of the ontology wants to reuse the classes and constraints defined in the related ontologies. Subclassing means to assert that a class in PROV-PUB-O/S is a subclass of a class in one of the related ontologies. For example, the user could optionally assert that pub:Chapter is a subclass of doco:Chapter to make every instance of pub:Chapter automatically also an instance of doco:Chapter. Double-classing means to assert that an instance of a PROV-PUB-O/S class is also an instance of another class in a related ontology. For example, an instance can be asserted as both a pub:Publication and a bibo:Document. Such suggestions indicate that the assertions are expected by the creator of the ontology but not forced. </p>
+<p>    To give subclassing suggestions, three bridging ontologies &lt;http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s-doco.ttl&gt;, &lt;http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s-bibtex.ttl&gt; and &lt;http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s-bibo.ttl&gt; are provided in case a user wants to accept all the suggested subclassing links from PROV-PUB-O/S to one of its related ontologies. Each bridging ontology is exclusively composed of assertions of the form "pub:ClassX rdfs:subClassOf ontologyY:ClassZ" such as "pub:Chapter rdfs:subClassOf doco:Chapter". </p>
+<p>    Double-classing suggestions are given in the "Examples" section inside comments (rdfs:comment) of each class, since they cannot be encoded in the form of bridging ontologies because they do not require any assertion at the schema level.</p>
+
+<div id="toc">
+	<h2>Table of Content</h2>
+	<ol>
+		<li><a href="#classes">Classes</a></li>
+		<li><a href="#objectproperties">Object Properties</a></li>
+		<li><a href="#dataproperties">Data Properties</a></li>
+		<li><a href="#namespacedeclarations">Namespace Declarations</a></li>
+	</ol>
+</div>
+<div id="classes">
+	<h2>Classes</h2>
+	<ul class="hlist">
+		<li><a href="#d4e469" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/ResultContainer">Result container</a></li>
+		<li><a href="#d4e440" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Publication">Research publication</a></li>
+		<li><a href="#d4e400" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Chapter">Chapter</a></li>
+		<li><a href="#d4e480" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Section">Section</a></li>
+		<li><a href="#d4e457" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/PublishedResult">Published result</a></li>
+		<li><a href="#d4e413" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Figure">Figure</a></li>
+		<li><a href="#d4e493" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Table">Table</a></li>
+		<li><a href="#d4e426" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/List">Published result in the form of a list</a></li>
+		<li><a href="#d4e507" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Text">Textually described result</a></li>
+	</ul>
+	<div id="d4e469" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/ResultContainer"></a>
+		<h3>Result container<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/ResultContainer</p>
+		<div class="comment">
+			<p>    A result container is a research publication or a part of it, usually a section or a chapter, that contains interesting published results. In PROV-PUB-O/S, document structure elements are defined not for analyzing document structures but for locating interesting research results. i.e., they help answer the question "where is this table/figure found?"</p>
+			<p>    It is not encouraged to directly assert an instance to be a result container. Consider asserting it to be one of result container's subclasses such as a publication, a chapter or a section.</p>
+		</div>
+		<dl class="description">
+			<dt>has sub-classes</dt>
+			<dd><a href="#d4e400" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Chapter">Chapter</a><sup title="class" class="type-c">c</sup>, <a href="#d4e440" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Publication">Research publication</a><sup title="class" class="type-c">c</sup>, <a href="#d4e480" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Section">Section</a><sup title="class" class="type-c">c</sup></dd>
+			<dt>is in domain of</dt>
+			<dd><a href="#d4e83" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasResult">has result</a><sup title="object property" class="type-op">op</sup></dd>
+		</dl>
+	</div>
+	<div id="d4e440" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Publication"></a>
+		<h3>Research publication<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Publication</p>
+		<div class="comment">
+			<p>    The research publication class represents those things which are broadly conceived "research publications". </p>
+			<p>    Consider asserting pub:Publication's also instances of bibtex:Entry or one of its subclasses to specify BibTeX entry type, or asserting them instances of bibo:Document or one of its subclasses to specify document type.</p>
+			<p>    Consider asserting pub:Publication to be a subclass of bibtex:Entry and/or bibo:Document to make every pub:Publication instance automatically also an instance of bibtex:Entry and/or bibo:Document.</p>
+			<p>    Examples:</p>
+			<pre>
+    @prefix : &lt;http://example.org/&gt;
+    :publication1 a pub:Publication, bibtex:Article, bibo:Document;
+	bibtex:hasTitle "..."; # this and the following triples are asserted to satisfy constraints on bibtex:Article
+	bibtex:hasYear "2015"^^xsd:nonNegativeInteger;
+	bibtex:hasJournal "...";
+	bibtex:hasAuthor "...".</pre>
+		</div>
+		<dl class="description">
+			<dt>has super-classes</dt>
+			<dd><a href="#d4e469" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/ResultContainer">Result container</a><sup title="class" class="type-c">c</sup></dd>
+			<dt>is in range of</dt>
+			<dd><a href="#d4e162" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inPublication">is in publication</a><sup title="object property" class="type-op">op</sup></dd>
+		</dl>
+	</div>
+	<div id="d4e400" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Chapter"></a>
+		<h3>Chapter<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Chapter</p>
+		<div class="comment">
+			<p>    The Chapter class represents chapters in research publications. A chapter is usually identified by a (numerical) label (with rdfs:label) and/or a caption (with pub:caption). An example of a label for a chapter is  This class can be used with doco:Chapter through subclassing or double-classing. By asserting pub:Chapter to be a subclass of doco:Chapter (subclassing), instances of pub:Chapter are automatically also instances of doco:Chapter. Instances of pub:Chapter can be asserted to be also instances of doco:Chapter, one at a time (double-classing).</p>
+			<p>    Examples:</p>
+			<pre>
+    @prefix : &lt;http://example.org/&gt;
+    :chapter4 a pub:Chapter, doco:Chapter;
+	rdfs:label "Chapter 4";
+	pub:caption "Energy Supply and Use";
+	pub:inPublication :publication2; # this chapter is in a publication
+	pub:hasSection :section1; # it has a section in it
+	pub:hasFigure :figure1; # it has a figure in it
+	pub:hasTable :table1; # it has a table in it
+	pattern:contains :paragraph1. # use a property in DoCO to reach down to the paragraph level</pre>
+		</div>
+		<dl class="description">
+			<dt>has super-classes</dt>
+			<dd><a href="#d4e469" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/ResultContainer">Result container</a><sup title="class" class="type-c">c</sup></dd>
+			<dt>is in range of</dt>
+			<dd><a href="#d4e37" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasChapter">has chapter</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e146" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inChapter">is in chapter</a><sup title="object property" class="type-op">op</sup></dd>
+		</dl>
+	</div>
+	<div id="d4e480" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Section"></a>
+		<h3>Section<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Section</p>
+		<div class="comment">
+			<p>    This class represents sections and can be used with doco:Section through subclassing or double classing. By asserting pub:Section to be a subclass of doco:Section (subclassing), instances of pub:Section are automatically also instances of doco:Section. Instances of pub:Section can be asserted to be also instances of doco:Section, one at a time (double-classing).</p>
+			<p>    Examples: </p>
+			<pre>
+    @prefix : &lt;http://example.org/&gt;
+    :section1 a pub:Section, doco:Section;
+	rdfs:label "Section 4.1";
+	pub:caption "Disruptions from Extreme Weather";
+	pub:inPublication :publication1; # this section is in a publication
+	pub:inChapter :chapter4; # this section is in a chapter
+	pub:hasSection :section1_1; # it has a subsection
+	pub:hasFigure :figure1; # it has a figure in it
+	pub:hasTable :table1; # it has a table in it
+	pattern:contains :paragraph1. # use a property in DoCO to reach down to the paragraph level</pre>
+		</div>
+		<dl class="description">
+			<dt>has super-classes</dt>
+			<dd><a href="#d4e469" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/ResultContainer">Result container</a><sup title="class" class="type-c">c</sup></dd>
+			<dt>is in range of</dt>
+			<dd><a href="#d4e100" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasSection">has section</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e177" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inSection">is in section</a><sup title="object property" class="type-op">op</sup></dd>
+		</dl>
+	</div>
+	<div id="d4e457" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/PublishedResult"></a>
+		<h3>Published result<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/PublishedResult</p>
+		<div class="comment">
+			<p>    This class represents published results including figures, tables, lists and textual descriptions. Subclasses of this class are expected to be defined by users to support more kinds of published results. The property pub:hasResult can be used on pub:ResultContainer instances to locate data products.</p>
+		</div>
+		<dl class="description">
+			<dt>has sub-classes</dt>
+			<dd><a href="#d4e426" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/List">Published result in the form of a list</a><sup title="class" class="type-c">c</sup>, <a href="#d4e493" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Table">Table</a><sup title="class" class="type-c">c</sup>, <a href="#d4e507" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Text">Textually described result</a><sup title="class" class="type-c">c</sup></dd>
+			<dt>is in range of</dt>
+			<dd><a href="#d4e83" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasResult">has result</a><sup title="object property" class="type-op">op</sup></dd>
+		</dl>
+	</div>
+	<div id="d4e413" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Figure"></a>
+		<h3>Figure<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Figure</p>
+		<div class="comment">
+			<p>    Figures are usually identified by their labels and captions, i.e., rdfs:label and pub:caption property values. An example of a label for a figure is "Figure 4.1", and an example of a caption for a figure is "Paths of Hurricanes Katrina and Rita Relative to Oil and Gas Production Facilities". If used together with doco:Figure, note that a doco:Figure cannot be contained (described with pattern:contains) by doco:Section or doco:Chapter. In this ontology, pub:hasFigure, pub:inSection, pub:inChapter and pub:inPublication can be used with pub:Publication, pub:Chapter and pub:Section instances to locate figures.</p>
+			<p>    Examples:</p>
+			<pre>
+    @prefix : &lt;http://example.org/&gt;
+    :figure1 a pub:Figure; # Benefit of double-classing with doco:Figure is unclear, so no double-classing here.
+	rdfs:label "Figure 4.1";
+	pub:caption "Paths of Hurricanes Katrina and Rita Relative to Oil and Gas Production Facilities";
+	pub:inSection :section1; # the figure is in a section
+	pub:inChapter :chapter4; # the figure is in a chapter
+	pub:inPublication :publication1. # the figure is in a publication</pre>
+		</div>
+		<dl class="description">
+			<dt>has super-classes</dt>
+			<dd><span class="dotted" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/PublishedResullt">published resullt</span><sup title="class" class="type-c">c</sup></dd>
+			<dt>is in range of</dt>
+			<dd><a href="#d4e52" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasFigure">has figure</a><sup title="object property" class="type-op">op</sup></dd>
+		</dl>
+	</div>
+	<div id="d4e493" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Table"></a>
+		<h3>Table<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Table</p>
+		<div class="comment">
+			<p>    Tables are usually identified by their labels and captions, i.e., rdfs:label and pub:caption property values. An example of a label for a table is "Table 4.1", and an example of a caption for a table is "Changing Energy Use for Heating and Cooling Will Vary by Region". If used together with doco:Table, note that a doco:Table cannot be contained (described with pattern:contains) by doco:Section or doco:Chapter. In this ontology, pub:hasTable, pub:inSection, pub:inChapter and pub:inPublication can be used on pub:Publication, pub:Chapter and pub:Section instances to locate tables.</p>
+			<p>    Examples:</p>
+			<pre>
+    @prefix : &lt;http://example.org/&gt;
+    :table1 a pub:Table; # No double-classing with doco:Table here because the benefit is unclear.
+	rdfs:label "Table 4.1";
+	pub:caption "Changing Energy Use for Heating and Cooling Will Vary by Region";
+	pub:inSection :section1; # the table is in a section
+	pub:inChapter :chapter4; # it is in a chapter
+	pub:inPublication :publication1. # it is in a publication</pre>
+		</div>
+		<dl class="description">
+			<dt>has super-classes</dt>
+			<dd><a href="#d4e457" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/PublishedResult">Published result</a><sup title="class" class="type-c">c</sup></dd>
+			<dt>is in range of</dt>
+			<dd><a href="#d4e116" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasTable">has table</a><sup title="object property" class="type-op">op</sup></dd>
+		</dl>
+	</div>
+	<div id="d4e426" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/List"></a>
+		<h3>Published result in the form of a list<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/List</p>
+		<div class="comment">
+			<p>    Unlike figures and tables, lists may not have labels and captions to identify them. It is recommended to use the rdfs:label property to give location information. In this ontology, pub:hasList, pub:inSection, pub:inChapter and pub:inPublication can be used on the proper pub:ResultContainer instances to locate lists.</p>
+			<p>    Examples:</p>
+			<pre>
+    @prefix : &lt;http://example.org/&gt;
+    :list1 a pub:List;
+	rdfs:label "The list at the beginning of Chapter 4"; # give location information to help identify the list
+	pub:inChapter :chapter4; # the list is in a chapter
+	pub:inPublication :publication1. # it is in a publication</pre>
+		</div>
+		<dl class="description">
+			<dt>has super-classes</dt>
+			<dd><a href="#d4e457" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/PublishedResult">Published result</a><sup title="class" class="type-c">c</sup></dd>
+			<dt>is in range of</dt>
+			<dd><a href="#d4e68" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasList">has list result</a><sup title="object property" class="type-op">op</sup></dd>
+		</dl>
+	</div>
+	<div id="d4e507" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Text"></a>
+		<h3>Textually described result<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Text</p>
+		<div class="comment">
+			<p>    Results of this kind usually do not have labels and captions to identify. It is recommended to use the rdfs:label property to give location information. In this ontology, pub:hasText, pub:inSection, pub:inChapter and pub:inPublication can be used on the proper pub:ResultContainer instances to locate textually described results.</p>
+			<p>    Examples:</p>
+			<pre>
+    @prefix : &lt;http://example.org/&gt;
+    :text1 a pub:Text;
+	rdfs:label "The sentence in the last paragraph of page 115 saying that coal produced 42% of U.S. electricity in 2011";
+	pub:inSection :section1; # the text is found in a section
+	pub:inChapter :chapter4; # it is in a chapter
+	pub:inPublication :publication1. # it is in a publication</pre>
+		</div>
+		<dl class="description">
+			<dt>has super-classes</dt>
+			<dd><a href="#d4e457" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/PublishedResult">Published result</a><sup title="class" class="type-c">c</sup></dd>
+			<dt>is in range of</dt>
+			<dd><a href="#d4e131" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasText">has textually described result</a><sup title="object property" class="type-op">op</sup></dd>
+		</dl>
+	</div>
+</div>
+<div id="objectproperties">
+	<h2>Object Properties</h2>
+	<ul class="hlist">
+		<li><a href="#d4e37" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasChapter">has chapter</a></li>
+		<li><a href="#d4e52" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasFigure">has figure</a></li>
+		<li><a href="#d4e68" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasList">has list result</a></li>
+		<li><a href="#d4e83" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasResult">has result</a></li>
+		<li><a href="#d4e100" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasSection">has section</a></li>
+		<li><a href="#d4e116" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasTable">has table</a></li>
+		<li><a href="#d4e131" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasText">has textually described result</a></li>
+		<li><a href="#d4e192" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isAbstractOf">is abstract of</a></li>
+		<li><a href="#d4e206" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isAcknowledgementsOf">is acknowledgements of</a></li>
+		<li><a href="#d4e219" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isAppendixOf">is appendix of</a></li>
+		<li><a href="#d4e232" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isBackgroundOf">is background of</a></li>
+		<li><a href="#d4e246" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isConclusionOf">is conclusion of</a></li>
+		<li><a href="#d4e259" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isContributionOf">is contribution of</a></li>
+		<li><a href="#d4e272" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isDiscussionOf">is discussion of</a></li>
+		<li><a href="#d4e286" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isEvaluationOf">is evaluation of</a></li>
+		<li><a href="#d4e299" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isForewordOf">is foreword of</a></li>
+		<li><a href="#d4e146" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inChapter">is in chapter</a></li>
+		<li><a href="#d4e162" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inPublication">is in publication</a></li>
+		<li><a href="#d4e177" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inSection">is in section</a></li>
+		<li><a href="#d4e312" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isIntroductionOf">is introduction of</a></li>
+		<li><a href="#d4e326" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isMotivationOf">is motivation of</a></li>
+		<li><a href="#d4e339" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isRelatedWorkOf">is related work of</a></li>
+		<li><a href="#d4e352" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isScenarioOf">is scenario of</a></li>
+	</ul>
+	<div id="d4e37" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasChapter"></a>
+		<h3>has chapter<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasChapter</p>
+		<div class="comment">
+			<p>    Used to describe that a publication or something else has a chapter as a part. Large publications may have larger parts on top of chapters, so the domain of this property is left unspecified.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/hasPart">has part</span></dd>
+				<dt>has range</dt>
+				<dd><a href="#d4e400" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Chapter">Chapter</a><sup title="class" class="type-c">c</sup></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e52" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasFigure"></a>
+		<h3>has figure<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasFigure</p>
+		<div class="comment">
+			<p>    This property represents the fact that a result container (such as a publication, a chapter or a section) contains a figure.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><a href="#d4e83" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasResult">has result</a><sup title="object property" class="type-op">op</sup></dd>
+				<dt>has range</dt>
+				<dd><a href="#d4e413" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Figure">Figure</a><sup title="class" class="type-c">c</sup></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e68" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasList"></a>
+		<h3>has list result<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasList</p>
+		<div class="comment">
+			<p>    This property represents the fact that a result container (such as a publication, a chapter or a section) contains a published result represented in the form of a list.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><a href="#d4e83" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasResult">has result</a><sup title="object property" class="type-op">op</sup></dd>
+				<dt>has range</dt>
+				<dd><a href="#d4e426" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/List">Published result in the form of a list</a><sup title="class" class="type-c">c</sup></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e83" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasResult"></a>
+		<h3>has result<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasResult</p>
+		<div class="comment">
+			<p>    The top property representing the relation between a result container (such as a publication, a chapter or a section) and a published result (such as a figure or a table) it contains.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/hasPart">has part</span></dd>
+				<dt>has sub-properties</dt>
+				<dd><a href="#d4e52" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasFigure">has figure</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e68" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasList">has list result</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e116" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasTable">has table</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e131" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasText">has textually described result</a><sup title="object property" class="type-op">op</sup></dd>
+				<dt>has domain</dt>
+				<dd><a href="#d4e469" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/ResultContainer">Result container</a><sup title="class" class="type-c">c</sup></dd>
+				<dt>has range</dt>
+				<dd><a href="#d4e457" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/PublishedResult">Published result</a><sup title="class" class="type-c">c</sup></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e100" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasSection"></a>
+		<h3>has section<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasSection</p>
+		<div class="comment">
+			<p>    Used to describe something has a section as a part. A section can be a part of another section (itself being a subsection), a chapter, a publication or an element not defined in this ontology, so the domain of this property is left unspecified.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/hasPart">has part</span></dd>
+				<dt>has range</dt>
+				<dd><a href="#d4e480" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Section">Section</a><sup title="class" class="type-c">c</sup></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e116" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasTable"></a>
+		<h3>has table<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasTable</p>
+		<div class="comment">
+			<p>    This property represents the fact that a result container (such as a publication, a chapter or a section) contains a table.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><a href="#d4e83" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasResult">has result</a><sup title="object property" class="type-op">op</sup></dd>
+				<dt>has range</dt>
+				<dd><a href="#d4e493" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Table">Table</a><sup title="class" class="type-c">c</sup></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e131" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasText"></a>
+		<h3>has textually described result<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasText</p>
+		<div class="comment">
+			<p>    This property represents the fact that a result container (such as a publication, a chapter or a section) contains a textually described result.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><a href="#d4e83" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/hasResult">has result</a><sup title="object property" class="type-op">op</sup></dd>
+				<dt>has range</dt>
+				<dd><a href="#d4e507" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Text">Textually described result</a><sup title="class" class="type-c">c</sup></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e192" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isAbstractOf"></a>
+		<h3>is abstract of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isAbstractOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the sro:Abstract class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf. Unlike some other classes such as sro:Background and sro:Conclusion, sro:Abstract does not have an equivalent class in DEO. The subject of this property is usually a pub:Section, but we are not a hundred percent sure whether it can be something else; the object of the property is usually a pub:Publication, but again we are not sure, so the domain and range of pub:isAbstractOf are both left unspecified.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e206" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isAcknowledgementsOf"></a>
+		<h3>is acknowledgements of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isAcknowledgementsOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the deo:Acknowledgements class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isAcknowledgementsOf usually represents a chapter-publication or section-chapter relation.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e219" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isAppendixOf"></a>
+		<h3>is appendix of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isAppendixOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the doco:Appendix class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isAppendixOf usually represents a chapter-publication or section-chapter relation.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e232" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isBackgroundOf"></a>
+		<h3>is background of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isBackgroundOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the deo:Background class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf. The subject of this property is usually a pub:Chapter, and the object usually a pub:Publication, but we are not sure whether they can be something else, so the domain and range are both left unspecified.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e246" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isConclusionOf"></a>
+		<h3>is conclusion of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isConclusionOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the deo:Conclusion class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isBackgroundOf in terms of domain and range applies to this property as well. i.e., pub:isConclusionOf usually represents a chapter-publication relation.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e259" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isContributionOf"></a>
+		<h3>is contribution of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isContributionOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the deo:Contribution class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf. The subject of this property can be a pub:Chapter, a pub:Section or a set of paragraphs or sentences, in the latter two cases it cannot be described with this ontology.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e272" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isDiscussionOf"></a>
+		<h3>is discussion of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isDiscussionOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the deo:Discussion class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isDiscussionOf usually represents a chapter-publication or section-chapter relation.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e286" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isEvaluationOf"></a>
+		<h3>is evaluation of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isEvaluationOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the deo:Evaluation class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isEvaluationOf usually represents a chapter-publication or section-chapter relation.    </p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e299" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isForewordOf"></a>
+		<h3>is foreword of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isForewordOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the doco:Foreword class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isForewordOf usually represents a chapter-publication or section-chapter relation.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e146" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inChapter"></a>
+		<h3>is in chapter<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inChapter</p>
+		<div class="comment">
+			<p>    This property is defined in the same way as pub:inPublication, except it is for chapter parts and results in a chapter.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+				<dt>has range</dt>
+				<dd><a href="#d4e400" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Chapter">Chapter</a><sup title="class" class="type-c">c</sup></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e162" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inPublication"></a>
+		<h3>is in publication<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inPublication</p>
+		<div class="comment">
+			<p>    This property represents the relation of a published result or result container being in a certain publication, so the range of this property is pub:Publication. We do not put any constraint of its domain since we do not know if published result and result container cover all the things that a user would like to describe to be in a publication.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+				<dt>has range</dt>
+				<dd><a href="#d4e440" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Publication">Research publication</a><sup title="class" class="type-c">c</sup></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e177" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inSection"></a>
+		<h3>is in section<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/inSection</p>
+		<div class="comment">
+			<p>    This property is defined in the same way as pub:inPublication, except it is for section parts and results in a section.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+				<dt>has range</dt>
+				<dd><a href="#d4e480" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/Section">Section</a><sup title="class" class="type-c">c</sup></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e312" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isIntroductionOf"></a>
+		<h3>is introduction of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isIntroductionOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the deo:Introduction class since a dangling introduction instance does not make sense, it must instead "to be the introduction of something". One section or chapter or something else alone does not qualify itself to be an introduction. It is the relation between this section or chapter or something else and the thing it introduces that makes it "an introduction". We capture this relation with the property pub:isIntroductionOf and argue that this is a more intuitive way to express the idea than using the deo:Introduction class. The introducer is usually a chapter or section, but can be something else; the introducee is usually a publication, but also can be a chapter or something else, so neither domain nor range is asserted for pub:isIntroductionOf.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e326" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isMotivationOf"></a>
+		<h3>is motivation of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isMotivationOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the deo:Motivation class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isMotivationOf usually represents a chapter-publication or section-chapter relation.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e339" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isRelatedWorkOf"></a>
+		<h3>is related work of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isRelatedWorkOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the deo:RelatedWork class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isRelatedWorkOf usually represents a chapter-publication or section-chapter relation.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div id="d4e352" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isScenarioOf"></a>
+		<h3>is scenario of<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/isScenarioOf</p>
+		<div class="comment">
+			<p>    This property is introduced to replace the deo:Scenario class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isScenarioOf usually represents a chapter-publication or section-chapter relation.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has super-properties</dt>
+				<dd><span class="dotted" title="http://www.purl.org/dc/terms/isPartOf">is part of</span></dd>
+			</dl>
+		</div>
+	</div>
+</div>
+<div id="dataproperties">
+	<h2>Data Properties</h2>
+	<ul class="hlist">
+		<li><a href="#d4e384" title="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/caption">caption</a></li>
+	</ul>
+	<div id="d4e384" class="entity">
+		<a name="http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/caption"></a>
+		<h3>caption<sup title="data property" class="type-dp">dp</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a></span></h3>
+		<p><strong>IRI:</strong> http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/caption</p>
+		<div class="comment">
+			<p>    This annotation represents the caption of a figure or a table. It can be used to describe captions of other things, so its domain is left unspecified.</p>
+		</div>
+		<div class="description">
+			<dl>
+				<dt>has range</dt>
+				<dd><span class="dotted" title="http://www.w3.org/2001/XMLSchema#string">string</span></dd>
+			</dl>
+		</div>
+	</div>
+</div>
+<div id="namespacedeclarations">
+	<h2>Namespace Declarations <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
+	<dl>
+		<dt><em>default namespace</em></dt>
+		<dd>http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s.ttl#</dd>
+		<dt>owl</dt>
+		<dd>http://www.w3.org/2002/07/owl#</dd>
+		<dt>prov-pub</dt>
+		<dd>http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/</dd>
+		<dt>rdf</dt>
+		<dd>http://www.w3.org/1999/02/22-rdf-syntax-ns#</dd>
+		<dt>rdfs</dt>
+		<dd>http://www.w3.org/2000/01/rdf-schema#</dd>
+		<dt>skos</dt>
+		<dd>http://www.w3.org/2004/02/skos/core#</dd>
+		<dt>terms</dt>
+		<dd>http://www.purl.org/dc/terms/</dd>
+		<dt>xsd</dt>
+		<dd>http://www.w3.org/2001/XMLSchema#</dd>
+	</dl>
+</div>
+<p class="endnote">This HTML document was obtained by processing the OWL ontology source code through <a href="http://www.essepuntato.it/lode">LODE</a>, <em>Live OWL Documentation Environment</em>, developed by <a href="http://www.essepuntato.it/">Silvio Peroni</a>.</p>
+</body>
+</html>
