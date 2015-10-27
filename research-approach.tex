@@ -399,7 +399,7 @@ The final score for an ontology is calculated as the weighted sum of the scores 
 %	project managers' viewpoint)
 %\end{itemize} 
 
-Different from the studies mentioned above, Bur-ton-Jones et al. \cite{burton2005semiotic} proposed a set of 10 attributes that fall into four metrics suites (i.e. syntactic, semantic, pragmatic and social quality) of a semiotic frame-work. They tried to find objective indicators to assess each recognized metric to eliminate the need of human reviewers. For example, the \emph{Lawfulness} dimension of the \emph{Syntax} metric is indicated by the percentage of correct syntax per class and property. The authors suggested that the evaluation could be extended to cover application-centered assessment of the quality of an ontology for use in a specific task. We create our list of candidate usability metrics by thinking in the aspects of syntax, semantics and pragmatics. We assume that the difference of social quality (authority and history) between two ontologies would dwarf the
+Different from the studies mentioned above, Burton-Jones et al. \cite{burton2005semiotic} proposed a set of 10 attributes that fall into four metrics suites (i.e. syntactic, semantic, pragmatic and social quality) of a semiotic frame-work. They tried to find objective indicators to assess each recognized metric to eliminate the need of human reviewers. For example, the \emph{Lawfulness} dimension of the \emph{Syntax} metric is indicated by the percentage of correct syntax per class and property. The authors suggested that the evaluation could be extended to cover application-centered assessment of the quality of an ontology for use in a specific task. We create our list of candidate usability metrics by thinking in the aspects of syntax, semantics and pragmatics. We assume that the difference of social quality (authority and history) between two ontologies would dwarf the
 overall impact of these three other aspects. In fact, only ontologies of similar social quality are worth comparing. If one of them has significantly more authority (i.e. more ontologies rely on it) or longer history (i.e. it has been used more), it would be an obvious winner. We also found it hard, if not impossible, to assess some of the important metrics with objective indicators. For example, the quality of documentation is very important to the usability of the ontology, but it is hardly possible to be measured in any objective way, so we argue that it requires the participation of human reviewers to get meaningful usability assessments.
 
 %Different from the studies mentioned above, Burton-Jones et al proposed a set of 10 objective metrics at 4 different levels of a semiotic framework in \cite{burton2005semiotic}. Their work supports objective evaluation of ontologies, which does not require experts' review of the ontologies in questions. 
@@ -509,7 +509,177 @@ We compiled our 10-item Likert scale for ontology usability evaluation based on 
 		\end{tabular} 
 	\end{center}
 \end{table}
-\comment{finish OUS discussion}
+In Table~\ref{tab:ous-draft}, closely related statements about concepts
+and relations were merged together. i.e., statements
+3 and 9 in Table~\ref{tab:poll} were merged to ``I found the
+concepts and relations in this ontology properly described
+in natural language'', and statement 10 was
+changed to ``I found the formal specification of concepts
+and relations in this ontology coincides with
+their descriptions in natural language''. We did this
+based on the assumption that concepts are equally
+important as and considered together with relations
+in an ontology.
+
+A scale from 1 to 5 was used to indicate ``highly
+disagree'', ``disagree'', ``neutral'', ``agree'' and ``highly
+agree'' against each statement in Table 3, so higher
+scores mean better usability. To assess the usability
+of an ontology using this form, a scorer needs to give
+a score indicating his/her degree of agreement for
+each statement, denoted as $s_1$, $s_2$, ..., $s_10$, then the
+total score $s_t$ is calculated as
+\begin{equation}
+\label{eq1}
+s_t = \sum_{i=1}^{10}s_i
+\end{equation}
+, which ranges from 10 to 50.
+
+To further improve the questionnaire, we use positive
+and negative forms of statements in Table~\ref{tab:ous-draft} alternately
+to make scorers more attentive when they
+fill out the form. The adapted and reorganized statements
+are shown in Table~\ref{tab:ous}.
+\begin{table}
+	\centering
+	\caption{Recommended ontology usability scale}
+	\label{tab:ous}
+		\begin{tabular}{|p{0.1\textwidth}|p{0.62\textwidth}|l|l|l|l|l|}
+			\hline Number & Statement & 1 & 2 & 3 & 4 & 5 \\ 
+			\hline 1 & The purpose of this ontology is clear. &  &  &  &  &  \\ 
+			\hline 2 & I need more examples than provided in the documentation to make sure how to use the ontology. &  &  &  &  &  \\ 
+			\hline 3 & I found the concepts and relations in this ontology properly described in natural language. &  &  &  &  &  \\ 
+			\hline 4 & There is inconsistency between the formal specification of concepts and relations in this ontology and their descriptions
+			in natural language. &  &  &  &  &  \\ 
+			\hline 5 & I would imagine that most domain experts would understand this ontology very quickly. &  &  &  &  &  \\ 
+			\hline 6 & I think that I would need the support of a person experienced with this ontology to be able to use it. &  &  &  &  &  \\ 
+			\hline 7 & I am confident I understand the conceptualization of the ontology. &  &  &  &  &  \\ 
+			\hline 8 & The attributes in this ontology fail to describe the concepts properly. &  &  &  &  &  \\ 
+			\hline 9 & I think the relations in this ontology relate appropriate concepts. &  &  &  &  &  \\ 
+			\hline 10 & I think the class hierarchy of this ontology needs better organization. &  &  &  &  &  \\ 
+			\hline 
+		\end{tabular} 
+\end{table}
+In Table~\ref{tab:ous}, the statements at odd numbered positions
+are all in a positive form and those at even
+numbered positions are all in a negative form. To use
+this form, Equation~\ref{eq1} needs to be changed to
+\begin{equation}
+\label{eq2}
+s_t = \sum_{i \textrm{ \scriptsize is odd}}s_i+\sum_{i \textrm{ \scriptsize is even}}(6-s_i)
+\end{equation}
+, which still ranges from 10 to 50. A higher score
+indicates a higher usability.
+\subsubsection{Case study and evaluation}
+We used the developed OUS, i.e. statements in
+Table~\ref{tab:ous} for a case study of ontology usability evaluation
+within the Tetherless World Constellation at
+Rensselaer Polytechnic Institute. The case study was
+carried out as an anonymous online survey, in which
+each participant was asked to choose an ontology and
+assign a score to each statement. The outputs of the
+survey are listed in Table~\ref{tab:ous}. Since revisions are currently
+undergoing to update the ontologies of Deep Carbon Observatory (DCO) and Global Change In-formation System (GCIS), we will be able to apply the developed OUS to their later versions to check if the revisions are effective in terms of usability. Comparisons among ontologies with similar intended uses and different versions of the same ontology are made easy with OUS since each ontology is given an overall score calculated from the answers given by each reviewer. Scoring an OUS form (Table~\ref{tab:ous}) does not require much of the reviewers' time, but the collected answers provide simple yet comprehensive assessments of the usability of the ontologies in question.
+\begin{table}
+	\centering
+	\caption{Results of ontology usability evaluation in a case study}
+	\label{tab:ous-case}
+	\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|}
+		\hline Ontology & $s_1$ & $s_2$ & $s_3$ & $s_4$ & $s_5$ & $s_6$ & $s_7$ & $s_8$ & $s_9$ & $s_{10}$ & $s_t$ \\ 
+		\hline DCO & 5 & 4 & 3 & 2 & 4 & 3 & 5 & 2 & 4 & 2 & 38 \\ 
+		\hline DCO & 5 & 4 & 4 & 1 & 3 & 2 & 5 & 1 & 5 & 2 & 42 \\ 
+		\hline DCO & 3 & 1 & 4 & 3 & 2 & 2 & 2 & 4 & 3 & 5 & 29 \\ 
+		\hline GCIS & 4 & 2 & 4 & 2 & 4 & 3 & 4 & 2 & 4 & 3 & 38 \\ 
+		\hline GCIS & 5 & 3 & 4 & 1 & 5 & 2 & 5 & 1 & 5 & 3 & 44 \\ 
+		\hline SIO & 5 & 5 & 5 & 2 & 5 & 5 & 2 & 1 & 5 & 3 & 36 \\ 
+		\hline VSTO & 1 & 5 & 1 & 3 & 2 & 4 & 4 & 2 & 4 & 2 & 26 \\ 
+		\hline 
+	\end{tabular} 
+\end{table}
+
+\subsubsection{Discussion on OUS}
+The resulting ontology usability scale of this study covers topics of syntax, semantics and pragmatics and addresses the issue of evaluating the usability of an ontology in a certain context. The list of statements in the current scale (Table~\ref{tab:ous}) is based on a survey. It has a concise structure and is easy to use in practice. The scale can be used by all stakeholders who participated in the development, application, and revision of an ontology, and the result can be used to improve the ontology.
+
+Semiotics is the study of signs. It is applicable to ontologies because ontologies are sign systems to represent knowledge. The division of semiotics into semantics, syntactics and pragmatics was contributed by Morris \cite{morris1938foundations}. According to Morris, semantics is the study of the relation of signs to the things they refer to (their designata); syntactics is the study of the relation of signs to one another; pragmatics studies the relation of signs to their interpreters. In the case of ontology, we define semantics as the mapping of domain knowledge to ontological elements such as classes and relations, or the meaning of these elements, conveyed through the conceptual model and documentation. Syntactics (or syntax according to Burton-Jones et al. \cite{burton2005semiotic}) is defined as the way the ontological elements are organized, usually with terms in RDFS or OWL. Pragmatics is the relation of ontologies to their users, so it is about the activity of a user using an ontology.
+
+According to the above definitions, it seems only the pragmatical dimension of semiotics is relevant to ontology usability since it is the only dimension about the ontology using activity rather than the ontology itself, and usability is about certain attributes of the activity of using a certain product rather than attributes of the product itself according to ISO 9241-11 \cite{iso19989241}. However, unlike simple signs which their users interpret out of intuition and experience, ontological terms require users to learn their semantical and syntactical features in order to interpret, typically through learning the term organization and reading the documentation. Therefore, all the three dimensions of semiotics are relevant to ontology usability. In fact, the survey result shown in Table~\ref{tab:poll} even indicated that the semantical and syntactical aspects may be more important than the pragmatical aspect, since only 2 out of the 11 top selections fall in the pragmatics group.
+
+ISO 9241-11 \cite{iso19989241} listed the following three aspects of usability, \emph{effectiveness} is about accuracy and completeness of the result of that activity, \emph{efficiency} is the resources expended during the process, such as time and effort of learning and creating solutions, and \emph{satisfaction} is the freedom from discomfort and the positive attitude towards the use of the product. As we tried to decide which semiotical aspect impact which usability aspect, we found that each semiotical aspect may impact every usability aspect. For example, missing or insufficiently illustrated ontological terms (semantical aspect) may cause the user unable to complete his or her tasks (effectiveness), to spend more time learning the conceptualization (efficiency), and/or to feel discomfortable (satisfaction). Inconsistent or counter-intuitive organization of the ontological elements (syntactical) may have the same effect in terms of effectiveness, efficiency and satisfaction, and the pragmatical aspect aligns well with the overall usability. Therefore, the semiotical aspects and the usability aspects are closely related, so it is reasonable to classify usability criteria with semiotical aspects.
+
+The survey result brings feedbacks and inspirations to ontology developers. As indicated by the top selections in Table~\ref{tab:poll}, stating the purpose of the ontology explicitly, describing classes and relations in detail and providing abundant examples in the documentation will greatly help users understand and use the ontology. The purpose of an ontology is important probably because of the close relationship between usability and purpose. Usability is inherently associated with fitness, and fitness, as summed up by Terry Pratchett in his novel ``Moving Pictures'', means ``appropriateness to a purpose'' \cite{pratchett2005moving} (quoted by Brooke in \cite{brooke1996sus}). Besides the statements pool in Table~\ref{tab:statements-pool}, in the online survey we also invited participants to write down any additional statements from their point of view. One suggestion is about the provenance of components in an ontology, such as the cited source in the definition of a class or property, and the person who asserts the definition, etc. Another issue is about the serialization language of ontologies. It was mentioned that if an ontology is not serialized in a simple format such as Turtle, it can be difficult for a user to read and understand. Another participant proposed the issue of ontology maintenance/sustainability, such as the stability of the ontology over time and the level of maintenance support that the ontology has. In \cite{ma2013recent} Ma et al. discussed that to achieve better ontology applications, people need to balance the expressivity, implementability and maintainability of the ontology. The maintainability or sustainability is relevant to the usability of an ontology in a long term period.
+
+In the online survey we also received active feedbacks about the organization and form of the statements. In the survey preparation we tried to group the statements into three categories following a semiotic framework, while in the survey we did not show the groups and listed the statements in a random order. Our intention is to avoid any bias that may be caused by those pre-defined groups. It was interesting to see that several participants suggested the statement pool should be categorized, especially from the point of view of an ontologist. Another participant suggested that there can be a separation of statements for subject matter experts and end users.
+
+Survey participants also commented on the positive and negative forms of the statements. From the comments we could see that it is okay to use both forms in a questionnaire, but we should avoid duplicated statements, such as ``I thought the ontology was easy to use'' and ``I found the ontology very cumbersome to use.'' Considering those feedbacks, we organized two sets of statements for ontology usability evaluation in Table~\ref{tab:ous-draft} and Table~\ref{tab:ous}, one with only statements in positive form and the other with both positive and negative forms.
+Besides the top 11 mostly voted statements in Table~\ref{tab:poll}, we also took a review of the least voted statements in the online poll (Table~\ref{tab:least}). Most of them have either an extreme or vague meaning. Statement 1 in Table~\ref{tab:least} is adapted from its negative form ``I needed to learn a lot of things before I could get going with this ontology''; statement 2 was originally ``The on-tology has unnecessary concepts''; statement 3 overlaps a lot in meaning with ``I found the concepts/relations in this ontology properly described in natural language'' but is less clear; statement 4 is very similar to ``I would imagine that most domain experts would understand this ontology very quickly'', and statement 5 similar to ``I found the various concepts in this ontology well integrated'' (which was selected 4 times).
+\begin{table}
+	\centering
+\caption{The least voted statements in the online poll}
+\label{tab:least}
+\begin{tabular}{|p{0.09\textwidth}|p{0.6\textwidth}|p{0.13\textwidth}|p{0.06\textwidth}|}
+	\hline Number & Statement & Category & Votes \\ 
+	\hline 1 & I do not need to learn any extra things before I could get going with this ontology. & Pragmatics & 0 \\ 
+	\hline 2 & The ontology does not have unnecessary concepts. & Syntax & 2 \\ 
+	\hline 3 & The annotations are helpful. & Semantics & 2 \\ 
+	\hline 4 & I would imagine that most people would learn to use this ontology very quickly. & Pragmatics & 2 \\ 
+	\hline 5 & I found the various parts of this ontology were well integrated. & Syntax & 2 \\ 
+	\hline 
+\end{tabular} 
+\end{table}
+
+We also collected information about what ontologies the surveyees had worked with, the top ones are shown in Table~\ref{tab:ontologies}.
+\begin{table}
+	\centering
+\caption{Ontologies that the online surveyees worked with}
+\label{tab:ontologies}
+\begin{tabular}{|l|l|}
+	\hline Ontology & Number of people worked with it \\ 
+	\hline SWEET & 11 \\ 
+	\hline Dublin Core & 8 \\ 
+	\hline FOAF & 7 \\ 
+	\hline SKOS & 5 \\ 
+	\hline PROV-O & 3 \\ 
+	\hline GCIS & 3 \\ 
+	\hline 
+\end{tabular} 
+\end{table}
+We found that users of domain ontologies such as SWEET have different preferences on statements from users of general ontologies such as Dublin Core. Top 12 selections for SWEET users listed in Table~\ref{tab:sweet} are very similar with those in Table~\ref{tab:poll}, with only a few minor differences. For example, statement 6 in Table~\ref{tab:poll} (``I would imagine that most domain experts would understand this ontology very quickly'') is missing in Table~\ref{tab:sweet}, but it ranks 13th among SWEET users; statement 10 and 12 in Table~\ref{tab:sweet} is missing in Table 2, but they rank 12th and 13th among all the statements so did not make it to the top 11 in Table~\ref{tab:poll}.
+\begin{table}
+	\centering
+\caption{Top 12 statements selected by SWEET users}
+\label{tab:sweet}
+\begin{tabular}{|l|p{0.7\textwidth}|l|}
+	\hline Number & Statement & Votes \\ 
+	\hline 1 & The purpose of this ontology is clear. & 8 \\ 
+	\hline 2 & I think the documentation provides sufficient examples for me to make sure how to use the ontology. & 8 \\ 
+	\hline 3 & I think the relations in this ontology relate appropriate concepts. & 7 \\ 
+	\hline 4 & I found the concepts in this ontology properly described in natural language. & 6 \\ 
+	\hline 5 & I am confident I understand the conceptualization of the ontology. & 6 \\ 
+	\hline 6 & I think the attributes in this ontology describe the concepts well. & 5 \\ 
+	\hline 7 & I found the subclasses in this ontology are properly defined. & 5 \\ 
+	\hline 8 & I do not need the support of a person experienced with this ontology to be able to use it. & 5 \\ 
+	\hline 9 & I found the relations in this ontology properly described in natural language. & 4 \\ 
+	\hline 10 & I found the ontology brief but comprehensive. & 4 \\ 
+	\hline 11 & I found the formal specification of concepts in this ontology coincides with their descriptions in natural language. & 4 \\ 
+	\hline 12 & I find the ontology easy to understand. & 4 \\ 
+	\hline 
+\end{tabular} 
+\end{table}
+But among the top three selections by Dublin Core users shown in Table~\ref{tab:dc}, two of them (``I think that I would like to use this ontology frequently'' and ``It is clear to me how to use this ontology'') are missing in Table~\ref{tab:poll}, so for ontologies designed to be used across different domains, statements 2 and 3 in Table~\ref{tab:dc} could be added to the usability scale.
+\begin{table}
+	\centering
+	\caption{Top 3 statements selected by Dublin Core users}
+	\label{tab:dc}
+	\begin{tabular}{|l|p{0.7\textwidth}|l|}
+		\hline Number & Statement & Votes \\ 
+		\hline 1 & I think the documentation provides sufficient examples for me to make sure how to use the ontology. & 7 \\ 
+		\hline 2 & I think that I would like to use this ontology frequently. & 5 \\ 
+		\hline 3 & It is clear to me how to use this ontology. & 4 \\ 
+		\hline 
+	\end{tabular} 
+\end{table}
+There are several issues that can be explored in future works. The first work is to have more case studies using the statements in Table~\ref{tab:ous-draft} and Table~\ref{tab:ous}. In this study we only carried out case studies of the ontology usability scale in the GCIS and the DCO projects. Although the feedbacks are positive, we want to hear more feedbacks and suggestions on the statements themselves, including both their forms and the orders, as well the topics covered. The second potential work is relevant to the ontology types. As Table~\ref{tab:ontologies} shows, among the ontologies that the survey participants had worked with, there are both upper ontologies (e.g. Dublin Core, PROV-O) and domain ontologies (e.g. SWEET, GCIS). The former are applicable across a range of domain and the latter are only used for a specific application or domain. Therefore, we may organize corresponding statements for the usability evaluation of those two types of ontologies, and we can take further surveys to see if there are any differences between the community's concerns on the two ontology types. In the current survey we did not ask the participants to specify their roles and experiences in the ontology work. The third potential work is that, if we are going to have new surveys, we can ask people about their roles (e.g. ontology developer, database curator, application developer, etc.) and their experience with ontology use (e.g. number of years). Last, the fourth potential work is to enrich, update and reorganize the statement pool from the point of view on expressivity, implementability and maintainability of ontologies. This framework is slightly different from the semiotic framework on syntax, semantics and pragmatics and covers new aspects of ontology usability.
+
 \section{Automatic provenance capturing framework}
 In computer science, a framework is a parameterized system. Certain components of the framework could be customized to fulfill specific tasks. The proposed provenance capturing framework in this thesis consists of the following components:
 \begin{itemize}
@@ -538,6 +708,8 @@ An important feature of the platform is that the front end and the store both on
 A corollary of this feature, is that the creation and retrieving of provenance should be on those operators, rather than the front end or the store. Because if the operators do not create provenance, the store has no way to get provenance since it only interacts with operators. Provenance would then get lost because it has to be saved in the store. Operators must be able to retrieve provenance for the readers of the research publications to reproduce the published results because only they have access to the store, where provenance is kept.
 
 Since the platform does not necessarily know the operational logic of every possible operator it is to invoke for some task, it is impossible to implement the provenance capturing function as part of the platform. For example, an operator may use several data objects to generate multiple other data objects. Some of these objects may be passed as parameters of function calls, others may be defined as the return values, and positions of these objects (whether they are parameters or return values) could be arbitrarily decided by the developer of the operator (software or scripts), so the job of creating and retrieving provenance has to be done by operators.
+
+Provenance collecting frameworks proposed before PROV-O such as \cite{simmhan2006framework} must depend on a central provenance service to collect provenance graph fragments provided by the various components operating on data to ensure these fragments are consistent with each other and can be put together to form the whole provenance graph. With PROV-PUB-O/P, which is a specialization of PROV-O, such a centralized provenance authority just need to simply concatenate the lists of triples generated by the operators, as long as all the operators format their provenance pieces with the same terminology. This assumption holds given that there is a terminology to be used that has been publicly published and widely adopted.
 
 The two functions of the platform, namely the creation of provenance and the replication of the research work with the saved provenance, do not have big differences between them. The only difference is that the replication requires an additional ``load provenance'' operation at the very beginning.
 % recap the three requirements
