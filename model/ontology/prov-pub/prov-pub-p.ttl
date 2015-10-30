@@ -33,7 +33,7 @@
     
 # Classes
 
-# Specific entities related to result generation process, including data, library and result.
+# Entities related to result generation process, including data, library and result.
 pub:Data a owl:Class;
     rdfs:subClassOf prov:Entity;
     rdfs:label "Data";
@@ -68,7 +68,7 @@ pub:PublishedResult a owl:Class;
     Also defined in PROV-PUB-O/S, this class represents published results including figures, tables, lists and textual descriptions. When an instance of this class is used in the context of provenance capturing, it is a provenance entity and represents the final product generated through a series of changes of data to appear in a research publication.
     """.
     
-    
+# Changes of data related to result generation process, including data loading, 
 pub:Publication a owl:Class;
     rdfs:label "Research publication";
     rdfs:comment """
