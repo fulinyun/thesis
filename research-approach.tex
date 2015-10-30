@@ -255,45 +255,52 @@ Interesting findings from this case study include:
 The details of the case study of Chapter 4 of NCA 2014 report can be found in the appendix of this thesis.
 
 \subsubsection{The common changing process of data}
-Based on the case study on the figures and tables in Chapter 4 of the NCA 2014 report, we summarized the following three common changing stages of data:
+Based on the case study on the figures and tables in Chapter 4 of the NCA 2014 report, we summarized the following five common changing stages of data:
 \begin{enumerate}
-	\item The data loading stage, where data serialized and stored on computer hard disks get loaded into the computer memory. These serialized and stored data are different from data already loaded in memory as atomic values or data structures that are held by variables managed by software agents. This stage get the data ready for all the flexible operations only limited by the software agents' capabilities. Source data could be stored in triple stores, databases, local files or files hosted on Websites. Physical and syntactical changes are performed to get the proper source data. For example, a data file in XML format is first downloaded from a data portal, then certain data chunks are extracted from the XML file and saved to a CSV file, ready for the read.csv() function in R to load the data into memory. The download of the XML file, the extraction, the serialization operation to get the properly formatted CSV file and the invocation of the read.csv() function in R programming language to get the initial in-memory data object (for further processing) together compose the data loading stage. This stage is easily missing in the provenance of a published result, leaving the readers wonder how the authors get their data ready for the claimed processing steps.
+	\item The data obtaining stage, where data hosted by servers or data portals get queried, sliced, filtered and downloaded to get ready for a direct loading to the main memory for the next processing steps. For example, a data file in XML format on a data portal is first downloaded from a data portal, then certain data chunks are extracted from the XML file and saved to a CSV file, ready for the read.csv() function in R to load the data into memory. This whole process is called data obtaining in this thesis. This stage is easily missing in the provenance of a published result, leaving the readers wonder how the authors get their data ready for the claimed processing steps.
+	\item The data loading stage, where data serialized and stored on computer hard disks get loaded into the computer memory. These serialized and stored data are different from data already loaded in memory as atomic values or data structures that are held by variables managed by software agents. This stage get the data ready for all the flexible operations only limited by the software agents' capabilities. Source data could be stored in triple stores, databases, local files or files hosted on Websites. For example, the invocation of the read.csv() function in R programming language to get the initial in-memory data object (for further processing) composes the data loading stage. Data do not need to be loaded into memory all at once. For example, a program may read from a data file in a line-by-line manner and process each line and write the processing result to a output file. This is equivalent to loading the data all at once as a vector (list) of lines, apply a certain operation on each element of this vector (such as with the sapply function in R) and write the whole processed vector to the output file. Programs written in either load-all-at-once or part-by-part manner can be easily converted to one another.
 	\item The data changing stage, where software agents change in-memory data objects semantically to get the target data objects, ready for presenting in the publication. This stage may contain several sub-stages where previous ones produce source data for the latter ones to load and further process. For example, data loaded with the read.csv() function are processed with various functions provided by different libraries, the data may get sliced, filtered, mapped, etc. to become a proper data structure in R ready for a plot function. The whole process transforming the data object obtained by the read.csv() function all the way to the data object ready to be passed to a plot function to produce a figure in the publication is the data changing stage. All the semantical changes happen in the memory, although intermediate data objects may be saved to disk at certain points and loaded later from the disk again. This stage is usually considered the only interesting one that worth noting down as the provenance.
 	\item The result generation stage, where in-memory data objects are visualized or summarized with certain software agents to generate the results in the publication. Results could be in the forms of figures, tables, lists or textual descriptions. Results are different from both data and source data. Results are saved on computer hard disks, but different from source data, they are not meant to be loaded into memory again, but are for human beings to view in the publication, and the transformation from data to results is non-reversible in the sense that results cannot be transformed as data are transformed to produce new data objects or new results. They, as the name indicates, are the final ``results''. We do not change an existing result to get a new one, rather, we change the data the result is based on in a new way to produce a new result. This stage is usually not sufficiently described, most of the time with only a single word ``plot''.
+	\item The result reusing stage, where published results get reused by successive publications. The provenance of the reused result is the same as the original result up till the end of the data changing phase. The differences come from different parameters of the plot function(s) in the result generation stage and/or direct image-level edits on the figure such as scaling and white balance adjustment. The reused result often has substantial similarity with the original result. For example, in our case study we found that Figure~4.1 in NCA 2014, ``Paths of Hurricanes Katrina and Rita Relative to Oil and Gas Production Facilities'', is just a slight adaptation of Figure~3 in the ``Natural Gas: Factors Affecting Prices and Potential Impacts on Consumers (GAO-06-420T)'' report. Both figures are generated with the same data that have come through the data changing stage. 
 \end{enumerate}
-We recognized three categories of changes of data earlier in this thesis. In the common process of data changes, physical and syntactical changes are performed on on-disk data to generate some other on-disk data, except the last activity that loads the on-disk data into memory, which is both a physical change and a syntactical change. Semantical changes could only happen in memory, although their generated data could be either in-memory or on-disk. If the generated data are saved on disk, then the activity would also be a physical change and a syntactical change. Result generation is an activity that uses data to generate results. In PROV-PUB-O/P, result generation is not a subclass of data change since we distinguish data from published results.
+We recognized three categories of changes of data earlier in this thesis. In the common process of data changes, physical and syntactical changes are performed on on-disk data to generate some other on-disk data, except the last activity that loads the on-disk data into memory, which is both a physical change and a syntactical change. Semantical changes could only happen in memory, although their generated data could be either in-memory or on-disk. If the generated data are saved on disk, then the activity would also be a physical change and a syntactical change. Result generation and reusing are two activities that use data or preexisting results to generate results. In PROV-PUB-O/P, result generation and reusing are not subclasses of data change since we distinguish data from published results and we want to make sure that a change of data always generates data only. 
+
+The three categories of changes of data (physical, syntactical and semantical) are intended to be used to label data changing activities in a domain and application independent way. When we defined more data changing activities, we tried to use the words that keep the ontology domain and application independent to the greatest extent. However, biases coming from our knowledge and experience and the case study we have done are inevitable. Commonly agreed vocabularies within a certain community or group are expected to be introduced as extensions to PROV-PUB-O/P.
 
 \subsubsection{PROV-PUB-O/P specification}
-\comment{improve this section}
-Based on the principles of minimalism on classes, rich on properties and leaving the decision for dependencies to the users, as well as the case study mentioned above, we define the following classes and properties in PROV-PUB-O/P:
+Based on the principles of minimalism on classes, rich on properties and leaving the decision for dependencies to the users, as well as the semiotic framework and the case study mentioned above, we define the following classes and properties in PROV-PUB-O/P:
 
-\hspace{-1em}\emph{Classes about data:}
+{\noindent\emph{Classes about data:}}
 \begin{itemize}
 	\item pub:Data
 	\item pub:InMemoryData
 	\item pub:OnDiskData
 \end{itemize}
-
-\hspace{-1em}\emph{Classes about change of data:}
+We define pub:Data as a subclass of prov:Entity, and pub:InMemoryData and pub:OnDiskData are defined as subclasses of pub:Data. They represent data residing in memory and on disk, respectively.
+{\noindent\emph{Classes about change of data:}}
 \begin{itemize}
 	\item pub:DataChange
 	\item pub:PhysicalChange
 	\item pub:SyntacticalChange
 	\item pub:SemanticalChange
-	\item pub:LoadData
-	\item pub:SaveData
-	\item pub:GenerateResult
+	\item pub:Obtaining
+	\item pub:Loading
+	\item pub:Saving
+	\item pub:Transformation
+	\item pub:ResultGeneration
+	\item pub:Visualization
+	\item pub:Analysis
 	\item pub:Library
 \end{itemize}
 Users are expected to define subclasses of these data changing activities to fit their specific domain. For example, semantical changes include slicing or subsetting, filtering, and transformation. Physical changes include downloads and copying. Syntactical changes include reformatting and conversion among data structures. Users may also overlook these three categories of data changes if they do not care. A simple use case may just require the use of pub:DataChange and pub:GenerateResult to capture all interesting steps leading to the published results.
 
-\hspace{-1em}\emph{Properties about using data:}
+{\noindent\emph{Properties about using data:}}
 \begin{itemize}
-	\item pub:transformed
-	\item pub:sliced
-	\item pub:subset
-	\item pub:filtered
-	\item pub:projected
+	\item pub:obtained
+	\item pub:loaded
+	\item pub:saved
+	\item pub:transformed%subset slice project filter map...
+	\item pub:visualized
 	\item pub:analyzed
 \end{itemize}
 These are sub-properties of prov:used to allow domain-specific ways of describing data usage methods. They can also be considered ``shortcuts'' to replace the use of prov:qualifiedUsage. For example, the following usage written in PROV-O
@@ -322,6 +329,7 @@ We believe users of PROV-PUB-O/P will benefit from dependencies to PROV-O in for
 The specialized ontology is not only helpful in describing the provenance, but it also enables the construction of executable provenance graphs to preserve the data product preparing process at a level that is detailed enough to be replicable.
 
 \begin{figure}
+	\centering
 	\includegraphics[width=\textwidth]{prov-pub-o.png}
 	\caption{Illustrated sample provenance graph in PROV-PUB-O}
 	\label{fig:prov-pub-o-eg}
