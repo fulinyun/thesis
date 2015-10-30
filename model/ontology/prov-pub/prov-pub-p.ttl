@@ -5,6 +5,7 @@
 @prefix dcterms: <http://www.purl.org/dc/terms/>.
 @prefix foaf: <http://xmlns.com/foaf/0.1/>.
 @prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
 
 @prefix doco: <http://purl.org/spar/doco/>.
 @prefix deo: <http://purl.org/spar/deo/>.
@@ -15,37 +16,58 @@
 
 @prefix pub: <http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/>.
 
-<http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s.ttl> a owl:Ontology;
+<http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-p.ttl> a owl:Ontology;
     dcterms:modified "2015-11-16"^^xsd:date;
-    rdfs:label "PROV-PUB-O/S";
+    rdfs:label "PROV-PUB-O/P";
     dcterms:creator "Linyun Fu <ful2@rpi.edu>";
     rdfs:comment """
-    PROV-PUB-O/S is a lightweight ontology designed to describe the locations of published results such as figures, tables, lists and textually described results within the structural elements of a research publication. The ontology design follows the following principles:
-    - Minimalism on classes --- meaning to make the number of constraints to its minimum and only define necessary classes to flatten the learning curve, quicken the prototyping and iterating processes.
-    - Rich on properties --- meaning to have multiple ways of expressing relations among classes, so that users are more likely to find a way that is easy to use for them. To avoid incomplete query results due to multiple ways of relation expression, users can choose to follow one particular way but they are not forced by being given only one way.
-    - Leave the decision for dependencies to the users --- meaning that we do not hard code dependencies to other ontologies which force the users to accept them, unless these dependencies are absolutely beneficial to the users. We just provide suggestions in documentation and let the users decide whether to accept the suggested dependencies.
+    PROV-PUB-O/P is a specialization of PROV-O to describe the provenance of published results such as figures, tables, lists and textually described results found in research publications.
+    
+    Three groups of extensions are made in PROV-PUB-O/P:
+    - Subclasses of prov:Activity are defined to represent specific activities related to the generation process of published results.
+    - Subclasses of prov:Entity are defined to represent specific (data) entities in the result generation process.
+    - Subproperties of prov:used are defined to represent specific usages of data in the result generation process.
 
-    To follow the principle of minialism on classes, only definitely necessary classes are defined. Two types of classes are considered definitely necessary. The first type is containers to contain published results, such as publication, chapter and section; the second type is published results such as figure, table, list and textually described result.
-    
-    To follow the principle of rich on properties, multiple ways of expressing part-whole and result-container relations are given. In addition to the general dcterms:isPartOf and dcterms:hasPart properties, we define properties that are specific on their ranges such as pub:inPublication, pub:inChapter, pub:inSection, pub:hasChapter, pub:hasSection, pub:hasFigure, pub:hasTable, pub:hasList and pub:hasText. Also defined are properties with role indications such as pub:isAbstractOf, pub:isIntroductionOf, pub:isDiscussionOf, pub:isRelatedWorkOf, pub:isConclusionOf and pub:isAcknowledgementsOf. In the comment (rdfs:comment) field of each class, sample usage of these properties are given in the "Examples" sections. The idea is not to make the users use all of them on each instance, but to let the users choose a most comfortable way and adhere to the chosen scheme of representing relations. For example, it may be decided that only pub:hasChapter, pub:hasSection, pub:hasFigure, pub:hasTable, pub:hasList and pub:hasText are allowed to use in a certain knowledge base, other properties such as pub:inPublication, pub:inChapter and pub:inSection are forbidden to ensure some prepared SPARQL queries to work properly.
-    
-    To follow the principle of leaving the decision for dependencies to the users, subclassing and double-classing suggestions are given for each class in PROV-PUB-O/S in case the user of the ontology wants to reuse the classes and constraints defined in the related ontologies. Subclassing means to assert that a class in PROV-PUB-O/S is a subclass of a class in one of the related ontologies. For example, the user could optionally assert that pub:Chapter is a subclass of doco:Chapter to make every instance of pub:Chapter automatically also an instance of doco:Chapter. Double-classing means to assert that an instance of a PROV-PUB-O/S class is also an instance of another class in a related ontology. For example, an instance can be asserted as both a pub:Publication and a bibo:Document. Such suggestions indicate that the assertions are expected by the creator of the ontology but not forced. 
-    
-    To give subclassing suggestions, three bridging ontologies <http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s-doco.ttl>, <http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s-bibtex.ttl> and <http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s-bibo.ttl> are provided in case a user wants to accept all the suggested subclassing links from PROV-PUB-O/S to one of its related ontologies. Each bridging ontology is exclusively composed of assertions of the form "pub:ClassX rdfs:subClassOf ontologyY:ClassZ" such as "pub:Chapter rdfs:subClassOf doco:Chapter". 
-    
-    Double-classing suggestions are given in the "Examples" section inside comments (rdfs:comment) of each class, since they cannot be encoded in the form of bridging ontologies because they do not require any assertion at the schema level.
+    The purpose of this ontology is to make provenance graphs easier to understand and use by introducing activities, entities and usages that are familiar and intuitive to researchers. This notology is expected to evolve as more researchers get involved and comment.
     """.
     
 # Classes
 
-# Result containers, including publication, chapter and section.
-pub:ResultContainer a owl:Class;
-    rdfs:label "Result container";
+# Specific entities related to result generation process, including data, library and result.
+pub:Data a owl:Class;
+    rdfs:subClassOf prov:Entity;
+    rdfs:label "Data";
     rdfs:comment """
-    A result container is a research publication or a part of it, usually a section or a chapter, that contains interesting published results. In PROV-PUB-O/S, document structure elements are defined not for analyzing document structures but for locating interesting research results. i.e., they help answer the question "where is this table/figure found?"
-    
-    It is not encouraged to directly assert an instance to be a result container. Consider asserting it to be one of result container's subclasses such as a publication, a chapter or a section.
+    The data class represents those things which are considered "data" by researchers. Data may reside on disk in files, databases or triple stores, but it may also reside in memory in some data structure and/or held by variables in a program. Changes of data are performed to generate new (intermediate) data or published results.
     """.
+
+pub:InMemoryData a owl:Class;
+    rdfs:subClassOf pub:Data;
+    rdfs:label "In-Memory Data";
+    rdfs:comments """
+    The in-memory data class represents those data that reside in memory, in some data structure and/or held by variables in a program.
+    """.
+    
+pub:OnDiskData a owl:Class;
+    rdfs:subClassOf pub:Data;
+    rdfs:label "On-Disk Data";
+    rdfs:comments """
+    The on-disk data class represents those data that reside on disk, in files, databases or triple stores.
+    """.
+    
+pub:Library a owl:Class;
+    rdfs:subClassOf prov:Entity;
+    rdfs:label "Library";
+    rdfs:comments """
+    The library classes represents software modules or utilities with functions useful in the changes of data.
+    """.
+    
+pub:PublishedResult a owl:Class;
+    rdfs:subClassOf prov:Entity;
+    skos:scopeNote """
+    Also defined in PROV-PUB-O/S, this class represents published results including figures, tables, lists and textual descriptions. When an instance of this class is used in the context of provenance capturing, it is a provenance entity and represents the final product generated through a series of changes of data to appear in a research publication.
+    """.
+    
     
 pub:Publication a owl:Class;
     rdfs:label "Research publication";
