@@ -45,7 +45,8 @@ Rather than starting from scratch, we refer to existing models for document stru
 Here we take DoCO as an example. DoCO defines structural (e.g. block, inline, paragraph, section, chapter, etc. --- meaning what the component looks like) as well as rhetorical (e.g. introduction, discussion, acknowledgements, reference list, figure, appendix, etc. --- meaning what role the component plays in the document) document components.
 
 Figure~\ref{fig:doco} shows the components of DoCO and the respective classes included in these components.
-\begin{figure}[h]
+\begin{figure}
+	\centering
 	\includegraphics[width=\textwidth]{doco-architecture.png}
 	\caption[Architecture of DoCO]{Architecture of DoCO, the Document Components Ontology}
 	\label{fig:doco}
@@ -77,13 +78,15 @@ This follows the principles of minimalism on classes and rich on properties.
 
 The resulting PROV-PUB-O/S ontology\footnote{PROV-PUB-O/S is not officially published and is temporarily hosted at \url{http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s.ttl}, accessed on October 10th, 2015.} follows a minimalist approach on class definitions to be a small ontology just sufficient for the purpose of describing the results and the parts of the research publications that contain them. Figure~\ref{fig:prov-pub-s-classes} and Figure~\ref{fig:prov-pub-s-properties} shows the classes and properties in PROV-PUB-O/S, respectively.
 
-\begin{figure}[h]
+\begin{figure}
+	\centering
 	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-s-classes.png}
 	\caption{Classes in PROV-PUB-O/S}
 	\label{fig:prov-pub-s-classes}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
+	\centering
 	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-s-properties.png}
 	\caption[Properties in PROV-PUB-O/S]{Properties in PROV-PUB-O/S, where pub:is{Role}Of represents the role indicating properties such as pub:isIntroductionOf, pub:isAbstractOf, etc.}
 	\label{fig:prov-pub-s-properties}
@@ -150,9 +153,9 @@ However, in a specific domain of interest, a lot more contextual and operational
 \subsubsection{Example of direct use of PROV-O to record provenance}
 PROV-O\footnote{Lebo, T., Sahoo, S., \& McGuinness, D. (2013). PROV-O: The PROV Ontology. Accessible at: http://www.w3.org/TR/prov-o/, accessed on October 22nd, 2015.} is a great advance based on its predecessors such as Proof Markup Language (PML) \cite{da2006proof} and the Open Provenance Model (OPM) \cite{moreau2011open}, Table 2 in \cite{ma2014ontology} gives a comparison of classes and properties of these three ontologies, which is shown in Table~\ref{tab:comparison}. From the table we could see that PROV-O filled in the blanks that are not established in PML and OPM. More classes and properties in PROV-O do not cause the ontology to be more complicated to understand because all these ontological elements are well organized into a simple framework shown in Figure~\ref{fig:prov-o}.
 \begin{table}
+	\centering
 \caption{Similar classes and properties in PROV-O, OPM and PML}
 \label{tab:comparison}        % \label command must always comes AFTER the caption
-\begin{center}
 \begin{tabular}{|p{0.07\textwidth}|p{0.31\textwidth}|p{0.31\textwidth}|p{0.31\textwidth}|}
 	\hline  & PROV-O & OPM & PML \\ 
 	\hline Class-es & prov:Entity & opmv:Artifact & pmlj:Nodeset \newline (+pmlp:Information) \\ 
@@ -170,10 +173,10 @@ PROV-O\footnote{Lebo, T., Sahoo, S., \& McGuinness, D. (2013). PROV-O: The PROV 
 	  & prov:endedAtTime & opmv:wasEndedAt & Not established \\ 
 	\hline 
 \end{tabular}
-\end{center}
 \end{table}
 \begin{figure}
-	\includegraphics[width=\textwidth]{prov-o.png}
+	\centering
+	\includegraphics[width=0.7\textwidth]{prov-o.png}
 	\caption{PROV-O framework}
 	\label{fig:prov-o}
 \end{figure}
@@ -690,17 +693,20 @@ In computer science, a framework is a parameterized system. Certain components o
 \end{itemize}
 The front end will invoke operators when the user launches a command through the front end. Operations on data are then delegated to various operators and execution results are sent back to the front end to enable it to provide meaningful feedback to the user. Execution of operations may require accesses to the store to operate in-memory or on-disk data objects. These processes are illustrated in Figure~\ref{fig:invoke} and Figure~\ref{fig:execute}.
 \begin{figure}
+	\centering
 	\includegraphics[width=\textwidth]{invoke.png}
 	\caption{Front end invoke operators to finish tasks}
 	\label{fig:invoke}
 \end{figure}
 \begin{figure}
+	\centering
 	\includegraphics[width=\textwidth]{execute.png}
 	\caption{Operators access store and notify front end}
 	\label{fig:execute}
 \end{figure}
 An important feature of the platform is that the front end and the store both only interact with operators, as shown in Figure~\ref{fig:platform}.
 \begin{figure}
+	\centering
 	\includegraphics[width=\textwidth]{platform.png}
 	\caption{Front end and store both only interact with operators}
 	\label{fig:platform}
