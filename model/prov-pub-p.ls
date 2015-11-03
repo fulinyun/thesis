@@ -507,7 +507,7 @@ Risk from Sea Level Rise";
 # Properties
 
 # Properties about data usage
-pub:obtained a rdf:Property;
+pub:obtained a owl:ObjectProperty;
     rdfs:label "obtained";
     rdfs:comment """
     This property represents the relation of a data
@@ -518,7 +518,7 @@ obtain the data wanted.
     rdfs:domain pub:Obtaining;
     rdfs:range pub:Data.
     
-pub:loaded a rdf:Property;
+pub:loaded a owl:ObjectProperty;
     rdfs:label "loaded";
     rdfs:comment """
     This property represents the relation of a data loading
@@ -529,7 +529,7 @@ it to main memory.
     rdfs:domain pub:Loading;
     rdfs:range pub:Data.
     
-pub:saved a rdf:Property;
+pub:saved a owl:ObjectProperty;
     rdfs:label "saved";
     rdfs:comment """
     This property represents the relation of a data saving
@@ -540,7 +540,7 @@ it to disk.
     rdfs:domain pub:Saving;
     rdfs:range pub:Data.
 
-pub:transformed a rdf:Property;
+pub:transformed a owl:ObjectProperty;
     rdfs:label "transformed";
     rdfs:comment """
     This property represents the relation of a data
@@ -551,7 +551,7 @@ transforming it to the data wanted.
     rdfs:domain pub:Transformation;
     rdfs:range pub:Data.
 
-pub:visualized a rdf:Property;
+pub:visualized a owl:ObjectProperty;
     rdfs:label "visualized";
     rdfs:comment """
     This property represents the relation of a
@@ -562,7 +562,7 @@ visualizing it to generate the result wanted.
     rdfs:domain pub:Visualization;
     rdfs:range pub:Data.
 
-pub:analyzed a rdf:Property;
+pub:analyzed a owl:ObjectProperty;
     rdfs:label "analyzed";
     rdfs:comment """
     This property represents the relation of a analysis
@@ -574,7 +574,7 @@ generate the result wanted.
     rdfs:range pub:Data.
 
 # Properties about result reuse
-pub:reused a rdf:Property;
+pub:reused a owl:ObjectProperty;
     rdfs:label "reused";
     rdfs:comment """
     This property represents the relation of a reuse

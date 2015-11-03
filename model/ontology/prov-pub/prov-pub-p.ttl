@@ -366,7 +366,7 @@ pub:Reuse a owl:Class;
 # Properties
 
 # Properties about data usage
-pub:obtained a rdf:Property;
+pub:obtained a owl:ObjectProperty;
     rdfs:label "obtained";
     rdfs:comment """
     This property represents the relation of a data obtaining activity used certain collections of data to obtain the data wanted.
@@ -375,7 +375,7 @@ pub:obtained a rdf:Property;
     rdfs:domain pub:Obtaining;
     rdfs:range pub:Data.
     
-pub:loaded a rdf:Property;
+pub:loaded a owl:ObjectProperty;
     rdfs:label "loaded";
     rdfs:comment """
     This property represents the relation of a data loading activity used certain on-disk data in the form of loading it to main memory.
@@ -384,7 +384,7 @@ pub:loaded a rdf:Property;
     rdfs:domain pub:Loading;
     rdfs:range pub:Data.
     
-pub:saved a rdf:Property;
+pub:saved a owl:ObjectProperty;
     rdfs:label "saved";
     rdfs:comment """
     This property represents the relation of a data saving activity used certain in-memory data in the form of saving it to disk.
@@ -393,7 +393,7 @@ pub:saved a rdf:Property;
     rdfs:domain pub:Saving;
     rdfs:range pub:Data.
 
-pub:transformed a rdf:Property;
+pub:transformed a owl:ObjectProperty;
     rdfs:label "transformed";
     rdfs:comment """
     This property represents the relation of a data transforming activity used certain data in the form of transforming it to the data wanted.
@@ -402,7 +402,7 @@ pub:transformed a rdf:Property;
     rdfs:domain pub:Transformation;
     rdfs:range pub:Data.
 
-pub:visualized a rdf:Property;
+pub:visualized a owl:ObjectProperty;
     rdfs:label "visualized";
     rdfs:comment """
     This property represents the relation of a visualization activity used certain data in the form of visualizing it to generate the result wanted.
@@ -411,7 +411,7 @@ pub:visualized a rdf:Property;
     rdfs:domain pub:Visualization;
     rdfs:range pub:Data.
 
-pub:analyzed a rdf:Property;
+pub:analyzed a owl:ObjectProperty;
     rdfs:label "analyzed";
     rdfs:comment """
     This property represents the relation of a analysis activity used certain data in the form of analyzing it to generate the result wanted.
@@ -421,7 +421,7 @@ pub:analyzed a rdf:Property;
     rdfs:range pub:Data.
 
 # Properties about result reuse
-pub:reused a rdf:Property;
+pub:reused a owl:ObjectProperty;
     rdfs:label "reused";
     rdfs:comment """
     This property represents the relation of a reuse activity reused a published result to generate the result wanted. 
