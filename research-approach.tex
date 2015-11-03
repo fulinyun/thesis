@@ -42,7 +42,7 @@ The third principle, leaving the decision for dependencies to the users, is a na
 % how these principles are followed
 Rather than starting from scratch, we refer to existing models for document structures to get the common vocabulary to follow. Document structure models such as the Document Components Ontology (DoCO)\footnote{DoCO, the Document Components Ontology: \url{http://purl.org/spar/doco}, accessed on October 10th, 2015} are usually based on structural patterns \cite{di2014dealing} and rhetorical structure theory (RST) \cite{taboada2006rhetorical}.
 
-Here we take DoCO as an example. DoCO defines structural (e.g. block, inline, paragraph, section, chapter, etc. --- meaning what the component looks like) as well as rhetorical (e.g. introduction, discussion, acknowledgements, reference list, figure, appendix, etc. --- meaning what role the component plays in the document) document components.
+Here we take DoCO as an example. DoCO defines structural (e.g. block, inline, paragraph, section, chapter, and so on --- meaning what the component looks like) as well as rhetorical (e.g. introduction, discussion, acknowledgements, reference list, figure, appendix, and so on --- meaning what role the component plays in the document) document components.
 
 Figure~\ref{fig:doco} shows the components of DoCO and the respective classes included in these components.
 \begin{figure}
@@ -88,7 +88,7 @@ The resulting PROV-PUB-O/S ontology\footnote{PROV-PUB-O/S is not officially publ
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-s-properties.png}
-	\caption[Properties in PROV-PUB-O/S]{Properties in PROV-PUB-O/S, where pub:is{Role}Of represents the role indicating properties such as pub:isIntroductionOf, pub:isAbstractOf, etc.}
+	\caption[Properties in PROV-PUB-O/S]{Properties in PROV-PUB-O/S, where pub:is{Role}Of represents the role indicating properties such as pub:isIntroductionOf, pub:isAbstractOf, and so on}
 	\label{fig:prov-pub-s-properties}
 \end{figure}
 
@@ -121,7 +121,6 @@ such as ``pubs:Chapter rdfs:subClassOf doco:Chapter''. Double-classing suggestio
 not require any assertion at the schema level.
 
 The general hypothesis to justify here is that PROV-PUB-O/S are more usable than DoCO for the task of describing the structure of a research publication, and a specific hypothesis is that properties in PROV-PUB-O/S are more usable than their corresponding rhetorical concepts in DoCO for describing publication components. We conducted user survey to collect opinions about pairs of RDF statement groups such as
-
 \begin{quote}
 	\begin{tabular}{l}
 	abs a Section;\\
@@ -131,7 +130,6 @@ The general hypothesis to justify here is that PROV-PUB-O/S are more usable than
 	 \hspace{1em}isPartOf article.
 	\end{tabular}
 \end{quote}
-
 , that is, whether it is better to describe the relation between an article and its abstract component by saying that ``that section is the abstract of the article'' or that ``that section is an abstract, and it is part of the article''. Here we omit all the RDF prefixes in the statements emphasize the modeling rationale.
 
 \subsubsection{Lessons learnt}
@@ -254,12 +252,12 @@ Interesting findings from this case study include:
 
 The details of the case study of Chapter 4 of NCA 2014 report can be found in the appendix of this thesis.
 
-\subsubsection{The common changing process of data}
-Based on the case study on the figures and tables in Chapter 4 of the NCA 2014 report, we summarized the following five common changing stages of data:
+\subsubsection{The common generating process of published results}
+Based on the case study on the figures and tables in Chapter 4 of the NCA 2014 report, we summarized the following five common stages of result generation:
 \begin{enumerate}
 	\item The data obtaining stage, where data hosted by servers or data portals get queried, sliced, filtered and downloaded to get ready for a direct loading to the main memory for the next processing steps. For example, a data file in XML format on a data portal is first downloaded from a data portal, then certain data chunks are extracted from the XML file and saved to a CSV file, ready for the read.csv() function in R to load the data into memory. This whole process is called data obtaining in this thesis. This stage is easily missing in the provenance of a published result, leaving the readers wonder how the authors get their data ready for the claimed processing steps.
 	\item The data loading stage, where data serialized and stored on computer hard disks get loaded into the computer memory. These serialized and stored data are different from data already loaded in memory as atomic values or data structures that are held by variables managed by software agents. This stage get the data ready for all the flexible operations only limited by the software agents' capabilities. Source data could be stored in triple stores, databases, local files or files hosted on Websites. For example, the invocation of the read.csv() function in R programming language to get the initial in-memory data object (for further processing) composes the data loading stage. Data do not need to be loaded into memory all at once. For example, a program may read from a data file in a line-by-line manner and process each line and write the processing result to a output file. This is equivalent to loading the data all at once as a vector (list) of lines, apply a certain operation on each element of this vector (such as with the sapply function in R) and write the whole processed vector to the output file. Programs written in either load-all-at-once or part-by-part manner can be easily converted to one another.
-	\item The data changing stage, where software agents change in-memory data objects semantically to get the target data objects, ready for presenting in the publication. This stage may contain several sub-stages where previous ones produce source data for the latter ones to load and further process. For example, data loaded with the read.csv() function are processed with various functions provided by different libraries, the data may get sliced, filtered, mapped, etc. to become a proper data structure in R ready for a plot function. The whole process transforming the data object obtained by the read.csv() function all the way to the data object ready to be passed to a plot function to produce a figure in the publication is the data changing stage. All the semantical changes happen in the memory, although intermediate data objects may be saved to disk at certain points and loaded later from the disk again. This stage is usually considered the only interesting one that worth noting down as the provenance.
+	\item The data changing stage, where software agents change in-memory data objects semantically to get the target data objects, ready for presenting in the publication. This stage may contain several sub-stages where previous ones produce source data for the latter ones to load and further process. For example, data loaded with the read.csv() function are processed with various functions provided by different libraries, the data may get sliced, filtered, mapped, and so on. to become a proper data structure in R ready for a plot function. The whole process transforming the data object obtained by the read.csv() function all the way to the data object ready to be passed to a plot function to produce a figure in the publication is the data changing stage. All the semantical changes happen in the memory, although intermediate data objects may be saved to disk at certain points and loaded later from the disk again. This stage is usually considered the only interesting one that worth noting down as the provenance.
 	\item The result generation stage, where in-memory data objects are visualized or summarized with certain software agents to generate the results in the publication. Results could be in the forms of figures, tables, lists or textual descriptions. Results are different from both data and source data. Results are saved on computer hard disks, but different from source data, they are not meant to be loaded into memory again, but are for human beings to view in the publication, and the transformation from data to results is non-reversible in the sense that results cannot be transformed as data are transformed to produce new data objects or new results. They, as the name indicates, are the final ``results''. We do not change an existing result to get a new one, rather, we change the data the result is based on in a new way to produce a new result. This stage is usually not sufficiently described, most of the time with only a single word ``plot''.
 	\item The result reusing stage, where published results get reused by successive publications. The provenance of the reused result is the same as the original result up till the end of the data changing phase. The differences come from different parameters of the plot function(s) in the result generation stage and/or direct image-level edits on the figure such as scaling and white balance adjustment. The reused result often has substantial similarity with the original result. For example, in our case study we found that Figure~4.1 in NCA 2014, ``Paths of Hurricanes Katrina and Rita Relative to Oil and Gas Production Facilities'', is just a slight adaptation of Figure~3 in the ``Natural Gas: Factors Affecting Prices and Potential Impacts on Consumers (GAO-06-420T)'' report. Both figures are generated with the same data that have come through the data changing stage. 
 \end{enumerate}
@@ -277,9 +275,9 @@ Based on the principles of minimalism on classes, rich on properties and leaving
 	\item pub:OnDiskData
 \end{itemize}
 We define pub:Data as a subclass of prov:Entity, and pub:InMemoryData and pub:OnDiskData are defined as subclasses of pub:Data. They represent data residing in memory and on disk, respectively.
-{\noindent\emph{Classes about change of data:}}
+{\noindent\emph{Classes about data generation:}}
 \begin{itemize}
-	\item pub:DataChange
+	\item pub:DataGeneration
 	\item pub:PhysicalChange
 	\item pub:SyntacticalChange
 	\item pub:SemanticalChange
@@ -287,14 +285,48 @@ We define pub:Data as a subclass of prov:Entity, and pub:InMemoryData and pub:On
 	\item pub:Loading
 	\item pub:Saving
 	\item pub:Transformation
+	\item pub:Library
+\end{itemize}
+The pub:DataGeneration class is defined as a subclass of prov:Entity and is the most general class representing data generation activities. 
+
+Semiotic framework based subclasses of pub:DataChange follows, that is, pub:PhysicalChange, pub:SyntacticalChange and pub:SemanticalChange, which we have already described earlier. 
+
+The next four classes, pub:Obtaining, pub:Loading, pub:Saving and pub:Transformation, are derived from the case study we have performed. The pub:Obtaining class represents data obtaining activities. Subclasses conforming naming conventions of specific domains are expected to get defined in extensions of PROV-PUB-O/P. In the earth science domain, for example, a ``Download'' subclass of pub:Obtaining would probably receive common acceptance. The pub:Obtaining class could be asserted as a subclass of pub:PhysicalChange and/or pub:SyntacticalChange according to application specific conditions. The pub:Loading class represents data loading activities that read data from disk to memory. This class should probably be asserted as a subclass of both pub:PhysicalChange and pub:SyntacticalChange, but we did not put these assertions in PROV-PUB-O/P because these assertions still might be undesirable in some use cases. The pub:Transformation class represents all general data transformation activities. Subclasses conforming naming conventions in various domains are expected to get defined in extensions of PROV-PUB-O/P. For example, ``subsetting'', ``slicing'', ``projection'' and ``filtering'' are four transformations commonly used in the earth science domain.
+
+The last class listed above, pub:Library, represents those software utilities or tools used in the process of generating data and results.
+
+Users are expected to either define subclasses of these data changing activities to fit their specific needs or overlook the subclasses of pub:DataChange and pub:ResultGeneration. That is, they could extend PROV-PUB-O/P with more data changing subclasses such as ``subsetting'', ``slicing'', ``projection'' and ``filtering'', or if they do not need classes so specific, they could just use pub:DataChange to capture every data changing activities involved in their use cases.
+
+\noindent\emph{Classes about result generation:}
+\begin{itemize}
 	\item pub:ResultGeneration
 	\item pub:Visualization
 	\item pub:Analysis
-	\item pub:Library
+	\item pub:Reuse
 \end{itemize}
-Users are expected to define subclasses of these data changing activities to fit their specific domain. For example, semantical changes include slicing or subsetting, filtering, and transformation. Physical changes include downloads and copying. Syntactical changes include reformatting and conversion among data structures. Users may also overlook these three categories of data changes if they do not care. A simple use case may just require the use of pub:DataChange and pub:GenerateResult to capture all interesting steps leading to the published results.
+These four classes represent the general result generation activity and three general ways of result generation, namely visualization typically used to create figures, analysis typically used to create tables, lists and textually described results, and reuse that generate a new result by reusing an existing one. The latter three are all subclasses of the first.
+	
+We define change of data as an activity that used data to generate data, and result generation as an activity that used data to generate results.
+	
+The pub:Library class are also likely to be used by result generation activities. We just do not list it here to avoid duplication.
+	
+Just like the classes about data generation, users are expected to either extend this part by defining more specific subclasses or overlook the two subclasses and just use pub:ResultGeneration according to their needs.
 
-{\noindent\emph{Properties about using data:}}
+Figure~\ref{fig:prov-pub-p-entity} and Figure~\ref{fig:prov-pub-p-activity} show the extensions on prov:Entity and prov:Activity in PROV-PUB-O/P, respectively.
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\textwidth]{model/ontology/prov-pub/prov-pub-p-entity.png}
+	\caption{Entities defined in PROV-PUB-O/P}
+	\label{fig:prov-pub-p-entity}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-p-activity.png}
+	\caption{Activities defined in PROV-PUB-O/P}
+	\label{fig:prov-pub-p-activity}	
+\end{figure}
+
+{\noindent\emph{Properties about using data and results:}}
 \begin{itemize}
 	\item pub:obtained
 	\item pub:loaded
@@ -302,8 +334,9 @@ Users are expected to define subclasses of these data changing activities to fit
 	\item pub:transformed%subset slice project filter map...
 	\item pub:visualized
 	\item pub:analyzed
+	\item pub:reused
 \end{itemize}
-These are sub-properties of prov:used to allow domain-specific ways of describing data usage methods. They can also be considered ``shortcuts'' to replace the use of prov:qualifiedUsage. For example, the following usage written in PROV-O
+These are sub-properties of prov:used to allow domain-specific ways of describing data and result usage methods. Their names indicate the correspondence between these properties and the data changing and result generation activities mentioned above. For example, pub:obtained is expected to be used with the pub:Obtaining activity. These properties can also be considered ``shortcuts'' to replace the use of prov:qualifiedUsage. For example, the following usage written in PROV-O
 \begin{quotation}
 :activity1 prov:qualifiedUsage [
 
@@ -317,27 +350,37 @@ could be written in PROV-PUB-O/P as
 \begin{quotation}
 :activity1 pub:transformed :data1.
 \end{quotation}
-\hspace{-1em}\emph{Properties about change of data:}
+Figure~\ref{fig:prov-pub-p-usage} shows the sub-properties of prov:used that are defined in PROV-PUB-O/P.
+\begin{figure}
+	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-p-usage.png}
+	\caption{Sub-properties of prov:used defined in PROV-PUB-O/P}
+	\label{fig:prov-pub-p-usage}
+\end{figure}
+
+\noindent\emph{Annotations about change of data and result generation:}
 \begin{itemize}
-	\item pub:language --- the programming language used in the data changing activity.
-	\item pub:code --- the code in a certain programming language for changing the data. It is recommended that only succinct code that invokes helper functions are included, and the detailed implementation of these helper functions be modeled as pub:Library instances used by data changing activities.
-	\item dcterms:description --- the textual description of the data processing method. 
+	\item pub:format
+	\item pub:language% --- the programming language used in the data changing activity.
+	\item pub:code% --- the code in a certain programming language for changing the data. It is recommended that only succinct code that invokes helper functions are included, and the detailed implementation of these helper functions be modeled as pub:Library instances used by data changing activities.
+	\item dcterms:description% --- the textual description of the data processing method. 
 \end{itemize}
+These four annotations are used to describe 1) the format in which on-disk data are, 2) the programming language used in a certain data changing or result generation activity, 3) the code in a certain programming language for changing the data or generating the result and 4) the data processing method in natural language. For the pub:code annotation, it is recommended that only succinct code that invokes helper functions are included, and the detailed implementation code of these helper functions be modeled as pub:Library instances used by the activity in question.
 
 We believe users of PROV-PUB-O/P will benefit from dependencies to PROV-O in forms of subclasses and sub-properties --- after all, this is the very reason we design PROV-PUB-O/P as a specialization of PROV-O --- so we include these assertions in PROV-PUB-O/P.
 
 The specialized ontology is not only helpful in describing the provenance, but it also enables the construction of executable provenance graphs to preserve the data product preparing process at a level that is detailed enough to be replicable.
 
+Figure~\ref{fig:prov-pub-example} shows a sample usage of PROV-PUB-O/P to describe the generation process of a figure very similar with Figure~4.2 in NCA 2014. The obtaining operation, ``:operation0'', generated the on-disk data, ``:csv\_file''. The details of how the data were obtained are described in the textual description, ``dct:description'' of the activity. Then the loading operation, ``:operation1'', loaded the on-disk data into memory as an in-memory data object, ``csv\_content'', which was then transformed by the transformation operation, ``:operation2'', to generate data ``:percent'', which were ready for the visualization operation, ``operation3'', to visualize and generate the published result in the form of a figure: ``:figure4.2''. 
+
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{prov-pub-o.png}
+	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-example.png}
 	\caption{Illustrated sample provenance graph in PROV-PUB-O}
-	\label{fig:prov-pub-o-eg}
+	\label{fig:prov-pub-example}
 	%\comment{to replace this figure with a more developed one}
 \end{figure}
 
-Figure~\ref{fig:prov-pub-o-eg}\comment{change the figure} shows a sample usage of PROV-PUB-O/P.
-The hypothesis we would like to justify here is that sub-properties of prov:used are more useful than prov:used itself in the use case of creating executable provenance graphs in the domain of earth science.
+The hypothesis we would like to justify here is that sub-properties of prov:used are more usable than prov:used itself in the use case of creating executable provenance graphs in the domain of earth science.
 
 %\subsubsection{Workflow vs. provenance semantics}
 
@@ -358,7 +401,7 @@ PROV-PUB-O is a specialization of PROV-O. The goal of such kind of specializatio
 We claim that PROV-PUB-O is more usable to research publication authors than PROV-O. Therefore, to justify that the creation of PROV-PUB-O is indeed a contribution, we need a set of criteria for the evaluation of ontology usability, through which people will be able to describe and assess an ontology from different aspects. The items in the criteria, however, are decided by the understandings about the meaning of \emph{usability}. We adopt the definition given in the international standard ISO 9241-11 \cite{iso19989241}, which has received endorsements from various domains: ``[Usability is] the extent to which a product can be used by specified users to achieve specified goals with effectiveness, efficiency and satisfaction in a specified context of use.'' The background of this definition is Human-Computer Interaction and the definition represents a user-centered point of view \cite{jokela2003standard}. The definition indicates that usability is not about the product itself (or, its quality), but about the activity of a user using it, so usability depends on the goal of the user and the context of the use. With satisfaction as one of its attributes, defined as ``freedom from discomfort, and positive attitude to the use of the product'' \cite{iso19989241}, usability is inevitably subjective.
 
 Therefore, existing criteria for assessing quality of ontologies do not necessarily fit in ontology usability evaluation. Although some of them can serve as strong usability indicators. For example, Gruber \cite{gruber1995toward}
-discussed several elements for ontology design: clarity, coherence, extendibility, minimal encoding bias, and minimal ontological commitment, which are all good principles for ontology quality evaluation, but to do usability evaluation, Fox and Lynnes added a few other items, namely contextual relevance, maturity, intended use, and fitness for use, to Gruber's list to cover the contextual and subjective aspects of ontology usability\footnote{Additional items for ontology evaluation. http://tw.rpi.edu/web/project/SeSF/workinggroups/OntologyEvaluation. Accessed on September 9th, 2015.}.
+discussed several elements for ontology design: clarity, coherence, extendibility, minimal encoding bias, and minimal ontological commitment, which are all good principles for ontology quality evaluation, but to do usability evaluation, Fox and Lynnes added a few other items, namely contextual relevance, maturity, intended use, and fitness for use, to Gruber's list to cover the contextual and subjective aspects of ontology usability\footnote{Additional items for ontology evaluation. \url{http://tw.rpi.edu/web/project/SeSF/workinggroups/OntologyEvaluation}. Accessed on September 9th, 2015.}.
 
 In this thesis we propose the Ontology Usability Scale (OUS) for the evaluation of ontology usability. The evaluation metrics are reflected in a short list of statements, which were derived from an online poll in the Semantic Web community. We will introduce our thoughts on semiotics when preparing a long list of statements for the poll, and will also analyze the community's concerns on ontology usability by using the outputs of the poll.
 
@@ -377,7 +420,7 @@ With the major Semantic Web standards and heavily reused upper ontologies being 
 	\label{fig:timeline}
 \end{figure}
 
-A popular approach to do this kind of evaluation is to define several criteria for decision making, evaluate the ontology in question on each criterion by giving a numerical score, and then compute the overall score for the ontology as a weighted sum of the per-criterion scores. Such methods are called multiple-criteria approaches in \cite{brank2005survey}. For example, Fox et al. \cite{fox1995organisation} proposed a set of criteria including generality, completeness, perspicuity, etc. Gomez-Perez in her paper \cite{gomez2001evaluation} published in 2001 pointed out the lack of interest in evaluation issues in the ontological engineering community at that time. She also pointed out that tools, tutorials and case studies are critical for ontology engineers to assess the usability of an existing ontology. Nevertheless, the paper does not give an example of ontology usability evaluation, it instead evaluates the Standard-Unit Ontology in terms of consistency, completeness and conciseness, so the evaluation result is not directly related to the effectiveness, efficiency and satisfaction of the users when they reuse a certain ontology. An ontology may be consistent (i.e. without any contradictory assertion), complete (i.e. without any missing definition) and concise (i.e. without any unnecessary definition), but still be unusable or very cumbersome to use (e.g. due to bad documentation).
+A popular approach to do this kind of evaluation is to define several criteria for decision making, evaluate the ontology in question on each criterion by giving a numerical score, and then compute the overall score for the ontology as a weighted sum of the per-criterion scores. Such methods are called multiple-criteria approaches in \cite{brank2005survey}. For example, Fox et al. \cite{fox1995organisation} proposed a set of criteria including generality, completeness, perspicuity, and so on. Gomez-Perez in her paper \cite{gomez2001evaluation} published in 2001 pointed out the lack of interest in evaluation issues in the ontological engineering community at that time. She also pointed out that tools, tutorials and case studies are critical for ontology engineers to assess the usability of an existing ontology. Nevertheless, the paper does not give an example of ontology usability evaluation, it instead evaluates the Standard-Unit Ontology in terms of consistency, completeness and conciseness, so the evaluation result is not directly related to the effectiveness, efficiency and satisfaction of the users when they reuse a certain ontology. An ontology may be consistent (i.e. without any contradictory assertion), complete (i.e. without any missing definition) and concise (i.e. without any unnecessary definition), but still be unusable or very cumbersome to use (e.g. due to bad documentation).
 
 Lozano-Tello et al. presented the ONTOMETRIC method \cite{lozano2003selection,lozano2004ontometric}, which compares ontologies with a taxonomy of 160 characteristics organized in a multi-level tree-shaped framework. At the top level, there are five basic aspects. These are: 
 \begin{enumerate}
@@ -689,7 +732,7 @@ But among the top three selections by Dublin Core users shown in Table~\ref{tab:
 		\hline 
 	\end{tabular} 
 \end{table}
-There are several issues that can be explored in future works. The first work is to have more case studies using the statements in Table~\ref{tab:ous-draft} and Table~\ref{tab:ous}. In this study we only carried out case studies of the ontology usability scale in the GCIS and the DCO projects. Although the feedbacks are positive, we want to hear more feedbacks and suggestions on the statements themselves, including both their forms and the orders, as well the topics covered. The second potential work is relevant to the ontology types. As Table~\ref{tab:ontologies} shows, among the ontologies that the survey participants had worked with, there are both upper ontologies (e.g. Dublin Core, PROV-O) and domain ontologies (e.g. SWEET, GCIS). The former are applicable across a range of domain and the latter are only used for a specific application or domain. Therefore, we may organize corresponding statements for the usability evaluation of those two types of ontologies, and we can take further surveys to see if there are any differences between the community's concerns on the two ontology types. In the current survey we did not ask the participants to specify their roles and experiences in the ontology work. The third potential work is that, if we are going to have new surveys, we can ask people about their roles (e.g. ontology developer, database curator, application developer, etc.) and their experience with ontology use (e.g. number of years). Last, the fourth potential work is to enrich, update and reorganize the statement pool from the point of view on expressivity, implementability and maintainability of ontologies. This framework is slightly different from the semiotic framework on syntax, semantics and pragmatics and covers new aspects of ontology usability.
+There are several issues that can be explored in future works. The first work is to have more case studies using the statements in Table~\ref{tab:ous-draft} and Table~\ref{tab:ous}. In this study we only carried out case studies of the ontology usability scale in the GCIS and the DCO projects. Although the feedbacks are positive, we want to hear more feedbacks and suggestions on the statements themselves, including both their forms and the orders, as well the topics covered. The second potential work is relevant to the ontology types. As Table~\ref{tab:ontologies} shows, among the ontologies that the survey participants had worked with, there are both upper ontologies (e.g. Dublin Core, PROV-O) and domain ontologies (e.g. SWEET, GCIS). The former are applicable across a range of domain and the latter are only used for a specific application or domain. Therefore, we may organize corresponding statements for the usability evaluation of those two types of ontologies, and we can take further surveys to see if there are any differences between the community's concerns on the two ontology types. In the current survey we did not ask the participants to specify their roles and experiences in the ontology work. The third potential work is that, if we are going to have new surveys, we can ask people about their roles (e.g. ontology developer, database curator, application developer, and so on.) and their experience with ontology use (e.g. number of years). Last, the fourth potential work is to enrich, update and reorganize the statement pool from the point of view on expressivity, implementability and maintainability of ontologies. This framework is slightly different from the semiotic framework on syntax, semantics and pragmatics and covers new aspects of ontology usability.
 
 \section{Automatic provenance capturing framework}
 In computer science, a framework is a parameterized system. Certain components of the framework could be customized to fulfill specific tasks. The proposed provenance capturing framework in this thesis consists of the following components:
