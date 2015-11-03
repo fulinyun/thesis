@@ -1,0 +1,32 @@
+# generating listing files in thesis:
+
+model/ontology/prov-pub/prov-pub-p.ttl
+model/ontology/prov-pub/prov-pub-p-examples.ttl
+
+
+generate_doc used prov-pub-p.ttl, lode
+  generated prov-pub-o_p.html
+  description """
+  use the "choose ontology file" function on the Webpage http://www.essepuntato.it/lode
+  """
+
+format_doc used prov-pub-o_p.html, html-formatter, 2 spaces per indentation level
+  generated prov-pub-o_p.html(1)
+  description """
+  	http://www.freeformatter.com/html-formatter.html
+  """
+
+edit content:
+ - reorder items
+ - remove lode url prefixes
+ - <pre> wrap examples
+ - <ol> lists
+ - check namespace declarations
+ - correct domain-range specifications
+
+http://appincredible.com/online/word-wrap/
+width: 59
+
+
+model/prov-pub-p.ls
+model/prov-pub-p-examples.ls
