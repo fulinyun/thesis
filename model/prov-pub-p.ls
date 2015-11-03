@@ -1,0 +1,618 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix dcterms: <http://www.purl.org/dc/terms/>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+
+@prefix pub:
+<http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/>.
+
+<http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-p
+ub-p.ttl> a owl:Ontology;
+    dcterms:modified "2015-11-16"^^xsd:date;
+    rdfs:label "PROV-PUB-O/P";
+    dcterms:creator "Linyun Fu <ful2@rpi.edu>";
+    rdfs:comment """
+    PROV-PUB-O/P is a specialization of PROV-O to describe
+the provenance of published results such as figures,
+tables, lists and textually described results found in
+research publications.
+    
+    Three groups of extensions are made in PROV-PUB-O/P:
+    - Subclasses of prov:Activity are defined to represent
+specific activities related to the generation process of
+published results.
+    - Subclasses of prov:Entity are defined to represent
+specific (data) entities in the result generation process.
+    - Subproperties of prov:used are defined to represent
+specific usages of data in the result generation process.
+
+    The purpose of this ontology is to make provenance
+graphs easier to understand and use by introducing
+activities, entities and usages that are familiar and
+intuitive to researchers. This notology is expected to
+evolve as more researchers get involved and comment.
+    """.
+    
+# Classes
+
+# Entities related to result generation process, including
+data, library and result.
+pub:Data a owl:Class;
+    rdfs:label "Data";
+    rdfs:comment """
+    The data class represents those things which are
+considered "data" by researchers. Data may reside on disk
+in files, databases or triple stores, but it may also
+reside in memory in some data structure and/or held by
+variables in a program. Changes of data are performed to
+generate new (intermediate) data or published results.
+    """;
+    rdfs:subClassOf prov:Entity.
+
+pub:InMemoryData a owl:Class;
+    rdfs:label "In-memory data";
+    rdfs:comment """
+    The in-memory data class represents those data that
+reside in memory, in some data structure and/or held by
+variables in a program.
+    
+    It is recommended to use dcterms:description to
+describe an in-memory data object in natural language.
+    
+    Examples: 
+    @prefix : <http://example.org/>.
+    :csv_content a pub:InMemoryData;
+        dcterms:description "Data held by the csv_content
+variable.".
+    """;
+    rdfs:subClassOf pub:Data.
+    
+pub:OnDiskData a owl:Class;
+    rdfs:label "On-disk data";
+    rdfs:comment """
+    The on-disk data class represents those data that
+reside on disk, in files, databases or triple stores.
+    
+    It is recommended to use pub:format to describe the
+format of an on-disk data object and dcterms:description to
+describe it in natural language.
+    
+    Examples: 
+    @prefix : <http://example.org/>.
+    :csv_file a pub:OnDiskData;
+        pub:format "CSV";
+        dcterms:description "Data in the data.csv file.".
+    """;
+    rdfs:subClassOf pub:Data.
+    
+pub:Library a owl:Class;
+    rdfs:label "Library";
+    rdfs:comment """
+    The library class represents software modules or
+utilities with functions useful in the generation process
+of data and results. Data and result generation activities
+may use libraries.
+    
+    It is recommended to use dcterms:description to
+describe a library in natural language.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :pandas a pub:Library;
+        dcterms:description "The pandas Python library.".
+    """;
+    rdfs:subClassOf prov:Entity.
+    
+pub:PublishedResult a owl:Class;
+    skos:scopeNote """
+    Also defined in PROV-PUB-O/S, this class represents
+published results including figures, tables, lists and
+textual descriptions. When an instance of this class is
+used in the context of provenance capturing, it is a
+provenance entity and represents the final product
+generated through a series of changes of data to appear in
+a research publication.
+    """;
+    rdfs:subClassOf prov:Entity.
+    
+# Data generation activities. 
+pub:DataGeneration a owl:Class;
+    rdfs:label "Data generation";
+    rdfs:comment """
+    This class represents those activities that generated
+data. Two categorizations of this class are provided in
+this ontology: one based on the semiotic framework
+presented by Burton-Jones et al. in 2005 and the other
+based on a case study on the result generation process of
+each figure and table in Chapter 4 of NCA 2014.
+pub:PhysicalChange, pub:SyntacticalChange and
+pub:SemanticalChange are semiotic framework based
+categories of changes of data; pub:Obtaining, pub:Loading,
+pub:Saving and pub:Transformation are case study based
+categories.
+    
+    It is recommended to use pub:language to describe the
+programming or script language used to generate data,
+pub:code to describe the code used to generate data, and
+dcterms:description to describe the data generation process
+in natural language.
+    
+    Note that this class and its subclasses are intended to
+be used to represent activities that generated data. To
+represent activities that generated published results,
+pub:ResultGeneration and its subclasses should be used.
+    
+    """;
+    rdfs:subClassOf prov:Activity.
+
+# Semiotic framework based categorization of data
+generation.
+pub:PhysicalChange a owl:Class;
+    rdfs:label "Physical change";
+    rdfs:comment """
+    This class represents such data generation activities
+that keep the source data "as is" and only change the
+locations and access permissions to generate new data.
+Examples are download, copying and sharing.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :download_data a pub:PhysicalChange;
+        pub:language "Bash";
+        pub:code "wget
+http://www1.ncdc.noaa.gov/pub/orders/CDODiv2177686828992.tx
+t";
+        dcterms:description "Downloaded a CSV file from a
+NOAA/NCDC download link with the wget utility.";
+        prov:used :wget;
+        prov:generated :csv_file.
+    :wget a pub:Library;
+        dcterms:description "The wget utility.".
+    :csv_file a pub:OnDiskData;
+        pub:format "CSV";
+        dcterms:description "Data in the
+CDODiv2177686828992.txt file.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+pub:SyntacticalChange a owl:Class;
+    rdfs:label "Syntactical change";
+    rdfs:comment """
+    This class represents such data generation activities
+that keep the logical content of the source data intact and
+only change the formats and encodings to generate new data.
+One example is converting data in RDF/XML to Turtle.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :convert_data a pub:SyntacticalChange;
+        dcterms:description "Used the online converter at
+http://www.easyrdf.org/converter with the \"Raw output\"
+option clicked.";
+        prov:used :converter;
+        prov:used :xml_data;
+        prov:generated :ttl_data.
+    :converter a pub:Library;
+        dcterms:description "The easyrdf online
+converter.".
+    :xml_data a pub:OnDiskData;
+        pub:format "RDF/XML";
+        dcterms:description "The bibtex ontology in
+RDF/XML.".
+    :ttl_data a pub:OnDiskData;
+        pub:format "Turtle";
+        dcterms:description "The bibtex ontology in
+Turtle.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+pub:SemanticalChange a owl:Class;
+    rdfs:label "Semantical change";
+    rdfs:comment """
+    This class represents such changes to data that change
+the actual logical content of data. Usually this is the
+most interesting category of changes, and generally called
+data transformation.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :transform_data a pub:SemanticalChange;
+        dcterms:description "Used Python scripts to
+transform data held by the variable csv_content into data
+held by variable percent for matplotlib.";
+        pub:language "Python";
+        pub:code \"\"\"
+        import pandas as pd
+        dd_agg=dd.groupby(dd['YearMonth'] // 100).sum()
+        dd_agg.index.name=u'Year'
+        cdd_avg, hdd_avg = sum(dd_agg['CDD'][0:31])/31,
+sum(dd_agg['HDD'][0:31])/31
+        to_percent = lambda x, y: (x-y)/y*100
+        cdd_percent, hdd_percent =
+to_percent(dd_agg['CDD'][:], cdd_avg),
+to_percent(dd_agg['HDD'][:], hdd_avg)
+        percent = pd.concat([hdd_percent, cdd_percent],
+axis=1)
+        \"\"\";
+        prov:used :pandas;
+        pub:transformed :csv_content;
+        prov:generated :percent.
+    :pandas a pub:Library;
+        dcterms:description "The Python pandas library.".
+    :csv_content a pub:InMemoryData;
+        dcterms:description "Data held by the csv_content
+variable.".
+    :percent a pub:InMemoryData;
+        dcterms:description "Data held by the percent
+variable.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+# Case study based categorization of data generation.
+pub:Obtaining a owl:Class;
+    rdfs:label "Obtaining of data";
+    rdfs:comment """
+    This class represents generation of data through
+selecting and/or gathering data from certain sources. One
+example is filling in a data request form at a certain
+Webpage and download the requested data file, so the data
+file was generated through obtaining data.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :obtain_data a pub:Obtaining;
+        dcterms:description "Filled out the data request
+form at
+http://www7.ncdc.noaa.gov/CDO/CDODivisionalSelect.jsp# with
+period: 1970.1--2010.12, and downloaded the requested
+data.";
+        prov:generated :csv_file.
+    :csv_file a pub:OnDiskData;
+        pub:format "CSV";
+        dcterms:description "Data in the
+CDODiv2177686828992.txt file.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+pub:Loading a owl:Class;
+    rdfs:label "Loading of data";
+    rdfs:comment """
+    This class represents generation of data through
+loading data from disk to memory. For example, the
+following code in Python loaded data in the data.csv file
+into the csv_content data object in memory:
+    
+    import pandas as pd
+    csv_content = pd.read_csv("data.csv", delimiter=' ',
+skipinitialspace=True)
+    
+    Consider using pub:loaded to describe the source data
+been loaded.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :load_data a pub:Loading;
+        dcterms:description "Loaded data from the data.csv
+file to the csv_content variable.";
+        pub:language "Python";
+        pub:code \"\"\"
+        import pandas as pd
+        csv_content = pd.read_csv("data.csv", delimiter='
+', skipinitialspace=True)        
+        \"\"\";
+        pub:loaded :csv_file;
+        prov:used :pandas;
+        pub:generated :csv_content.
+    :csv_file a pub:OnDiskData;
+        pub:format "CSV";
+        dcterms:description "Data in the data.csv file.".
+    :pandas a pub:Library;
+        dcterms:description "The Python pandas library.".
+    :csv_content a pub:InMemoryData;
+        dcterms:desription "Data held by the csv_content
+variable.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+pub:Saving a owl:Class;
+    rdfs:label "Saving of data";
+    rdfs:comment """
+    This class represents generation of data through saving
+data from memory to disk. For example, the following code
+in R saved data held by the data_frame variable in memory
+to the data.csv file on disk:
+    
+    write.csv(data_frame, "data.csv")
+    
+    Consider using pub:saved to describe data been saved.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :save_data a pub:Saving;
+        dcterms:description "Saved data held by the
+csv_content varialbe to the data.csv file.";
+        pub:language "R";
+        pub:code "write.csv(csv_content, \"data.csv\")";
+        pub:saved :csv_content;
+        prov:generated :csv_file.
+    :csv_content a pub:InMemoryData;
+        dcterms:description "Data held by the csv_content
+variable.".
+    :csv_file a pub:OnDiskData;
+        pub:format "CSV";
+        dcterms:description "Data in the data.csv file.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+pub:Transformation a owl:Class;
+    rdfs:label "Transformation of data";
+    rdfs:comment """
+    This class represents generation of data through
+various data transforming operations. One example is using
+Python scripts to transform a data object loaded from a CSV
+file into a form that is ready for the matplotlib library
+to plot.
+    
+    Consider using pub:transformed to describe data been
+transformed.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :transform_data a pub:Transformation;
+        dcterms:description "Used Python scripts to
+transform data held by the variable csv_content into data
+held by variable percent for matplotlib.";
+        pub:language "Python";
+        pub:code \"\"\"
+        import pandas as pd
+        dd_agg=dd.groupby(dd['YearMonth'] // 100).sum()
+        dd_agg.index.name=u'Year'
+        cdd_avg, hdd_avg = sum(dd_agg['CDD'][0:31])/31,
+sum(dd_agg['HDD'][0:31])/31
+        to_percent = lambda x, y: (x-y)/y*100
+        cdd_percent, hdd_percent =
+to_percent(dd_agg['CDD'][:], cdd_avg),
+to_percent(dd_agg['HDD'][:], hdd_avg)
+        percent = pd.concat([hdd_percent, cdd_percent],
+axis=1)
+        \"\"\";
+        prov:used :pandas;
+        pub:transformed :csv_content;
+        prov:generated :percent.
+    :pandas a pub:Library;
+        dcterms:description "The Python pandas library.".
+    :csv_content a pub:InMemoryData;
+        dcterms:description "Data held by the csv_content
+variable.".
+    :percent a pub:InMemoryData;
+        dcterms:description "Data held by the percent
+variable.".    
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+# Result generation activities.
+pub:ResultGeneration a owl:Class;
+    rdfs:label "Result generation";
+    rdfs:comment """
+    This class represents those activities that generated
+published results. Two major result generation activities,
+namely visualization and analysis, are defined as two
+subclasses of this class.
+    
+    It is recommended to use pub:language to describe the
+programming or script language used to generate the result,
+pub:code to describe the code used to generate the result,
+and dcterms:description to describe the result generation
+process in natural language.
+    
+    Note that this class and its subclasses are intended to
+be used to represent activities that generated published
+results. To represent activities that generated data,
+pub:DataGeneration and its subclasses should be used.
+    
+    """;
+    rdfs:subClassOf prov:Activity.
+
+pub:Visualization a owl:Class;
+    rdfs:label "Visualization of data";
+    rdfs:comment """
+    This class represents generation of results through
+visualization of data. Figures are typically generated in
+this way.
+    
+    Consider using pub:visualized to describe data been
+visualized.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :plot_data a pub:Visualization;
+        dcterms:description "Plotted data held by the
+percent variable with matplotlib to generate Figure 4.2.";
+        pub:language "Python";
+        pub:code \"\"\"
+        import matplotlib.pyplot as plt
+        plt.style.use('ggplot')
+        percent.plot(kind='bar', figsize=(20,10))
+        \"\"\";
+        pub:visualized :percent;
+        prov:used :matplotlib;
+        prov:generated :figure4_2.
+    :percent a pub:InMemoryData;
+        dcterms:desccription "Data held by the percent
+variable.".
+    :matplotlib a pub:Library;
+        dcterms:description "The matplotlib Python
+library.".
+    :figure4_2 a pub:Figure;
+        rdfs:label "Figure 4.2";
+        pub:caption "Increase in Cooling Demand and
+Decrease in Heating Demand";
+        pub:inSection :section1.
+    """;
+    rdfs:subClassOf pub:ResultGeneration.
+
+pub:Analysis a owl:Class;
+    rdfs:label "Analysis of data";
+    rdfs:comment """
+    This class represents generation of results through
+analysis of data.
+    
+    Consider using pub:analyzed to describe data been
+analyzed.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :analyze_data a pub:Analysis;
+        dcterms:description "Analyzed data about U.S.
+electricity generation in 2011";
+        pub:analyzed :us_electricity_data_2011;
+        prov:generated :text.
+    :us_electricity_data_2011 a pub:Data.
+    :text a pub:Text;
+        rdfs:label "The sentence in the last paragraph of
+page 115 saying that coal produced 42% of U.S. electricity
+in 2011";
+        pub:inSection :section1.
+    """;
+    rdfs:subClassOf pub:ResultGeneration.
+
+pub:Reuse a owl:Class;
+    rdfs:label "Reuse of published result";
+    rdfs:comment """
+    This class represents generation of a result through
+reuse of another existing result.
+    
+    Consider using pub:reused to describe result been
+reused.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :reuse_figure a pub:Reuse;
+        dcterms:description "Reused Figure 19 in the
+osti-1026811 report as Figure 4.5.";
+        pub:reused :figure19;
+        prov:generated :figure4_5.
+    :figure19 a pub:Figure.
+    :figure4_5 a pub:Figure;
+        rdfs:label "Figure 4.5";
+        pub:caption "California Power Plants Potentially at
+Risk from Sea Level Rise";
+        pub:inSection :section1.
+    """;
+    rdfs:subClassOf pub:ResultGeneration.
+
+# Properties
+
+# Properties about data usage
+pub:obtained a rdf:Property;
+    rdfs:label "obtained";
+    rdfs:comment """
+    This property represents the relation of a data
+obtaining activity used certain collections of data to
+obtain the data wanted.
+    """;
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Obtaining;
+    rdfs:range pub:Data.
+    
+pub:loaded a rdf:Property;
+    rdfs:label "loaded";
+    rdfs:comment """
+    This property represents the relation of a data loading
+activity used certain on-disk data in the form of loading
+it to main memory.
+    """;
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Loading;
+    rdfs:range pub:Data.
+    
+pub:saved a rdf:Property;
+    rdfs:label "saved";
+    rdfs:comment """
+    This property represents the relation of a data saving
+activity used certain in-memory data in the form of saving
+it to disk.
+    """;
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Saving;
+    rdfs:range pub:Data.
+
+pub:transformed a rdf:Property;
+    rdfs:label "transformed";
+    rdfs:comment """
+    This property represents the relation of a data
+transforming activity used certain data in the form of
+transforming it to the data wanted.
+    """;
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Transformation;
+    rdfs:range pub:Data.
+
+pub:visualized a rdf:Property;
+    rdfs:label "visualized";
+    rdfs:comment """
+    This property represents the relation of a
+visualization activity used certain data in the form of
+visualizing it to generate the result wanted.
+    """;
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Visualization;
+    rdfs:range pub:Data.
+
+pub:analyzed a rdf:Property;
+    rdfs:label "analyzed";
+    rdfs:comment """
+    This property represents the relation of a analysis
+activity used certain data in the form of analyzing it to
+generate the result wanted.
+    """;
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Analysis;
+    rdfs:range pub:Data.
+
+# Properties about result reuse
+pub:reused a rdf:Property;
+    rdfs:label "reused";
+    rdfs:comment """
+    This property represents the relation of a reuse
+activity reused a published result to generate the result
+wanted. 
+    """;
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Reuse;
+    rdfs:range pub:PublishedResult.
+    
+# Annotations
+
+pub:language a owl:DatatypeProperty;
+    rdfs:label "programming language";
+    rdfs:comment """
+    This annotation represents the programming language
+used by a data or result generation activity.
+    """;
+    rdfs:range xsd:string.
+
+pub:code a owl:DatatypeProperty;
+    rdfs:label "code";
+    rdfs:comment """
+    This annotation represents the code used to generate
+data or results.
+    """;
+    rdfs:range xsd:string.
+
+pub:format a owl:DatatypeProperty;
+    rdfs:label "format";
+    rdfs:comment """
+    This annotation represents the format of on-disk data.
+    """;
+    rdfs:range xsd:string.
+
+dcterms:description a rdf:Property;
+    skos:scopeNote """
+    Used to include natural language descriptions of data
+and data/result generation activities.
+    """.
+    
