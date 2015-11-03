@@ -3,16 +3,8 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#>.
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
 @prefix dcterms: <http://www.purl.org/dc/terms/>.
-@prefix foaf: <http://xmlns.com/foaf/0.1/>.
 @prefix skos: <http://www.w3.org/2004/02/skos/core#>.
 @prefix prov: <http://www.w3.org/ns/prov#>.
-
-@prefix doco: <http://purl.org/spar/doco/>.
-@prefix deo: <http://purl.org/spar/deo/>.
-@prefix sro: <http://salt.semanticauthoring.org/ontologies/sro#>.
-@prefix bibo: <http://purl.org/ontology/bibo/>.
-@prefix bibtex: <http://purl.org/net/nknouf/ns/bibtex#>.
-@prefix pattern: <http://www.essepuntato.it/2008/12/pattern#>.
 
 @prefix pub: <http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/>.
 
@@ -35,362 +27,434 @@
 
 # Entities related to result generation process, including data, library and result.
 pub:Data a owl:Class;
-    rdfs:subClassOf prov:Entity;
     rdfs:label "Data";
     rdfs:comment """
     The data class represents those things which are considered "data" by researchers. Data may reside on disk in files, databases or triple stores, but it may also reside in memory in some data structure and/or held by variables in a program. Changes of data are performed to generate new (intermediate) data or published results.
-    """.
+    """;
+    rdfs:subClassOf prov:Entity.
 
 pub:InMemoryData a owl:Class;
-    rdfs:subClassOf pub:Data;
-    rdfs:label "In-Memory Data";
-    rdfs:comments """
+    rdfs:label "In-memory data";
+    rdfs:comment """
     The in-memory data class represents those data that reside in memory, in some data structure and/or held by variables in a program.
-    """.
     
-pub:OnDiskData a owl:Class;
-    rdfs:subClassOf pub:Data;
-    rdfs:label "On-Disk Data";
-    rdfs:comments """
-    The on-disk data class represents those data that reside on disk, in files, databases or triple stores.
-    """.
-    
-pub:Library a owl:Class;
-    rdfs:subClassOf prov:Entity;
-    rdfs:label "Library";
-    rdfs:comments """
-    The library classes represents software modules or utilities with functions useful in the changes of data.
-    """.
-    
-pub:PublishedResult a owl:Class;
-    rdfs:subClassOf prov:Entity;
-    skos:scopeNote """
-    Also defined in PROV-PUB-O/S, this class represents published results including figures, tables, lists and textual descriptions. When an instance of this class is used in the context of provenance capturing, it is a provenance entity and represents the final product generated through a series of changes of data to appear in a research publication.
-    """.
-    
-# Changes of data related to result generation process, including data loading, 
-pub:Publication a owl:Class;
-    rdfs:label "Research publication";
-    rdfs:comment """
-    The research publication class represents those things which are broadly conceived "research publications". 
-    
-    Consider asserting pub:Publication's also instances of bibtex:Entry or one of its subclasses to specify BibTeX entry type, or asserting them instances of bibo:Document or one of its subclasses to specify document type.
-    
-    Consider asserting pub:Publication to be a subclass of bibtex:Entry and/or bibo:Document to make every pub:Publication instance automatically also an instance of bibtex:Entry and/or bibo:Document.
-
-    Examples:
-    @prefix : <http://example.org/>
-    :publication1 a pub:Publication, bibtex:Article, bibo:Document;
-        bibtex:hasTitle "..."; # this and the following triples are asserted to satisfy constraints on bibtex:Article
-        bibtex:hasYear "2015"^^xsd:nonNegativeInteger;
-        bibtex:hasJournal "...";
-        bibtex:hasAuthor "...".
-
-    """;
-    rdfs:subClassOf pub:ResultContainer.
-    
-pub:Chapter a owl:Class;
-    rdfs:label "Chapter";
-    rdfs:comment """
-    The Chapter class represents chapters in research publications. A chapter is usually identified by a (numerical) label (with rdfs:label) and/or a caption (with pub:caption). An example of a label for a chapter is  This class can be used with doco:Chapter through subclassing or double-classing. By asserting pub:Chapter to be a subclass of doco:Chapter (subclassing), instances of pub:Chapter are automatically also instances of doco:Chapter. Instances of pub:Chapter can be asserted to be also instances of doco:Chapter, one at a time (double-classing).
-    
-    Examples:
-    @prefix : <http://example.org/>
-    :chapter4 a pub:Chapter, doco:Chapter;
-        rdfs:label "Chapter 4";
-        pub:caption "Energy Supply and Use";
-        pub:inPublication :publication2; # this chapter is in a publication
-        pub:hasSection :section1; # it has a section in it
-        pub:hasFigure :figure1; # it has a figure in it
-        pub:hasTable :table1; # it has a table in it
-        pattern:contains :paragraph1. # use a property in DoCO to reach down to the paragraph level
-    """;
-    rdfs:subClassOf pub:ResultContainer.
-
-pub:Section a owl:Class;
-    rdfs:label "Section";
-    rdfs:comment """
-    This class represents sections and can be used with doco:Section through subclassing or double classing. By asserting pub:Section to be a subclass of doco:Section (subclassing), instances of pub:Section are automatically also instances of doco:Section. Instances of pub:Section can be asserted to be also instances of doco:Section, one at a time (double-classing).
+    It is recommended to use dcterms:description to describe an in-memory data object in natural language.
     
     Examples: 
-    @prefix : <http://example.org/>
-    :section1 a pub:Section, doco:Section;
-        rdfs:label "Section 4.1";
-        pub:caption "Disruptions from Extreme Weather";
-        pub:inPublication :publication1; # this section is in a publication
-        pub:inChapter :chapter4; # this section is in a chapter
-        pub:hasSection :section1_1; # it has a subsection
-        pub:hasFigure :figure1; # it has a figure in it
-        pub:hasTable :table1; # it has a table in it
-        pattern:contains :paragraph1. # use a property in DoCO to reach down to the paragraph level
+    @prefix : <http://example.org/>.
+    :csv_content a pub:InMemoryData;
+        dcterms:description "Data held by the csv_content variable.".
     """;
-    rdfs:subClassOf pub:ResultContainer.
-
-# Published results, including figure, table, list and textual description.
+    rdfs:subClassOf pub:Data.
+    
+pub:OnDiskData a owl:Class;
+    rdfs:label "On-disk data";
+    rdfs:comment """
+    The on-disk data class represents those data that reside on disk, in files, databases or triple stores.
+    
+    It is recommended to use pub:format to describe the format of an on-disk data object and dcterms:description to describe it in natural language.
+    
+    Examples: 
+    @prefix : <http://example.org/>.
+    :csv_file a pub:OnDiskData;
+        pub:format "CSV";
+        dcterms:description "Data in the data.csv file.".
+    """;
+    rdfs:subClassOf pub:Data.
+    
+pub:Library a owl:Class;
+    rdfs:label "Library";
+    rdfs:comment """
+    The library class represents software modules or utilities with functions useful in the generation process of data and results. Data and result generation activities may use libraries.
+    
+    It is recommended to use dcterms:description to describe a library in natural language.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :pandas a pub:Library;
+        dcterms:description "The pandas Python library.".
+    """;
+    rdfs:subClassOf prov:Entity.
+    
 pub:PublishedResult a owl:Class;
-    rdfs:label "Published result";
-    rdfs:comment """
-    This class represents published results including figures, tables, lists and textual descriptions. Subclasses of this class are expected to be defined by users to support more kinds of published results. The property pub:hasResult can be used on pub:ResultContainer instances to locate data products.
-    """.
-    
-pub:Figure a owl:Class;
-    rdfs:label "Figure";
-    rdfs:comment """
-    Figures are usually identified by their labels and captions, i.e., rdfs:label and pub:caption property values. An example of a label for a figure is "Figure 4.1", and an example of a caption for a figure is "Paths of Hurricanes Katrina and Rita Relative to Oil and Gas Production Facilities". If used together with doco:Figure, note that a doco:Figure cannot be contained (described with pattern:contains) by doco:Section or doco:Chapter. In this ontology, pub:hasFigure, pub:inSection, pub:inChapter and pub:inPublication can be used with pub:Publication, pub:Chapter and pub:Section instances to locate figures.
-    
-    Examples:
-    @prefix : <http://example.org/>
-    :figure1 a pub:Figure; # Benefit of double-classing with doco:Figure is unclear, so no double-classing here.
-        rdfs:label "Figure 4.1";
-        pub:caption "Paths of Hurricanes Katrina and Rita Relative to Oil and Gas Production Facilities";
-        pub:inSection :section1; # the figure is in a section
-        pub:inChapter :chapter4; # the figure is in a chapter
-        pub:inPublication :publication1. # the figure is in a publication
+    skos:scopeNote """
+    Also defined in PROV-PUB-O/S, this class represents published results including figures, tables, lists and textual descriptions. When an instance of this class is used in the context of provenance capturing, it is a provenance entity and represents the final product generated through a series of changes of data to appear in a research publication.
     """;
-    rdfs:subClassOf pub:PublishedResullt.
+    rdfs:subClassOf prov:Entity.
     
-pub:Table a owl:Class;
-    rdfs:label "Table";
+# Data generation activities. 
+pub:DataGeneration a owl:Class;
+    rdfs:label "Data generation";
     rdfs:comment """
-    Tables are usually identified by their labels and captions, i.e., rdfs:label and pub:caption property values. An example of a label for a table is "Table 4.1", and an example of a caption for a table is "Changing Energy Use for Heating and Cooling Will Vary by Region". If used together with doco:Table, note that a doco:Table cannot be contained (described with pattern:contains) by doco:Section or doco:Chapter. In this ontology, pub:hasTable, pub:inSection, pub:inChapter and pub:inPublication can be used on pub:Publication, pub:Chapter and pub:Section instances to locate tables.
+    This class represents those activities that generated data. Two categorizations of this class are provided in this ontology: one based on the semiotic framework presented by Burton-Jones et al. in 2005 and the other based on a case study on the result generation process of each figure and table in Chapter 4 of NCA 2014. pub:PhysicalChange, pub:SyntacticalChange and pub:SemanticalChange are semiotic framework based categories of changes of data; pub:Obtaining, pub:Loading, pub:Saving and pub:Transformation are case study based categories.
     
-    Examples:
-    @prefix : <http://example.org/>
-    :table1 a pub:Table; # No double-classing with doco:Table here because the benefit is unclear.
-        rdfs:label "Table 4.1";
-        pub:caption "Changing Energy Use for Heating and Cooling Will Vary by Region";
-        pub:inSection :section1; # the table is in a section
-        pub:inChapter :chapter4; # it is in a chapter
-        pub:inPublication :publication1. # it is in a publication
+    It is recommended to use pub:language to describe the programming or script language used to generate data, pub:code to describe the code used to generate data, and dcterms:description to describe the data generation process in natural language.
+    
+    Note that this class and its subclasses are intended to be used to represent activities that generated data. To represent activities that generated published results, pub:ResultGeneration and its subclasses should be used.
+    
     """;
-    rdfs:subClassOf pub:PublishedResult.
-    
-pub:List a owl:Class;
-    rdfs:label "Published result in the form of a list";
+    rdfs:subClassOf prov:Activity.
+
+# Semiotic framework based categorization of data generation.
+pub:PhysicalChange a owl:Class;
+    rdfs:label "Physical change";
     rdfs:comment """
-    Unlike figures and tables, lists may not have labels and captions to identify them. It is recommended to use the rdfs:label property to give location information. In this ontology, pub:hasList, pub:inSection, pub:inChapter and pub:inPublication can be used on the proper pub:ResultContainer instances to locate lists.
+    This class represents such data generation activities that keep the source data "as is" and only change the locations and access permissions to generate new data. Examples are download, copying and sharing.
     
     Examples:
-    @prefix : <http://example.org/>
-    :list1 a pub:List;
-        rdfs:label "The list at the beginning of Chapter 4"; # give location information to help identify the list
-        pub:inChapter :chapter4; # the list is in a chapter
-        pub:inPublication :publication1. # it is in a publication
+    @prefix : <http://example.org/>.
+    :download_data a pub:PhysicalChange;
+        pub:language "Bash";
+        pub:code "wget http://www1.ncdc.noaa.gov/pub/orders/CDODiv2177686828992.txt";
+        dcterms:description "Downloaded a CSV file from a NOAA/NCDC download link with the wget utility.";
+        prov:used :wget;
+        prov:generated :csv_file.
+    :wget a pub:Library;
+        dcterms:description "The wget utility.".
+    :csv_file a pub:OnDiskData;
+        pub:format "CSV";
+        dcterms:description "Data in the CDODiv2177686828992.txt file.".
     """;
-    rdfs:subClassOf pub:PublishedResult.
-    
-pub:Text a owl:Class;
-    rdfs:label "Textually described result";
+    rdfs:subClassOf pub:DataGeneration.
+
+pub:SyntacticalChange a owl:Class;
+    rdfs:label "Syntactical change";
     rdfs:comment """
-    Results of this kind usually do not have labels and captions to identify. It is recommended to use the rdfs:label property to give location information. In this ontology, pub:hasText, pub:inSection, pub:inChapter and pub:inPublication can be used on the proper pub:ResultContainer instances to locate textually described results.
+    This class represents such data generation activities that keep the logical content of the source data intact and only change the formats and encodings to generate new data. One example is converting data in RDF/XML to Turtle.
     
     Examples:
-    @prefix : <http://example.org/>
-    :text1 a pub:Text;
+    @prefix : <http://example.org/>.
+    :convert_data a pub:SyntacticalChange;
+        dcterms:description "Used the online converter at http://www.easyrdf.org/converter with the \"Raw output\" option clicked.";
+        prov:used :converter;
+        prov:used :xml_data;
+        prov:generated :ttl_data.
+    :converter a pub:Library;
+        dcterms:description "The easyrdf online converter.".
+    :xml_data a pub:OnDiskData;
+        pub:format "RDF/XML";
+        dcterms:description "The bibtex ontology in RDF/XML.".
+    :ttl_data a pub:OnDiskData;
+        pub:format "Turtle";
+        dcterms:description "The bibtex ontology in Turtle.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+pub:SemanticalChange a owl:Class;
+    rdfs:label "Semantical change";
+    rdfs:comment """
+    This class represents such changes to data that change the actual logical content of data. Usually this is the most interesting category of changes, and generally called data transformation.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :transform_data a pub:SemanticalChange;
+        dcterms:description "Used Python scripts to transform data held by the variable csv_content into data held by variable percent for matplotlib.";
+        pub:language "Python";
+        pub:code \"\"\"
+        import pandas as pd
+        dd_agg=dd.groupby(dd['YearMonth'] // 100).sum()
+        dd_agg.index.name=u'Year'
+        cdd_avg, hdd_avg = sum(dd_agg['CDD'][0:31])/31, sum(dd_agg['HDD'][0:31])/31
+        to_percent = lambda x, y: (x-y)/y*100
+        cdd_percent, hdd_percent = to_percent(dd_agg['CDD'][:], cdd_avg), to_percent(dd_agg['HDD'][:], hdd_avg)
+        percent = pd.concat([hdd_percent, cdd_percent], axis=1)
+        \"\"\";
+        prov:used :pandas;
+        pub:transformed :csv_content;
+        prov:generated :percent.
+    :pandas a pub:Library;
+        dcterms:description "The Python pandas library.".
+    :csv_content a pub:InMemoryData;
+        dcterms:description "Data held by the csv_content variable.".
+    :percent a pub:InMemoryData;
+        dcterms:description "Data held by the percent variable.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+# Case study based categorization of data generation.
+pub:Obtaining a owl:Class;
+    rdfs:label "Obtaining of data";
+    rdfs:comment """
+    This class represents generation of data through selecting and/or gathering data from certain sources. One example is filling in a data request form at a certain Webpage and download the requested data file, so the data file was generated through obtaining data.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :obtain_data a pub:Obtaining;
+        dcterms:description "Filled out the data request form at http://www7.ncdc.noaa.gov/CDO/CDODivisionalSelect.jsp# with period: 1970.1--2010.12, and downloaded the requested data.";
+        prov:generated :csv_file.
+    :csv_file a pub:OnDiskData;
+        pub:format "CSV";
+        dcterms:description "Data in the CDODiv2177686828992.txt file.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+pub:Loading a owl:Class;
+    rdfs:label "Loading of data";
+    rdfs:comment """
+    This class represents generation of data through loading data from disk to memory. For example, the following code in Python loaded data in the data.csv file into the csv_content data object in memory:
+    
+    import pandas as pd
+    csv_content = pd.read_csv("data.csv", delimiter=' ', skipinitialspace=True)
+    
+    Consider using pub:loaded to describe the source data been loaded.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :load_data a pub:Loading;
+        dcterms:description "Loaded data from the data.csv file to the csv_content variable.";
+        pub:language "Python";
+        pub:code \"\"\"
+        import pandas as pd
+        csv_content = pd.read_csv("data.csv", delimiter=' ', skipinitialspace=True)        
+        \"\"\";
+        pub:loaded :csv_file;
+        prov:used :pandas;
+        pub:generated :csv_content.
+    :csv_file a pub:OnDiskData;
+        pub:format "CSV";
+        dcterms:description "Data in the data.csv file.".
+    :pandas a pub:Library;
+        dcterms:description "The Python pandas library.".
+    :csv_content a pub:InMemoryData;
+        dcterms:desription "Data held by the csv_content variable.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+pub:Saving a owl:Class;
+    rdfs:label "Saving of data";
+    rdfs:comment """
+    This class represents generation of data through saving data from memory to disk. For example, the following code in R saved data held by the data_frame variable in memory to the data.csv file on disk:
+    
+    write.csv(data_frame, "data.csv")
+    
+    Consider using pub:saved to describe data been saved.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :save_data a pub:Saving;
+        dcterms:description "Saved data held by the csv_content varialbe to the data.csv file.";
+        pub:language "R";
+        pub:code "write.csv(csv_content, \"data.csv\")";
+        pub:saved :csv_content;
+        prov:generated :csv_file.
+    :csv_content a pub:InMemoryData;
+        dcterms:description "Data held by the csv_content variable.".
+    :csv_file a pub:OnDiskData;
+        pub:format "CSV";
+        dcterms:description "Data in the data.csv file.".
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+pub:Transformation a owl:Class;
+    rdfs:label "Transformation of data";
+    rdfs:comment """
+    This class represents generation of data through various data transforming operations. One example is using Python scripts to transform a data object loaded from a CSV file into a form that is ready for the matplotlib library to plot.
+    
+    Consider using pub:transformed to describe data been transformed.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :transform_data a pub:Transformation;
+        dcterms:description "Used Python scripts to transform data held by the variable csv_content into data held by variable percent for matplotlib.";
+        pub:language "Python";
+        pub:code \"\"\"
+        import pandas as pd
+        dd_agg=dd.groupby(dd['YearMonth'] // 100).sum()
+        dd_agg.index.name=u'Year'
+        cdd_avg, hdd_avg = sum(dd_agg['CDD'][0:31])/31, sum(dd_agg['HDD'][0:31])/31
+        to_percent = lambda x, y: (x-y)/y*100
+        cdd_percent, hdd_percent = to_percent(dd_agg['CDD'][:], cdd_avg), to_percent(dd_agg['HDD'][:], hdd_avg)
+        percent = pd.concat([hdd_percent, cdd_percent], axis=1)
+        \"\"\";
+        prov:used :pandas;
+        pub:transformed :csv_content;
+        prov:generated :percent.
+    :pandas a pub:Library;
+        dcterms:description "The Python pandas library.".
+    :csv_content a pub:InMemoryData;
+        dcterms:description "Data held by the csv_content variable.".
+    :percent a pub:InMemoryData;
+        dcterms:description "Data held by the percent variable.".    
+    """;
+    rdfs:subClassOf pub:DataGeneration.
+
+# Result generation activities.
+pub:ResultGeneration a owl:Class;
+    rdfs:label "Result generation";
+    rdfs:comment """
+    This class represents those activities that generated published results. Two major result generation activities, namely visualization and analysis, are defined as two subclasses of this class.
+    
+    It is recommended to use pub:language to describe the programming or script language used to generate the result, pub:code to describe the code used to generate the result, and dcterms:description to describe the result generation process in natural language.
+    
+    Note that this class and its subclasses are intended to be used to represent activities that generated published results. To represent activities that generated data, pub:DataGeneration and its subclasses should be used.
+    
+    """;
+    rdfs:subClassOf prov:Activity.
+
+pub:Visualization a owl:Class;
+    rdfs:label "Visualization of data";
+    rdfs:comment """
+    This class represents generation of results through visualization of data. Figures are typically generated in this way.
+    
+    Consider using pub:visualized to describe data been visualized.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :plot_data a pub:Visualization;
+        dcterms:description "Plotted data held by the percent variable with matplotlib to generate Figure 4.2.";
+        pub:language "Python";
+        pub:code \"\"\"
+        import matplotlib.pyplot as plt
+        plt.style.use('ggplot')
+        percent.plot(kind='bar', figsize=(20,10))
+        \"\"\";
+        pub:visualized :percent;
+        prov:used :matplotlib;
+        prov:generated :figure4_2.
+    :percent a pub:InMemoryData;
+        dcterms:desccription "Data held by the percent variable.".
+    :matplotlib a pub:Library;
+        dcterms:description "The matplotlib Python library.".
+    :figure4_2 a pub:Figure;
+        rdfs:label "Figure 4.2";
+        pub:caption "Increase in Cooling Demand and Decrease in Heating Demand";
+        pub:inSection :section1.
+    """;
+    rdfs:subClassOf pub:ResultGeneration.
+
+pub:Analysis a owl:Class;
+    rdfs:label "Analysis of data";
+    rdfs:comment """
+    This class represents generation of results through analysis of data.
+    
+    Consider using pub:analyzed to describe data been analyzed.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :analyze_data a pub:Analysis;
+        dcterms:description "Analyzed data about U.S. electricity generation in 2011";
+        pub:analyzed :us_electricity_data_2011;
+        prov:generated :text.
+    :us_electricity_data_2011 a pub:Data.
+    :text a pub:Text;
         rdfs:label "The sentence in the last paragraph of page 115 saying that coal produced 42% of U.S. electricity in 2011";
-        pub:inSection :section1; # the text is found in a section
-        pub:inChapter :chapter4; # it is in a chapter
-        pub:inPublication :publication1. # it is in a publication
+        pub:inSection :section1.
     """;
-    rdfs:subClassOf pub:PublishedResult.
+    rdfs:subClassOf pub:ResultGeneration.
+
+pub:Reuse a owl:Class;
+    rdfs:label "Reuse of published result";
+    rdfs:comment """
+    This class represents generation of a result through reuse of another existing result.
     
+    Consider using pub:reused to describe result been reused.
+    
+    Examples:
+    @prefix : <http://example.org/>.
+    :reuse_figure a pub:Reuse;
+        dcterms:description "Reused Figure 19 in the osti-1026811 report as Figure 4.5.";
+        pub:reused :figure19;
+        prov:generated :figure4_5.
+    :figure19 a pub:Figure.
+    :figure4_5 a pub:Figure;
+        rdfs:label "Figure 4.5";
+        pub:caption "California Power Plants Potentially at Risk from Sea Level Rise";
+        pub:inSection :section1.
+    """;
+    rdfs:subClassOf pub:ResultGeneration.
+
 # Properties
 
-# is part of relations
-dcterms:isPartOf a rdf:Property;
-    skos:scopeNote "Used to express part-whole relations among publications, chapters, sections, figures and tables.".
-    
-dcterms:hasPart a rdf:Property;
-    skos:scopeNote "Used to express part-whole relations among publications, chapters, sections, figures and tables.".
-    
-pub:inPublication a owl:ObjectProperty;
-    rdfs:label "is in publication";
+# Properties about data usage
+pub:obtained a rdf:Property;
+    rdfs:label "obtained";
     rdfs:comment """
-    This property represents the relation of a published result or result container being in a certain publication, so the range of this property is pub:Publication. We do not put any constraint of its domain since we do not know if published result and result container cover all the things that a user would like to describe to be in a publication.
+    This property represents the relation of a data obtaining activity used certain collections of data to obtain the data wanted.
     """;
-    rdfs:subPropertyOf dcterms:isPartOf;
-    rdfs:range pub:Publication.
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Obtaining;
+    rdfs:range pub:Data.
+    
+pub:loaded a rdf:Property;
+    rdfs:label "loaded";
+    rdfs:comment """
+    This property represents the relation of a data loading activity used certain on-disk data in the form of loading it to main memory.
+    """;
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Loading;
+    rdfs:range pub:Data.
+    
+pub:saved a rdf:Property;
+    rdfs:label "saved";
+    rdfs:comment """
+    This property represents the relation of a data saving activity used certain in-memory data in the form of saving it to disk.
+    """;
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Saving;
+    rdfs:range pub:Data.
 
-pub:inChapter a owl:ObjectProperty;
-    rdfs:label "is in chapter";
+pub:transformed a rdf:Property;
+    rdfs:label "transformed";
     rdfs:comment """
-    This property is defined in the same way as pub:inPublication, except it is for chapter parts and results in a chapter.
+    This property represents the relation of a data transforming activity used certain data in the form of transforming it to the data wanted.
     """;
-    rdfs:subPropertyOf dcterms:isPartOf;
-    rdfs:range pub:Chapter.
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Transformation;
+    rdfs:range pub:Data.
 
-pub:inSection a owl:ObjectProperty;
-    rdfs:label "is in section";
+pub:visualized a rdf:Property;
+    rdfs:label "visualized";
     rdfs:comment """
-    This property is defined in the same way as pub:inPublication, except it is for section parts and results in a section.
+    This property represents the relation of a visualization activity used certain data in the form of visualizing it to generate the result wanted.
     """;
-    rdfs:subPropertyOf dcterms:isPartOf;
-    rdfs:range pub:Section.
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Visualization;
+    rdfs:range pub:Data.
 
-# is part of relations with role indication, only those parts usually played by a section or a chapter are included.
-pub:isIntroductionOf a owl:ObjectProperty;
-    rdfs:label "is introduction of";
+pub:analyzed a rdf:Property;
+    rdfs:label "analyzed";
     rdfs:comment """
-    This property is introduced to replace the deo:Introduction class since a dangling introduction instance does not make sense, it must instead "to be the introduction of something". One section or chapter or something else alone does not qualify itself to be an introduction. It is the relation between this section or chapter or something else and the thing it introduces that makes it "an introduction". We capture this relation with the property pub:isIntroductionOf and argue that this is a more intuitive way to express the idea than using the deo:Introduction class. The introducer is usually a chapter or section, but can be something else; the introducee is usually a publication, but also can be a chapter or something else, so neither domain nor range is asserted for pub:isIntroductionOf.
+    This property represents the relation of a analysis activity used certain data in the form of analyzing it to generate the result wanted.
     """;
-    rdfs:subPropertyOf dcterms:isPartOf.
-    
-pub:isAbstractOf a owl:ObjectProperty;
-    rdfs:label "is abstract of";
-    rdfs:comment """
-    This property is introduced to replace the sro:Abstract class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf. Unlike some other classes such as sro:Background and sro:Conclusion, sro:Abstract does not have an equivalent class in DEO. The subject of this property is usually a pub:Section, but we are not a hundred percent sure whether it can be something else; the object of the property is usually a pub:Publication, but again we are not sure, so the domain and range of pub:isAbstractOf are both left unspecified.
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
-    
-pub:isBackgroundOf a owl:ObjectProperty;
-    rdfs:label "is background of";
-    rdfs:comment """
-    This property is introduced to replace the deo:Background class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf. The subject of this property is usually a pub:Chapter, and the object usually a pub:Publication, but we are not sure whether they can be something else, so the domain and range are both left unspecified.
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Analysis;
+    rdfs:range pub:Data.
 
-pub:isConclusionOf a owl:ObjectProperty;
-    rdfs:label "is conclusion of";
+# Properties about result reuse
+pub:reused a rdf:Property;
+    rdfs:label "reused";
     rdfs:comment """
-    This property is introduced to replace the deo:Conclusion class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isBackgroundOf in terms of domain and range applies to this property as well. i.e., pub:isConclusionOf usually represents a chapter-publication relation.
+    This property represents the relation of a reuse activity reused a published result to generate the result wanted. 
     """;
-    rdfs:subPropertyOf dcterms:isPartOf.
+    rdfs:subPropertyOf prov:used;
+    rdfs:domain pub:Reuse;
+    rdfs:range pub:PublishedResult.
     
-pub:isContributionOf a owl:ObjectProperty;
-    rdfs:label "is contribution of";
-    rdfs:comment """
-    This property is introduced to replace the deo:Contribution class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf. The subject of this property can be a pub:Chapter, a pub:Section or a set of paragraphs or sentences, in the latter two cases it cannot be described with this ontology.
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
-    
-pub:isDiscussionOf a owl:ObjectProperty;
-    rdfs:label "is discussion of";
-    rdfs:comment """
-    This property is introduced to replace the deo:Discussion class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isDiscussionOf usually represents a chapter-publication or section-chapter relation.
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
+# Annotations
 
-pub:isEvaluationOf a owl:ObjectProperty;
-    rdfs:label "is evaluation of";
+pub:language a owl:DatatypeProperty;
+    rdfs:label "programming language";
     rdfs:comment """
-    This property is introduced to replace the deo:Evaluation class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isEvaluationOf usually represents a chapter-publication or section-chapter relation.    
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
-    
-pub:isMotivationOf a owl:ObjectProperty;
-    rdfs:label "is motivation of";
-    rdfs:comment """
-    This property is introduced to replace the deo:Motivation class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isMotivationOf usually represents a chapter-publication or section-chapter relation.
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
-    
-pub:isScenarioOf a owl:ObjectProperty;
-    rdfs:label "is scenario of";
-    rdfs:comment """
-    This property is introduced to replace the deo:Scenario class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isScenarioOf usually represents a chapter-publication or section-chapter relation.
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
-    
-pub:isAcknowledgementsOf a owl:ObjectProperty;
-    rdfs:label "is acknowledgements of";
-    rdfs:comment """
-    This property is introduced to replace the deo:Acknowledgements class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isAcknowledgementsOf usually represents a chapter-publication or section-chapter relation.
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
-
-pub:isRelatedWorkOf a owl:ObjectProperty;
-    rdfs:label "is related work of";
-    rdfs:comment """
-    This property is introduced to replace the deo:RelatedWork class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isRelatedWorkOf usually represents a chapter-publication or section-chapter relation.
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
-
-pub:isAppendixOf a owl:ObjectProperty;
-    rdfs:label "is appendix of";
-    rdfs:comment """
-    This property is introduced to replace the doco:Appendix class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isAppendixOf usually represents a chapter-publication or section-chapter relation.
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
-
-pub:isForewordOf a owl:ObjectProperty;
-    rdfs:label "is foreword of";
-    rdfs:comment """
-    This property is introduced to replace the doco:Foreword class for the same reason as the replacement of deo:Introduction with pub:isIntroductionOf, and the remarks for pub:isIntroductionOf in terms of domain and range applies to this property as well. i.e., pub:isForewordOf usually represents a chapter-publication or section-chapter relation.
-    """;
-    rdfs:subPropertyOf dcterms:isPartOf.
-
-# has part relations
-
-# whole-part relations among publications and document parts
-pub:hasChapter a owl:ObjectProperty;
-    rdfs:label "has chapter";
-    rdfs:comment """
-    Used to describe that a publication or something else has a chapter as a part. Large publications may have larger parts on top of chapters, so the domain of this property is left unspecified.
-    """;
-    rdfs:range pub:Chapter;
-    rdfs:subPropertyOf dcterms:hasPart.
-    
-pub:hasSection a owl:ObjectProperty;
-    rdfs:label "has section";
-    rdfs:comment """
-    Used to describe something has a section as a part. A section can be a part of another section (itself being a subsection), a chapter, a publication or an element not defined in this ontology, so the domain of this property is left unspecified.
-    """;
-    rdfs:range pub:Section;
-    rdfs:subPropertyOf dcterms:hasPart.
-    
-# has result relations
-pub:hasResult a owl:ObjectProperty;
-    rdfs:label "has result";
-    rdfs:comment """
-    The top property representing the relation between a result container (such as a publication, a chapter or a section) and a published result (such as a figure or a table) it contains.
-    """;
-    rdfs:domain pub:ResultContainer;
-    rdfs:range pub:PublishedResult;
-    rdfs:subPropertyOf dcterms:hasPart.
-    
-pub:hasFigure a owl:ObjectProperty;
-    rdfs:label "has figure";
-    rdfs:comment """
-    This property represents the fact that a result container (such as a publication, a chapter or a section) contains a figure.
-    """;
-    rdfs:subPropertyOf pub:hasResult;
-    rdfs:range pub:Figure.
-    
-pub:hasTable a owl:ObjectProperty;
-    rdfs:label "has table";
-    rdfs:comment """
-    This property represents the fact that a result container (such as a publication, a chapter or a section) contains a table.
-    """;
-    rdfs:subPropertyOf pub:hasResult;
-    rdfs:range pub:Table.
-    
-pub:hasList a owl:ObjectProperty;
-    rdfs:label "has list result";
-    rdfs:comment """
-    This property represents the fact that a result container (such as a publication, a chapter or a section) contains a published result represented in the form of a list.
-    """;
-    rdfs:subPropertyOf pub:hasResult;
-    rdfs:range pub:List.
-
-pub:hasText a owl:ObjectProperty;
-    rdfs:label "has textually described result";
-    rdfs:comment """
-    This property represents the fact that a result container (such as a publication, a chapter or a section) contains a textually described result.
-    """;
-    rdfs:subPropertyOf pub:hasResult;
-    rdfs:range pub:Text.
-    
-
-# Label and caption
-
-rdfs:label a rdf:Property;
-    skos:scopeNote """Used to describe the (numerical) label of a figure or table, such as "Figure 4.1" or "Table 4.2", or give location information for lists and textually described results.""".
-
-pub:caption a owl:DatatypeProperty;
-    rdfs:label "caption";
-    rdfs:comment """
-    This annotation represents the caption of a figure or a table. It can be used to describe captions of other things, so its domain is left unspecified.
+    This annotation represents the programming language used by a data or result generation activity.
     """;
     rdfs:range xsd:string.
-    
+
+pub:code a owl:DatatypeProperty;
+    rdfs:label "code";
+    rdfs:comment """
+    This annotation represents the code used to generate data or results.
+    """;
+    rdfs:range xsd:string.
+
+pub:format a owl:DatatypeProperty;
+    rdfs:label "format";
+    rdfs:comment """
+    This annotation represents the format of on-disk data.
+    """;
+    rdfs:range xsd:string.
+
+dcterms:description a rdf:Property;
+    skos:scopeNote """
+    Used to include natural language descriptions of data and data/result generation activities.
+    """.
     

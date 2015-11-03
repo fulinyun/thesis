@@ -57,7 +57,7 @@ pub:Publication a owl:Class;
     Consider asserting pub:Publication to be a subclass of bibtex:Entry and/or bibo:Document to make every pub:Publication instance automatically also an instance of bibtex:Entry and/or bibo:Document.
 
     Examples:
-    @prefix : <http://example.org/>
+    @prefix : <http://example.org/>.
     :publication1 a pub:Publication, bibtex:Article, bibo:Document;
         bibtex:hasTitle "..."; # this and the following triples are asserted to satisfy constraints on bibtex:Article
         bibtex:hasYear "2015"^^xsd:nonNegativeInteger;
@@ -73,7 +73,7 @@ pub:Chapter a owl:Class;
     The Chapter class represents chapters in research publications. A chapter is usually identified by a (numerical) label (with rdfs:label) and/or a caption (with pub:caption). An example of a label for a chapter is  This class can be used with doco:Chapter through subclassing or double-classing. By asserting pub:Chapter to be a subclass of doco:Chapter (subclassing), instances of pub:Chapter are automatically also instances of doco:Chapter. Instances of pub:Chapter can be asserted to be also instances of doco:Chapter, one at a time (double-classing).
     
     Examples:
-    @prefix : <http://example.org/>
+    @prefix : <http://example.org/>.
     :chapter4 a pub:Chapter, doco:Chapter;
         rdfs:label "Chapter 4";
         pub:caption "Energy Supply and Use";
@@ -91,7 +91,7 @@ pub:Section a owl:Class;
     This class represents sections and can be used with doco:Section through subclassing or double classing. By asserting pub:Section to be a subclass of doco:Section (subclassing), instances of pub:Section are automatically also instances of doco:Section. Instances of pub:Section can be asserted to be also instances of doco:Section, one at a time (double-classing).
     
     Examples: 
-    @prefix : <http://example.org/>
+    @prefix : <http://example.org/>.
     :section1 a pub:Section, doco:Section;
         rdfs:label "Section 4.1";
         pub:caption "Disruptions from Extreme Weather";
@@ -117,7 +117,7 @@ pub:Figure a owl:Class;
     Figures are usually identified by their labels and captions, i.e., rdfs:label and pub:caption property values. An example of a label for a figure is "Figure 4.1", and an example of a caption for a figure is "Paths of Hurricanes Katrina and Rita Relative to Oil and Gas Production Facilities". If used together with doco:Figure, note that a doco:Figure cannot be contained (described with pattern:contains) by doco:Section or doco:Chapter. In this ontology, pub:hasFigure, pub:inSection, pub:inChapter and pub:inPublication can be used with pub:Publication, pub:Chapter and pub:Section instances to locate figures.
     
     Examples:
-    @prefix : <http://example.org/>
+    @prefix : <http://example.org/>.
     :figure1 a pub:Figure; # Benefit of double-classing with doco:Figure is unclear, so no double-classing here.
         rdfs:label "Figure 4.1";
         pub:caption "Paths of Hurricanes Katrina and Rita Relative to Oil and Gas Production Facilities";
@@ -125,7 +125,7 @@ pub:Figure a owl:Class;
         pub:inChapter :chapter4; # the figure is in a chapter
         pub:inPublication :publication1. # the figure is in a publication
     """;
-    rdfs:subClassOf pub:PublishedResullt.
+    rdfs:subClassOf pub:PublishedResult.
     
 pub:Table a owl:Class;
     rdfs:label "Table";
@@ -133,7 +133,7 @@ pub:Table a owl:Class;
     Tables are usually identified by their labels and captions, i.e., rdfs:label and pub:caption property values. An example of a label for a table is "Table 4.1", and an example of a caption for a table is "Changing Energy Use for Heating and Cooling Will Vary by Region". If used together with doco:Table, note that a doco:Table cannot be contained (described with pattern:contains) by doco:Section or doco:Chapter. In this ontology, pub:hasTable, pub:inSection, pub:inChapter and pub:inPublication can be used on pub:Publication, pub:Chapter and pub:Section instances to locate tables.
     
     Examples:
-    @prefix : <http://example.org/>
+    @prefix : <http://example.org/>.
     :table1 a pub:Table; # No double-classing with doco:Table here because the benefit is unclear.
         rdfs:label "Table 4.1";
         pub:caption "Changing Energy Use for Heating and Cooling Will Vary by Region";
@@ -149,7 +149,7 @@ pub:List a owl:Class;
     Unlike figures and tables, lists may not have labels and captions to identify them. It is recommended to use the rdfs:label property to give location information. In this ontology, pub:hasList, pub:inSection, pub:inChapter and pub:inPublication can be used on the proper pub:ResultContainer instances to locate lists.
     
     Examples:
-    @prefix : <http://example.org/>
+    @prefix : <http://example.org/>.
     :list1 a pub:List;
         rdfs:label "The list at the beginning of Chapter 4"; # give location information to help identify the list
         pub:inChapter :chapter4; # the list is in a chapter
@@ -163,7 +163,7 @@ pub:Text a owl:Class;
     Results of this kind usually do not have labels and captions to identify. It is recommended to use the rdfs:label property to give location information. In this ontology, pub:hasText, pub:inSection, pub:inChapter and pub:inPublication can be used on the proper pub:ResultContainer instances to locate textually described results.
     
     Examples:
-    @prefix : <http://example.org/>
+    @prefix : <http://example.org/>.
     :text1 a pub:Text;
         rdfs:label "The sentence in the last paragraph of page 115 saying that coal produced 42% of U.S. electricity in 2011";
         pub:inSection :section1; # the text is found in a section
