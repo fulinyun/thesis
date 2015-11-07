@@ -120,17 +120,18 @@ PROV-PUB-O/S to one of its related ontologies. Each bridging ontology is exclusi
 such as ``pubs:Chapter rdfs:subClassOf doco:Chapter''. Double-classing suggestions cannot be encoded in the form of bridging ontologies because they do 
 not require any assertion at the schema level.
 
-The general hypothesis to justify here is that PROV-PUB-O/S are more usable than DoCO for the task of describing the structure of a research publication, and a specific hypothesis is that properties in PROV-PUB-O/S are more usable than their corresponding rhetorical concepts in DoCO for describing publication components. We conducted user survey to collect opinions about pairs of RDF statement groups such as
-\begin{quote}
-	\begin{tabular}{l}
-	abs a Section;\\
-	 \hspace{1em}isAbstractOf article.\\
-	 \hspace{3em}vs.\\
-	abs a Abstract;\\ 
-	 \hspace{1em}isPartOf article.
-	\end{tabular}
-\end{quote}
-, that is, whether it is better to describe the relation between an article and its abstract component by saying that ``that section is the abstract of the article'' or that ``that section is an abstract, and it is part of the article''. Here we omit all the RDF prefixes in the statements emphasize the modeling rationale.
+There are existing ontologies, such as the GCIS ontology \cite{ma2014ontology}, that also have classes to represent document components such as chapters, but we prefer not reusing from such application ontologies because PROV-PUB-O/S is considered to be a general ontology for all kinds of research publications, and it is logical to have application ontologies make subclassing and/or equivalent-classing assertions to general or domain ontologies, but not the other way around.
+%The general hypothesis to justify here is that PROV-PUB-O/S are more usable than DoCO for the task of describing the structure of a research publication, and a specific hypothesis is that properties in PROV-PUB-O/S are more usable than their corresponding rhetorical concepts in DoCO for describing publication components. We conducted user survey to collect opinions about pairs of RDF statement groups such as
+%\begin{quote}
+%	\begin{tabular}{l}
+%	abs a Section;\\
+%	 \hspace{1em}isAbstractOf article.\\
+%	 \hspace{3em}vs.\\
+%	abs a Abstract;\\ 
+%	 \hspace{1em}isPartOf article.
+%	\end{tabular}
+%\end{quote}
+%, that is, whether it is better to describe the relation between an article and its abstract component by saying that ``that section is the abstract of the article'' or that ``that section is an abstract, and it is part of the article''. Here we omit all the RDF prefixes in the statements emphasize the modeling rationale.
 
 \subsubsection{Lessons learnt}
 The three principles of designing a usable ontology --- minimalism on classes, rich on properties and leaving the decision for dependencies to the users --- is developed as we had finished the conceptual modeling and started writing the ontology in Turtle format, which was considered just a ``finishing up'' work. Documentation requires numerous decisions to make about wordings, definitions or even formatting. The workload increases quickly with the number of classes and dependencies in the form of subclassing or equivalent-classing. One change may trigger a whole lot of change all over the ontology to keep it consistent.
@@ -293,7 +294,7 @@ Semiotic framework based subclasses of pub:DataChange follows, that is, pub:Phys
 
 The next four classes, pub:Obtaining, pub:Loading, pub:Saving and pub:Transformation, are derived from the case study we have performed. The pub:Obtaining class represents data obtaining activities. Subclasses conforming naming conventions of specific domains are expected to get defined in extensions of PROV-PUB-O/P. In the earth science domain, for example, a ``Download'' subclass of pub:Obtaining would probably receive common acceptance. The pub:Obtaining class could be asserted as a subclass of pub:PhysicalChange and/or pub:SyntacticalChange according to application specific conditions. The pub:Loading class represents data loading activities that read data from disk to memory. This class should probably be asserted as a subclass of both pub:PhysicalChange and pub:SyntacticalChange, but we did not put these assertions in PROV-PUB-O/P because these assertions still might be undesirable in some use cases. The pub:Transformation class represents all general data transformation activities. Subclasses conforming naming conventions in various domains are expected to get defined in extensions of PROV-PUB-O/P. For example, ``subsetting'', ``slicing'', ``projection'' and ``filtering'' are four transformations commonly used in the earth science domain.
 
-The last class listed above, pub:Library, represents those software utilities or tools used in the process of generating data and results.
+The last class listed above, pub:Library, represents those software utilities or tools used in the process of generating data and results. The detailed information about the software could be described with a software description ontology such as the OntoSoft ontology \cite{gil2015ontosoft}.
 
 Users are expected to either define subclasses of these data changing activities to fit their specific needs or overlook the subclasses of pub:DataChange and pub:ResultGeneration. That is, they could extend PROV-PUB-O/P with more data changing subclasses such as ``subsetting'', ``slicing'', ``projection'' and ``filtering'', or if they do not need classes so specific, they could just use pub:DataChange to capture every data changing activities involved in their use cases.
 
