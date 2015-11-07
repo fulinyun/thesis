@@ -274,7 +274,7 @@ pub:Transformation a owl:Class;
     :csv_content a pub:InMemoryData;
         dcterms:description "Data held by the csv_content variable.".
     :percent a pub:InMemoryData;
-        dcterms:description "Data held by the percent variable.".    
+        dcterms:description "Data held by the percent variable.".
     """;
     rdfs:subClassOf pub:DataGeneration.
 
