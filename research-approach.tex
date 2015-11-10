@@ -738,7 +738,7 @@ There are several issues that can be explored in future works. The first work is
 \section{Automatic provenance capturing framework}
 In computer science, a framework is a parameterized system. Certain components of the framework could be customized to fulfill specific tasks. The proposed provenance capturing framework in this thesis consists of the following components:
 \begin{itemize}
-	\item A \emph{platform} is the managing system that coordinates its front end, operators and store.
+	\item A \emph{platform} is the managing system that coordinates its front end, operators and store. 
 	\item The \emph{front end} of the platform is the interface for the users to interact with the platform. It provides the users ways to input requests to the platform that could be fulfilled with certain operators. Usually a platform kernel, which is a special operator, interprets user actions into requests and forwards these requests to the platform. The front end also takes feedback from the operators of the platform after they finish processing requests and interprets it into user-friendly feedback to display to the users. A front end could be as simple as a line processor that deals with one line of input text in each round of interaction with the user, but it could also be as capable as a system monitor that receives every single event happened on the user interface of the operating system. For such capable front end, users could interact with it in ways far beyond inputting commands and looking at textual feedback. For example, a user could open a browser and download a file, in which case the front end will take the sequence of events and interpret it into something the platform kernel understands, such as a ``download file'' command.
 	\item The \emph{operators} of the platform are provenance aware software tools or scripts that execute operations on data and record provenance at each execution time. They can be included in the platform as pre-installed utilities but users are expected to obtain new operators for new tasks from time to time. The front end and the platform kernel (if there exists one) does not necessarily know the operational logics of a certain operator but must know how to invoke the operator according to the requests from the users and how to receive feedback from the operator.
 	\item The \emph{kernel} of the platform is an optional special operator that directly interact with the front end. It deals with all the requests interpreted by the front end either itself or through dispatching to other operators. If there is a kernel in the platform, it must be the only operator that directly interact with the front end, and all the other operators must only interact with the kernel operator. In this thesis we focus on the case where there is a kernel. One important job of the kernel is to assign consistent URIs to the data objects across different operations. We will go to the details of this point in Section~\ref{sec:transition}.
@@ -768,7 +768,7 @@ A corollary of this feature, is that the creation and retrieving of provenance s
 
 Since neither the front end nor the platform kernel necessarily know the operational logic of every possible operator they are to invoke for some task, it is impossible to implement the provenance capturing function as part of the front end or platform kernel. For example, an operator may use several data objects to generate multiple other data objects. Some of these objects may be passed as parameters of function calls, others may be defined as the return values, and positions of these objects (whether they are parameters or return values) could be arbitrarily decided by the developer of the operator (software or scripts), so the job of creating and retrieving provenance has to be done by the operators. In the case where a kernel exists, it has the job of connecting provenance fragments generated within other operators. For example, an operator O1 used data D1 as one of its arguments and generated data D2 as its return value. In this case the operator O1 knows what D1 and D2 are but does not know the identities of D1 and D2 within the context where O1 gets invoked. In other words, O1 knows D1 is the $n$-th argument, and D2 the return value, but O1 has no way to know which variable is holding its $n$-th argument and which variable will hold its return value. The kernel operator knows where each argument comes from and where each return value goes to, so it has to be involved in provenance capturing to assign consistent URIs to data objects and results.
 
-Provenance collecting frameworks proposed before PROV-O such as \cite{simmhan2006framework} must depend on a central provenance service to collect provenance graph fragments provided by the various components operating on data to ensure these fragments are consistent with each other and can be put together to form the whole provenance graph. With PROV-PUB-O/P, which is a specialization of PROV-O, such a centralized provenance authority just need to simply concatenate the lists of triples generated by the operators, as long as all the operators format their provenance pieces with the same terminology. This assumption holds given that there is a terminology to be used that has been publicly published and widely adopted.
+Provenance collecting frameworks proposed before the publication of PROV-O such as \cite{simmhan2006framework} must depend on a central provenance service to collect provenance graph fragments provided by the various components operating on data to ensure these fragments are consistent with each other and can be put together to form the whole provenance graph. With PROV-PUB-O/P, which is a specialization of PROV-O, such a centralized provenance authority just need to simply concatenate the lists of triples generated by the operators, as long as all the operators format their provenance pieces with the same terminology. This assumption holds given that there is a terminology to be used that has been publicly published and widely adopted.
 
 The two functions of the platform, namely the creation of provenance and the replication of the research work with the saved provenance, do not have big differences between them. The only difference is that the replication requires an additional ``load provenance'' operation at the very beginning.
 
@@ -782,16 +782,44 @@ Given a front end, a finite set of operators including the kernel, and a store, 
 \end{itemize}
 Of these three events, the first and the third does not require special attention in terms of provenance capturing. At the start-up time of the system, the store just needs to be initialized to an empty graph, and at the ending time of the system, the store needs to be saved to disk.
 
+\subsubsection{What operation means}
 Before we focus on the second event, we want to make clear what does ``an operation'' mean. In this thesis, an operation must have the following abstract form:
 \begin{equation}
+\label{eq:fun}
 \textrm{function}(\textrm{argument1}, \textrm{argument2}, \dots, \textrm{argumentN})\rightarrow \textrm{return}
 \end{equation}
 The meaning of this operation is that a function of an operator with N arguments is invoked to generate a return. Note that through simple wrapping, logical and arithmetic operations can be converted to this form. For example, x plus y gets z could be written as a function ``plus'' taking two arguments x and y, and generating z:
 \begin{equation}
 \textrm{plus}(x, y)\rightarrow z
 \end{equation}
+We do not allow the function to change some of its arguments as a side effect, this demand could be fulfilled by rewriting the function definition to move these arguments to the return side, in which case the return would have these changed arguments all held in some data structure such as a list or a dictionary.
 
-For the second event, an operation gets executed by a certain operator, if the operator is the kernel, then the kernel will generate a fresh URI for the operation, and the operation will be asserted to be an instance of a certain class in PROV-PUB-O according to the kernel's knowledge about the operation (for example, the kernel may assert the operation to be a pub:Obtaining, or a pub:Loading, and so on). The data objects used among the operation's arguments will be recorded with proper sub-properties of prov:used, that is, pub:obtained, pub:loaded, and so on. These data objects will get fresh URIs generated by the kernel. Finally, the fact of the operation generating the returned data object will also be recorded as a triple in the store.
+Here we follow the kernel language approach described in Chapter 2.3 of the book written by Peter Van Roy and Seif Haridi~\cite{van2004concepts}. Table 2.1 in this chapter summarizes all the basic operations needed by a general programming language, thus these operations must be sufficient for creating results in research publications.
+
+In fact, the kernel language defined in Table 2.1 in \cite{van2004concepts} could be redefined as in Table~\ref{tab:kernel}. 
+\begin{table}
+	\centering
+	\begin{tabular}{|rrll|}
+		\hline $<s>$ & ::= & skip & Empty statement \\ 
+		  & | & $<s>_1$ $<s>_2$ & Statement sequence \\ 
+		  & | & $<x>_2\rightarrow <x>_1$ & Variable binding \\ 
+		  & | & $<v>\rightarrow<x>$ & Value assignment \\ 
+		  & | & $f(<a>_1\dots<a>_n)\rightarrow r$ & Operation invocation \\ 
+		\hline 
+	\end{tabular} 
+	\caption{Kernel language adapted from Van Roy and Haridi's work}
+	\label{tab:kernel}
+\end{table}
+The differences are:
+\begin{itemize}
+	\item Variable creation and binding are in one step (this is the case for functional programming languages, and is adopted by Python and R), so there is no separate variable creation step.
+	\item Procedure applications are replaced by operation invocations. To convert a procedure application to an operation invocation, we just need to move those arguments that would be changed to the return value side (the $r$ side).
+	\item Conditional and pattern matching statements are removed, they must be written in the form of operation invocations.
+\end{itemize}
+In fact, variable binding and value assignment could also be written in the form of operation invocations. Thus the program could be further simplified to just a sequence of operation invocations: variable binding could be rewritten as the kernel operation ``bind($<x>_2$)$\rightarrow <x>_1$'', and value assignment could be written as ``assign($<v>$)$\rightarrow <x>$''. Therefore, $<x>_2\rightarrow <x>_1$ and $<v>\rightarrow<x>$ could be seen as the syntactical sugar provided by certain kernels. Certain kernels could allow conditional statements and pattern matching statements and many more conveniences implemented in this manner. That is, they are actually operation invocations to the kernel.
+
+\subsubsection{Operation invocation rules}
+For the event of an operation gets executed by a certain operator, if the operator is the kernel, then the kernel will generate a fresh URI for the operation, and the operation will be asserted to be an instance of a certain class in PROV-PUB-O according to the kernel's knowledge about the operation (for example, the kernel may assert the operation to be a pub:Obtaining, or a pub:Loading, and so on). The data objects used among the operation's arguments will be recorded with proper sub-properties of prov:used, that is, pub:obtained, pub:loaded, and so on. These data objects will get fresh URIs generated by the kernel. Finally, the fact of the operation generating the returned data object will also be recorded as a triple in the store.
 
 For example, suppose the read\_csv(input\_file)-->csv\_content operation is handled directly by the kernel, then the following triples will be added to the store once this operation gets executed:
 \begin{itemize}
@@ -802,6 +830,24 @@ For example, suppose the read\_csv(input\_file)-->csv\_content operation is hand
 \end{itemize}
 The pub:language and pub:code properties of :read\_csv can also be provided according to specific kernel configurations.
 
+Note that URIs such as :read\_csv, :input\_file and :csv\_content could be replaced with any fresh URIs not yet been used by other data objects.
+
+These provenance capturing actions are taken in addition to the normal actions performed by the platform.
+
+A kernel usually provides only the most basic operations such as value assignment, variable binding, logic and arithmetic operations, and conditional execution. More complicated computations are typically carried out by some provenance aware operator other than the kernel. In this case, the kernel knows the variable carrying the return value of the operation and all the arguments that could potentially be used by the operation, but it does not know the detailed usage of these arguments, neither does the kernel know the specific type of the operation. The operator needs to fill in the blanks where the kernel does not know about it.
+
+For example, suppose the read\_csv(input\_file)-->csv\_content operation is handled by a provenance aware operator instead of the kernel, the same list of triples need to be generated:
+\begin{itemize}
+	\item (:read\_csv, rdf:type, pub:Loading)
+	\item (:read\_csv, pub:loaded, :input\_file)
+	\item (:read\_csv, prov:generated, :csv\_content)
+	\item (:read\_csv, dct:description, ``Read data in CSV format from the input\_file to the csv\_content object.'')
+\end{itemize}
+All the fresh URIs for read\_csv, input\_file and csv\_content must be provided by the kernel, the kernel will pass the dictionary of variable-URI mappings to the operator. The operator knows the relationships among these data objects, so it is responsible to generate all the triples with the URIs provided by the kernel. It can also generate more triples that describe useful information such as the programming language and the library dependency.
+
+\subsection{A comprehensive example}
+
+\subsection{Non-functional requirements}
 % recap the three requirements
 
 % front end supporting multiple programming languages and extensible
