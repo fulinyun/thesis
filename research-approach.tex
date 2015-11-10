@@ -739,9 +739,10 @@ There are several issues that can be explored in future works. The first work is
 In computer science, a framework is a parameterized system. Certain components of the framework could be customized to fulfill specific tasks. The proposed provenance capturing framework in this thesis consists of the following components:
 \begin{itemize}
 	\item A \emph{platform} is the managing system that coordinates its front end, operators and store.
-	\item The \emph{front end} of the platform is the interface for the users to interact with the platform.
-	\item The \emph{operators} of the platform are provenance aware software tools or scripts that execute operations on data and record provenance at each execution time. They can be included in the platform as pre-installed utilities but users are expected to obtain new operators for new tasks from time to time. The platform does not necessarily know the operational logics of a certain operator but must know how to invoke the operator to get jobs done and how to receive feedback to present to the users.
-	\item The \emph{store} of the platform takes charge of temporarily holding in-memory provenance fragments and storing provenance on disks.
+	\item The \emph{front end} of the platform is the interface for the users to interact with the platform. It provides the users ways to input requests to the platform that could be fulfilled with certain operators. Usually a platform kernel, which is a special operator, interprets user actions into requests and forwards these requests to the platform. The front end also takes feedback from the operators of the platform after they finish processing requests and interprets it into user-friendly feedback to display to the users. A front end could be as simple as a line processor that deals with one line of input text in each round of interaction with the user, but it could also be as capable as a system monitor that receives every single event happened on the user interface of the operating system. For such capable front end, users could interact with it in ways far beyond inputting commands and looking at textual feedback. For example, a user could open a browser and download a file, in which case the front end will take the sequence of events and interpret it into something the platform kernel understands, such as a ``download file'' command.
+	\item The \emph{operators} of the platform are provenance aware software tools or scripts that execute operations on data and record provenance at each execution time. They can be included in the platform as pre-installed utilities but users are expected to obtain new operators for new tasks from time to time. The front end and the platform kernel (if there exists one) does not necessarily know the operational logics of a certain operator but must know how to invoke the operator according to the requests from the users and how to receive feedback from the operator.
+	\item The \emph{kernel} of the platform is an optional special operator that directly interact with the front end. It deals with all the requests interpreted by the front end either itself or through dispatching to other operators. If there is a kernel in the platform, it must be the only operator that directly interact with the front end, and all the other operators must only interact with the kernel operator. In this thesis we focus on the case where there is a kernel. One important job of the kernel is to assign consistent URIs to the data objects across different operations. We will go to the details of this point in Section~\ref{sec:transition}.
+	\item The \emph{store} of the platform takes charge of temporarily holding in-memory provenance fragments and storing provenance on disks. For a platform compliant with PROV-PUB-O, its store is equivalent with an RDF graph in the vocabulary of PROV-PUB-O.
 \end{itemize}
 The front end will invoke operators when the user launches a command through the front end. Operations on data are then delegated to various operators and execution results are sent back to the front end to enable it to provide meaningful feedback to the user. Execution of operations may require accesses to the store to operate in-memory or on-disk data objects. These processes are illustrated in Figure~\ref{fig:invoke} and Figure~\ref{fig:execute}.
 \begin{figure}
@@ -765,11 +766,42 @@ An important feature of the platform is that the front end and the store both on
 \end{figure}
 A corollary of this feature, is that the creation and retrieving of provenance should be on those operators, rather than the front end or the store. Because if the operators do not create provenance, the store has no way to get provenance since it only interacts with operators. Provenance would then get lost because it has to be saved in the store. Operators must be able to retrieve provenance for the readers of the research publications to reproduce the published results because only they have access to the store, where provenance is kept.
 
-Since the platform does not necessarily know the operational logic of every possible operator it is to invoke for some task, it is impossible to implement the provenance capturing function as part of the platform. For example, an operator may use several data objects to generate multiple other data objects. Some of these objects may be passed as parameters of function calls, others may be defined as the return values, and positions of these objects (whether they are parameters or return values) could be arbitrarily decided by the developer of the operator (software or scripts), so the job of creating and retrieving provenance has to be done by operators.
+Since neither the front end nor the platform kernel necessarily know the operational logic of every possible operator they are to invoke for some task, it is impossible to implement the provenance capturing function as part of the front end or platform kernel. For example, an operator may use several data objects to generate multiple other data objects. Some of these objects may be passed as parameters of function calls, others may be defined as the return values, and positions of these objects (whether they are parameters or return values) could be arbitrarily decided by the developer of the operator (software or scripts), so the job of creating and retrieving provenance has to be done by the operators. In the case where a kernel exists, it has the job of connecting provenance fragments generated within other operators. For example, an operator O1 used data D1 as one of its arguments and generated data D2 as its return value. In this case the operator O1 knows what D1 and D2 are but does not know the identities of D1 and D2 within the context where O1 gets invoked. In other words, O1 knows D1 is the $n$-th argument, and D2 the return value, but O1 has no way to know which variable is holding its $n$-th argument and which variable will hold its return value. The kernel operator knows where each argument comes from and where each return value goes to, so it has to be involved in provenance capturing to assign consistent URIs to data objects and results.
 
 Provenance collecting frameworks proposed before PROV-O such as \cite{simmhan2006framework} must depend on a central provenance service to collect provenance graph fragments provided by the various components operating on data to ensure these fragments are consistent with each other and can be put together to form the whole provenance graph. With PROV-PUB-O/P, which is a specialization of PROV-O, such a centralized provenance authority just need to simply concatenate the lists of triples generated by the operators, as long as all the operators format their provenance pieces with the same terminology. This assumption holds given that there is a terminology to be used that has been publicly published and widely adopted.
 
 The two functions of the platform, namely the creation of provenance and the replication of the research work with the saved provenance, do not have big differences between them. The only difference is that the replication requires an additional ``load provenance'' operation at the very beginning.
+
+\subsection{System state transition rules}
+\label{sec:transition}
+Given a front end, a finite set of operators including the kernel, and a store, the platform becomes a system. The state of the system gets changed only when one of the following events happens:
+\begin{itemize}
+	\item The system gets started.
+	\item One operation gets executed by a certain operator.
+	\item The system is closed.
+\end{itemize}
+Of these three events, the first and the third does not require special attention in terms of provenance capturing. At the start-up time of the system, the store just needs to be initialized to an empty graph, and at the ending time of the system, the store needs to be saved to disk.
+
+Before we focus on the second event, we want to make clear what does ``an operation'' mean. In this thesis, an operation must have the following abstract form:
+\begin{equation}
+\textrm{function}(\textrm{argument1}, \textrm{argument2}, \dots, \textrm{argumentN})\rightarrow \textrm{return}
+\end{equation}
+The meaning of this operation is that a function of an operator with N arguments is invoked to generate a return. Note that through simple wrapping, logical and arithmetic operations can be converted to this form. For example, x plus y gets z could be written as a function ``plus'' taking two arguments x and y, and generating z:
+\begin{equation}
+\textrm{plus}(x, y)\rightarrow z
+\end{equation}
+
+For the second event, an operation gets executed by a certain operator, if the operator is the kernel, then the kernel will generate a fresh URI for the operation, and the operation will be asserted to be an instance of a certain class in PROV-PUB-O according to the kernel's knowledge about the operation (for example, the kernel may assert the operation to be a pub:Obtaining, or a pub:Loading, and so on). The data objects used among the operation's arguments will be recorded with proper sub-properties of prov:used, that is, pub:obtained, pub:loaded, and so on. These data objects will get fresh URIs generated by the kernel. Finally, the fact of the operation generating the returned data object will also be recorded as a triple in the store.
+
+For example, suppose the read\_csv(input\_file)-->csv\_content operation is handled directly by the kernel, then the following triples will be added to the store once this operation gets executed:
+\begin{itemize}
+	\item (:read\_csv, rdf:type, pub:Loading)
+	\item (:read\_csv, pub:loaded, :input\_file)
+	\item (:read\_csv, prov:generated, :csv\_content)
+	\item (:read\_csv, dct:description, ``Read data in CSV format from the input\_file to the csv\_content object.'')
+\end{itemize}
+The pub:language and pub:code properties of :read\_csv can also be provided according to specific kernel configurations.
+
 % recap the three requirements
 
 % front end supporting multiple programming languages and extensible
