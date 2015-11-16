@@ -99,3 +99,6 @@ thoughts/2014-08-30-worry.txt
 thoughts/2014-08-31-diary.txt
 thoughts/2014-09-01-diary.txt
 
+# compiled python modules
+*.pyc
+
