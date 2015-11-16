@@ -22,7 +22,7 @@ class ProvMagics(Magics):
 		rewritten_cell = ""
 		lines = cell.splitlines()
 		for line in lines:
-			rewritten_cell += rewrite(line, args.verbose)+"\n"
+			rewritten_cell += rewrite(line, line, args.verbose)+"\n"
 			if args.verbose:
 				print("Actual code executed:\n"+rewritten_cell)
 			get_ipython().run_cell(rewritten_cell)
@@ -38,9 +38,11 @@ class ProvMagics(Magics):
 		args = magic_arguments.parse_argstring(self.prov, line)
 		rcode = """from rdflib import Graph, Namespace, URIRef, Literal
 from rdflib.namespace import DC, NamespaceManager
+import operators
 if '__NAMESPACE__' not in globals():
     __NAMESPACE__ = 'http://example.org/'
 __URIDICT__ = {}
+__TEXTDICT__ = {}
 __PROV__ = Graph()
 pub = Namespace("http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/")
 prov = Namespace("http://www.w3.org/ns/prov#")
@@ -57,26 +59,48 @@ __PROV__.namespace_manager = namespace_manager
 		get_ipython().run_cell(rcode)
 		self.prov(line, cell)
 
-def rewrite(line, verbose=True):
+def rewrite(origline, line, verbose=True):
 	funtuple = matchfun(line)
 	if not funtuple:
-		assigntuple = matchassign(line)
-		if not assigntuple:
-			deltuple = matchdel(line)
-			if not deltuple:
-				return line
+		proctuple = matchproc(line)
+		if not proctuple:
+			assigntuple = matchassign(line)
+			if not assigntuple:
+				deltuple = matchdel(line)
+				if not deltuple:
+					return line
+				else:
+					(obj, key) = deltuple
+					line1 = obj+"=operators.delete("+obj+","+key+")"
+					if verbose:
+						print("First rewritten to:\n"+line1)
+					return rewrite(line, line1, verbose)
 			else:
-				(obj, key) = deltuple
-				line1 = obj+"=operators.delete("+obj+","+key+")"
+				(lhs, rhs) = assigntuple
+				line1 = lhs+"=operators.assign("+rhs+")"
 				if verbose:
 					print("First rewritten to:\n"+line1)
-				return rewrite(line1, verbose)
+				return rewrite(line, line1, verbose)
 		else:
-			(lhs, rhs) = assigntuple
-			line1 = lhs+"=operators.assign("+rhs+")"
-			if verbose:
-				print("First rewritten to:\n"+line1)
-			return rewrite(line1, verbose)
+			(fun, allargs) = proctuple
+			rcode = "__TEXTDICT__ = {}\n"
+			argsl = parseargs(allargs)
+			for i in range(len(argsl)):
+				if '=' in argsl[i]:
+					[pname, text] = re.split("=", argsl[i])
+					pname = pname.strip()
+					text = text.strip()
+					rcode += "__TEXTDICT__['"+pname+"'] = \""+text+"\"\n"
+					rcode += "__URIDICT__['"+pname+"'] = __NAMESPACE__+'"+freshurl(pname)+"_a'\n"
+				else:
+					text = argsl[i].strip()
+					rcode += "__TEXTDICT__["+str(i)+"] = \""+text+"\"\n"
+					rcode += "__URIDICT__["+str(i)+"] = __NAMESPACE__+'"+freshurl(text)+"_a'\n"
+			rcode += "__TEXTDICT__['fun'] = \""+fun+"\"\n"
+			rcode += "__URIDICT__['fun'] = __NAMESPACE__+'"+freshurl(fun)+"'\n"
+			rcode += "__PROV__.add((URIRef(__URIDICT__['fun']), pub.code, Literal(\""+origline.replace('"', '\\"')+"\")))\n"
+			rcode += fun+"("+allargs+", namespace=__NAMESPACE__, textdict=__TEXTDICT__, uridict=__URIDICT__, provgraph=__PROV__)"
+			return rcode
 	else:
 		(ret, fun, allargs) = funtuple
 		rcode = "__TEXTDICT__ = {}\n"
@@ -96,27 +120,38 @@ def rewrite(line, verbose=True):
 		rcode += "__URIDICT__['fun'] = __NAMESPACE__+'"+freshurl(fun)+"'\n"
 		rcode += "__TEXTDICT__['return'] = \""+ret+"\"\n"
 		rcode += "__URIDICT__['return'] = __NAMESPACE__+'"+freshurl(ret)+"'\n"
-		rcode += "__PROV__.add((URIRef(__URIDICT__['fun']), pub.code, Literal(\""+line.replace('"', '\\"')+"\")))\n"
+		rcode += "__PROV__.add((URIRef(__URIDICT__['fun']), pub.code, Literal(\""+origline.replace('"', '\\"')+"\")))\n"
+		funcall = fun+"("+allargs+", namespace=__NAMESPACE__, textdict=__TEXTDICT__, uridict=__URIDICT__, provgraph=__PROV__)"
 		rcode += "__RETURN__ = None\n"
-		rcode += "__RETURN__ = "+fun+"("+allargs+", namespace=__NAMESPACE__, textdict=__TEXTDICT__, uridict=__URIDICT__, provgraph=__PROV__)\n"
-		rcode += ret + " = __RETURN__"
+		rcode += "__RETURN__ = "+funcall
+		rcode += "\n" + ret + " = __RETURN__"
 		return rcode
 
 def matchfun(line):
-	result = re.match(r"(\S+)\s*=\s*(\S+?)\s*\((.*)\)\s*(#.*)?", line)
+	line = stripcomment(line).strip()
+	result = re.match(r"(.*?)=\s*(\S+?)\s*\((.*)\)", line)
 	if not result:
 		return None
-	ret = result.group(1)
+	ret = result.group(1).strip()
 	fun = result.group(2)
 	allargs = result.group(3).strip()
 	return (ret, fun, allargs)
 	
-def matchassign(line):
-	line = stripcomment(line)
-	result = re.match(r"(\S+)\s*=(.*)", line)
+def matchproc(line):
+	line = stripcomment(line).strip()
+	result = re.match(r"(\S+)\s*\((.*)\)", line)
 	if not result:
 		return None
-	lhs = result.group(1)
+	fun = result.group(1)
+	allargs = result.group(2).strip()
+	return (fun, allargs)
+
+def matchassign(line):
+	line = stripcomment(line).strip()
+	result = re.match(r"(.*?)=(.*)", line)
+	if not result:
+		return None
+	lhs = result.group(1).strip()
 	rhs = result.group(2).strip()
 	return (lhs, rhs)
 
@@ -146,7 +181,8 @@ def stripcomment(line):
 	return ret
 
 def matchdel(line):
-	result = re.match(r"del\s*(\S+?)\s*\[(.*)\]\s*(#.*)?", line)
+	line = stripcomment(line).strip()
+	result = re.match(r"del\s*(\S+)\s*\[(.*)\]", line)
 	if not result:
 		return None
 	obj = result.group(1)

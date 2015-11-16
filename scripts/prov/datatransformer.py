@@ -4,7 +4,7 @@ from rdflib import Graph, URIRef, RDF, Namespace, Literal
 from rdflib.namespace import DC, XSD
 from datetime import datetime
 
-def group_aggregate(dataframe, keys, aggregation=np.sum, namespace="", textdict = {}, uridict={}, provgraph=None):
+def group_aggregate(dataframe, keys, aggregation=np.sum, **kwargs): # namespace="", textdict = {}, uridict={}, provgraph=None
 	# record activity starting time
 	stime = datetime.utcnow()
 
@@ -13,6 +13,12 @@ def group_aggregate(dataframe, keys, aggregation=np.sum, namespace="", textdict 
 
 	# record activity ending time
 	etime = datetime.utcnow()
+
+	# augmented provenance parameters
+	namespace = kwargs['namespace']
+	textdict = kwargs['textdict']
+	uridict = kwargs['uridict']
+	provgraph = kwargs['provgraph']
 
 	# namespaces
 	example = Namespace(namespace)
@@ -69,6 +75,66 @@ def group_aggregate(dataframe, keys, aggregation=np.sum, namespace="", textdict 
 	provgraph.add((aid, prov.used, pdid))
 	provgraph.add((pdid, RDF.type, pub.Library))
 	provgraph.add((pdid, DC.description, Literal("The pandas Python library")))
+	provgraph.add((aid, prov.used, npid))
+	provgraph.add((npid, RDF.type, pub.Library))
+	provgraph.add((npid, DC.description, Literal("The numpy Python library")))
+	provgraph.add((aid, prov.generated, returnid))
+	provgraph.add((returnid, RDF.type, pub.InMemoryData))
+	provgraph.add((returnid, DC.description, Literal("Data held by variable or expression "+returntext)))
+	return ret
+
+def average(li, **kwargs):
+	# record activity starting time
+	stime = datetime.utcnow()
+
+	# execute normal operation
+	ret = np.average(li)
+
+	# record activity ending time
+	etime = datetime.utcnow()
+
+	# augmented provenance parameters
+	namespace = kwargs['namespace']
+	textdict = kwargs['textdict']
+	uridict = kwargs['uridict']
+	provgraph = kwargs['provgraph']
+
+	# namespaces
+	example = Namespace(namespace)
+	pub = Namespace("http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/")
+	prov = Namespace("http://www.w3.org/ns/prov#")
+
+	# id and text for activity, used data object, library, and return value
+	aid = URIRef(uridict['fun'])
+
+	if 0 in uridict:
+		listid = URIRef(uridict[0])
+	else:
+		listid = URIRef(uridict['li'])
+	
+	if 0 in textdict:
+		listtext = textdict[0]
+	else:
+		listtext = textdict['li']
+
+	if 'numpy' in uridict:
+		npid = URIRef(uridict['numpy'])
+	else:
+		npid = example.numpy
+		uridict['numpy'] = str(npid)
+
+	returnid = URIRef(uridict['return'])
+	returntext = textdict['return']
+
+	# add triples to the provenance graph
+	provgraph.add((aid, RDF.type, pub.Transformation))
+	provgraph.add((aid, DC.description, Literal("Get the average of data in list "+listtext+" and save it at "+returntext)))
+	provgraph.add((aid, pub.language, Literal("Python")))
+	provgraph.add((aid, prov.startedAtTime, Literal(stime.strftime("%Y-%m-%dT%H:%M:%SZ"), datatype=XSD.dateTime)))
+	provgraph.add((aid, prov.endedAtTime, Literal(etime.strftime("%Y-%m-%dT%H:%M:%SZ"), datatype=XSD.dateTime)))
+	provgraph.add((aid, pub.transformed, listid))
+	provgraph.add((listid, RDF.type, pub.InMemoryData))
+	provgraph.add((listid, DC.description, Literal("Data held by variable or expression "+listtext)))
 	provgraph.add((aid, prov.used, npid))
 	provgraph.add((npid, RDF.type, pub.Library))
 	provgraph.add((npid, DC.description, Literal("The numpy Python library")))

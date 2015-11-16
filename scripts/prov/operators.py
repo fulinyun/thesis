@@ -2,7 +2,7 @@ from rdflib import Graph, URIRef, RDF, Namespace, Literal
 from rdflib.namespace import DC, XSD
 from datetime import datetime
 
-def assign(rhs, namespace="", textdict = {}, uridict={}, provgraph=None):
+def assign(rhs, **kwargs): # namespace="", textdict = {}, uridict={}, provgraph=None
 	# record activity starting time
 	stime = datetime.utcnow()
 
@@ -11,6 +11,12 @@ def assign(rhs, namespace="", textdict = {}, uridict={}, provgraph=None):
 
 	# record activity ending time
 	etime = datetime.utcnow()
+
+	# augmented provenance parameters
+	namespace = kwargs['namespace']
+	textdict = kwargs['textdict']
+	uridict = kwargs['uridict']
+	provgraph = kwargs['provgraph']
 
 	# namespaces
 	pub = Namespace("http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/")
@@ -44,7 +50,7 @@ def assign(rhs, namespace="", textdict = {}, uridict={}, provgraph=None):
 	provgraph.add((returnid, DC.description, Literal("Data or result held by variable "+textdict['return'])))
 	return ret
 
-def delete(obj, key, namespace="", textdict={}, uridict={}, provgraph=None):
+def delete(obj, key, **kwargs): # namespace="", textdict={}, uridict={}, provgraph=None
 	# record activity starting time
 	stime = datetime.utcnow()
 	
@@ -53,6 +59,12 @@ def delete(obj, key, namespace="", textdict={}, uridict={}, provgraph=None):
 
 	# record activity ending time
 	etime = datetime.utcnow()
+
+	# augmented provenance parameters
+	namespace = kwargs['namespace']
+	textdict = kwargs['textdict']
+	uridict = kwargs['uridict']
+	provgraph = kwargs['provgraph']
 
 	# namespaces
 	pub = Namespace("http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/")

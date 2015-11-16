@@ -3,12 +3,12 @@ from rdflib import Graph, URIRef, RDF, Namespace, Literal
 from rdflib.namespace import DC, XSD
 from datetime import datetime
 
-def read_csv(csvinput, delimiter=',', skipinitialspace=True, **kwargs): # namespace="", textdict = {}, uridict={}, provgraph=None
+def write_csv(dataframe, csvoutput, delimiter=',', index=True, **kwargs): # namespace="", textdict = {}, uridict={}, provgraph=None
 	# record activity starting time
 	stime = datetime.utcnow()
 
 	# execute normal operation
-	ret = pd.read_csv(csvinput, delimiter = delimiter, skipinitialspace=skipinitialspace)
+	dataframe.to_csv(csvoutput, sep = delimiter, index = index)
 
 	# record activity ending time
 	etime = datetime.utcnow()
@@ -28,33 +28,39 @@ def read_csv(csvinput, delimiter=',', skipinitialspace=True, **kwargs): # namesp
 	aid = URIRef(uridict['fun'])
 
 	if 0 in uridict:
-		csvinputid = URIRef(uridict[0])
+		dfid = URIRef(uridict[0])
 	else:
-		csvinputid = URIRef(uridict['csvinput'])
+		dfid = URIRef(uridict['dataframe'])
 	
+	if 0 in textdict:
+		dftext = textdict[0]
+	else:
+		dftext = textdict['dataframe']
+	
+	if 1 in uridict:
+		csvoutputid = URIRef(uridict[1])
+	else:
+		csvoutputid = URIRef(uridict['csvoutput'])
+		
 	if 'pandas' in uridict:
 		libid = URIRef(uridict['pandas'])
 	else:
 		libid = example.pandas
 		uridict['pandas'] = str(libid)
 	
-	returnid = URIRef(uridict['return'])
-
 	# add triples to the provenance graph
-	provgraph.add((aid, RDF.type, pub.Loading))
-	provgraph.add((aid, DC.description, Literal("Read CSV data in file "+csvinput+" to variable "+textdict['return'])))
+	provgraph.add((aid, RDF.type, pub.Saving))
+	provgraph.add((aid, DC.description, Literal("Save data in "+dftext+" to file "+csvoutput)))
 	provgraph.add((aid, pub.language, Literal("Python")))
 	provgraph.add((aid, prov.startedAtTime, Literal(stime.strftime("%Y-%m-%dT%H:%M:%SZ"), datatype=XSD.dateTime)))
 	provgraph.add((aid, prov.endedAtTime, Literal(etime.strftime("%Y-%m-%dT%H:%M:%SZ"), datatype=XSD.dateTime)))
-	provgraph.add((aid, pub.loaded, csvinputid))
-	provgraph.add((csvinputid, RDF.type, pub.OnDiskData))
-	provgraph.add((csvinputid, DC.description, Literal("Data stored in file "+csvinput)))
+	provgraph.add((aid, pub.saved, dfid))
+	provgraph.add((dfid, RDF.type, pub.InMemoryData))
+	provgraph.add((dfid, DC.description, Literal("Data held by variable or expression "+dftext)))
 	provgraph.add((aid, prov.used, libid))
 	provgraph.add((libid, RDF.type, pub.Library))
 	provgraph.add((libid, DC.description, Literal("The pandas Python library")))
-	provgraph.add((aid, prov.generated, returnid))
-	provgraph.add((returnid, RDF.type, pub.InMemoryData))
-	provgraph.add((returnid, DC.description, Literal("Data held by variable "+textdict['return'])))
-	return ret
-
+	provgraph.add((aid, prov.generated, csvoutputid))
+	provgraph.add((csvoutputid, RDF.type, pub.OnDiskData))
+	provgraph.add((csvoutputid, DC.description, Literal("Data stored in file "+csvoutput)))
 
