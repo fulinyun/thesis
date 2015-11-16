@@ -102,3 +102,64 @@ thoughts/2014-09-01-diary.txt
 # compiled python modules
 *.pyc
 
+# just ignore
+Git Bash.lnk
+model/.cmapthumbs/
+model/cmaps/.cmapthumbs/
+model/cmaps/PROV-PUB.cmap
+model/cmaps/figure4.2.cmap
+model/cmaps/figure4.3.cmap
+model/cmaps/project.idx
+model/cmaps/prov-pub-example-old.cmap
+model/ontology/prov-pub/PROV-PUB-O_P.html
+model/ontology/prov-pub/PROV-PUB-O_P.html~
+model/ontology/prov-pub/PROV-PUB-O_P_files/
+model/ontology/prov-pub/PROV-PUB-O_S.html~
+model/ontology/prov-pub/index.html~
+model/ontology/prov-pub/prov-pub-p-example.png
+project.idx
+rpistyle.bst
+rpistyle.dbj
+scripts/.RData
+scripts/.Rhistory
+scripts/CDODiv2177686828992.txt
+scripts/New folder/
+scripts/Untitled2.ipynb
+scripts/Untitled3.ipynb
+scripts/cmd.exe.lnk
+scripts/echokernel.py
+scripts/input.txt
+scripts/nca3chapter4figure2.ipynb
+scripts/nca3chapter4figure2no-output.ipynb
+scripts/pandas-test.ipynb
+scripts/parse-xml.ipynb
+scripts/project.idx
+scripts/prov-file.ttl
+scripts/prov.txt
+scripts/provkernel.py
+scripts/proxykernel.py
+scripts/rdflib-test.ipynb
+scripts/replication-demos.ipynb
+scripts/replicationDemos_1.05.zip
+scripts/replicationDemos_1.13.zip
+scripts/test-based-on-nca3chapter4figure2.ipynb
+scripts/test-out.csv
+scripts/test1.ipynb
+scripts/test_prov.ipynb
+steps-in-a-typical-data-analysis-r-in-action-p4-figure1.1.pptx
+thesis.dbj
+thoughts/2014-06-23-email2deborah.txt
+thoughts/2015-09-18-semiotics.txt
+thoughts/2015-09-23-nca3chapter4.txt
+thoughts/2015-09-27-jupyter-notebook-extraction.txt
+thoughts/2015-10-21-limitations.txt
+thoughts/2015-10-21-python-extraction.txt
+thoughts/2015-10-21-r-extraction.txt
+thoughts/2015-10-25-prototype.txt
+thoughts/2015-10-29-activity-classification.txt
+thoughts/2015-11-04-what-authors-need-to-do.txt
+thoughts/2015-11-05-survey-ideas.txt
+thoughts/project.idx
+thoughts/provenance-model-and-granularity.txt
+thoughts/pubs-thoughts.txt
+
