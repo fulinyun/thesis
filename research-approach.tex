@@ -213,6 +213,7 @@ To capture these changes of data, four classes are defined in PROV-PUB-O/P: pub:
 To further define specialized activities under and beyond the above three categories, we performed a case study on the 5 figures and 3 tables in Chapter 4 of the National Climate Assessment Report published in 2014 (NCA 2014). 
 
 \subsubsection{Case study on the figures and tables in Chapter 4 of NCA 2014}
+\label{sec:case}
 After a careful scrutiny of the 5 figures and 3 tables in Chapter 4 of NCA 2014, the following two types of recurring result generation paradigms are summarized:
 \begin{itemize}
 	\item Direct reuse of an existing result such as a figure. For example, Figure~4.1 in NCA 2014, ``Paths of Hurricanes Katrina and Rita Relative to Oil and Gas Production Facilities'', is just a slight adaptation of Figure~3 in the ``Natural Gas: Factors Affecting Prices and Potential Impacts on Consumers (GAO-06-420T)'' report. We argue that if both reports have their results recorded in provenance graphs with PROV-PUB-O/S, a much precise citation of the Figure~3 of the latter report could be provided in the previous report. We capture this kind of result generation process with the pub:Reuse class, which is a subclass of the prov:Activity class. This class is not a subclass of the ``change of data'' class pub:DataChange, because it does not actually happen on data, but on results.
@@ -848,6 +849,7 @@ All the fresh URIs for read\_csv, input\_file and csv\_content must be provided 
 Note that when generating URI for read\_csv, the URI is not for the function, but for the particular invocation of the function read\_csv, so later invocation of the same function will need different fresh URIs to differentiate among the different function invocations. The same rule holds for different references of the same data object generated at different occasions. Since the internal value changed, they are considered different data objects and need different URIs. Data objects on the left hand side of the operations (arguments of the operations) are considered ``read only'', so they should reuse their existing URIs if such URIs have been created for them.
 
 \subsection{A comprehensive example}
+\label{sec:example}
 Suppose we have the following list of operations:
 \begin{enumerate}
 	\item obtain\_data()$\rightarrow$input\_file
@@ -952,25 +954,137 @@ Finally, description for the figure usually should be generated:
 \end{itemize}
 If this figure gets adopted in the final publication, the author could assert that the figure in the publication is equivalent to :figure here with the owl:sameAs predicate. That is the reason why we assert the figure as an instance of pub:Figure (which is a subclass of pub:PublishedResult) although it may get discarded and end up not published.
 
+After the five operations get executed by the framework, the framework will have the full trace of the result figure :figure as follows, among other related information:
+\begin{itemize}
+	\item (:obtain\_data, prov:generated, :input\_file)
+	\item (:read\_csv, pub:loaded, :input\_file)
+	\item (:read\_csv, prov:generated, :csv\_content)
+	\item (:transform\_data, pub:transformed, :csv\_content)
+	\item (:transform\_data, prov:generated, :plot\_ready\_data)
+	\item (:plot\_data, pub:visualized, :plot\_ready\_data)
+	\item (:plot\_data, prov:generated, :figure)
+\end{itemize}
+
 \subsection{Non-functional requirements}
+The previous two sections specified and illustrated the functions a provenance-aware platform should implement. In addition to them, the platform compliant with the framework also needs to meet some non-functional requirements as much as possible to ensure its usability.
+
+First, it is desirable to support multiple forms of input. For example, to support multiple programming languages. That is, users should be likely to find one of their favorite ways of doing certain things acceptable by the front end. One example is one of their favorite programming languages is acceptable by the front end of the platform. In this case the users do not have to learn a new programming language in order to use the platform. In the ideal case, the platform includes provenance aware versions of all the software tools the users use to create research publications. For example, the platform includes provenance aware Web browsers and table creation tools, and the user could launch one of each kind within the platform so that the browsing and table creating actions are monitored by the kernel and get recorded automatically in a similar way as illustrated in the last section. The complication could be that the operator needs to provide the kernel with the operations in the form of Equation~\ref{eq:fun}, then the kernel could generate fresh URIs and the operator could generate provenance triples based on these URIs.
+
+Second, it is desirable to hide as much provenance details as possible from the user of the platform. However, when requested, the provenance details should be accessible to the user for review and modification. For example, the provenance aware functions should not expose provenance related arguments to the user or even ask the user to provide proper values for these arguments. Users would be annoyed and/or confused if they have to pass four extra parameters each time they call a provenance-aware version of their familiar function. Invocation of a provenance aware function should look as much as possible just like the invocation of a normal function. On the other hand, for provenance experts who want to see and have more control over the provenance get recorded, the platform should provide a way to show what is happening under the hood and what is in the provenance store so far.
+
+In the next section, we will describe a prototype that is compliant with the framework specification and implemented with these non-functional requirements in mind.
 % recap the three requirements
 
 % front end supporting multiple programming languages and extensible
 
 % capturing mechanism that does not require user involvement
 
-
-
 \section{A proof-of-concept platform}
 \label{sec:prototype}
-% front end -- Jupyter notebooks
-Jupyter Notebook is a strong candidate for the front end because it supports a lot of programming languages popular among scientists such as R and Python.
-% provenance capturing mechanism: parse Jupyter notebooks to extract provenance and construct provenance graphs
-The file system provided by the operating system makes a store that is easy to manage.
-% resulting provenance graph: reproducibility check, bad node search
-Sample provenance aware operators able to capture provenance for tables and figures in Chapter 4 of NCA 2014 report are implemented to complete the prototype.
+Based on the framework specification described in the last section, we implemented a prototype which has Jupyter Notebook as its front end, IPython as its kernel operator, several Python modules wrapping the functions of pandas, numpy and matplotlib.pyplot Python libraries as its data processing operators, and a Graph object of the rdflib library as its provenance store. The Python programming language is used to showcase the concept here, but Jupyter Notebook is language agnostic and kernels and operators could be implemented for other languages in the same manner.
 
-A special operator is implemented to retrieve provenance graphs previously saved. 
+The prototype supports the following forms of operations:
+\begin{enumerate}
+	\item Function invocation: $r = f(a_1\dots a_n)$
+	\item Procedure invocation: $p(a_1\dots a_n)$
+	\item Assignment: $l = r$
+	\item Deletion: del $o$[$k$]
+	\item Normal Python scripts
+\end{enumerate}
+These operation forms are picked from the Python code used to reproduce a figure in the case study described in Section~\ref{sec:case}. The intention is to make the operation invocations look exactly the same as normal Python scripts, and at the same time, cover as many frequently used Python code patterns as possible.
+
+The first form, function invocation, intuitively corresponds to the abstract operation pattern in Equation~\ref{eq:fun}. The important difference of the first form from a normal Python script is that the arguments $<a>_1\dots<a>_n$ are all read-only. It does not limit the capability of the function because if one argument, say $a_1$, is to get changed by the function $f$, then the function definition could change so that it returns a tuple $(r, a_1)$ to avoid the necessity of changing one of function $f$'s arguments.
+
+The second form, procedure invocation, is necessary because there are certain functions in Python that do not return data objects. They generate data objects, but these objects could not be held by in-memory variables. For example, consider the save\_data function mentioned in Section~\ref{sec:example}: when implemented with a Python function, it normally takes as one of its arguments the name of the file to save the data. It could be defined to return a file object to fit the first form, but that would be against the common Python code patterns and make the invocation in an awkward form. That is the reason we introduce the second form. It corresponds to the following abstract operation form:
+\begin{equation}
+p(a_2\dots a_n)\rightarrow \textrm{file}(a_1)
+\end{equation}
+where $\textrm{file}(a_1)$ is the on-disk data object with file name $a_1$.
+
+The third form, assignment, covers data and result generation operations achieved through Python operators. Examples are arithmetic operations such as ``$+$'', ``$-$'', ``$\times$'' and ``$\div$'', logical operators such as ``and'' and ``or'', and member access operators such as ``.'' and ``[]''. $r$ in the third form is usually an expression containing these Python operators, and this form is first reduced to $l = \textrm{assign}(r)$ (in the first form) where assign is a built-in function implemented within the kernel implemented in an IPython cell magic function called ``prov''.
+
+The fourth form, deletion, specifically covers the operations achieved through the Python del operator. One example is to use this operator to drop a column in a data frame. When reading an operation in this form, the kernel would rewrite it to $o = \textrm{delete}(o, k)$ (in the first form) and execute, where delete is a built-in function implemented within the kernel implemented in the same ``prov'' IPython cell magic.
+
+Operations written in the first four forms are all provenance aware, but there are some Python scripts that do not have meaningful provenance to capture. Examples are inspection of data objects and manipulating the provenance store content. The fifth form is for such provenance-unaware operations. Users could decide whether to capture provenance or not with the ``prov'' IPython cell magic that is responsible for rewriting scripts in the third and fourth forms.
+
+The ``prov'' cell magic maintains the URIs and texts of variables and expressions with several Python dictionaries, and these dictionaries, along with other provenance related variables, are initialized with the ``initprov'' cell magic. To tell the platform to start tracking provenance, the user just need to call the ``initprov'' cell magic once, and to record provenance captured by the provenance aware function and procedure invocations in a cell, the user just need to call the ``prov'' cell magic in the cell.
+
+The following provenance aware functions are implemented to show how to define provenance aware functions for the platform and use the platform:
+\begin{itemize}
+	\item assign(rhs, **kwargs) in the \emph{operators} module
+	\item delete(obj, key, **kwargs) in the \emph{operators} module
+	\item read\_csv(csvinput, delimiter=',', skipinitialspace=True, **kwargs) in the \emph{dataloader} module
+	\item group\_aggregate(dataframe, keys, aggregation, **kwargs) in the \emph{datatransformer} module
+	\item average(li, **kwargs) in the \emph{datatransformer} module
+	\item write\_csv(dataframe, csvoutput, delimiter=',', index=True, **kwargs) in the \emph{datasaver} module
+	\item plot(dataframe, kind, figsize, **kwargs) in the \emph{dataplotter} module
+\end{itemize}
+The \emph{**kwargs} (key word arguments) in the argument lists are for provenance related arguments to be added by the kernel before these functions get actually executed. For example, in a provenance aware cell (indicated with the call of the ``prov'' cell magic), if the user writes the following line of code:
+\begin{quotation}
+\noindent\texttt{csv\_content = read\_csv('CDODiv2177686828992.txt', delimiter=' ')}
+\end{quotation}
+The actual code gets executed would be:
+\begin{quotation}
+	\noindent...
+	
+	\noindent\texttt{csv\_content = read\_csv('CDODiv2177686828992.txt', delimiter=' ', namespace=\_\_NAMESPACE\_\_, textdict=\_\_TEXTDICT\_\_, uridict=\_\_URIDICT\_\_, provgraph=\_\_PROV\_\_)}
+	
+	\noindent...
+\end{quotation}
+where \_\_NAMESPACE\_\_, \_\_TEXTDICT\_\_, \_\_URIDICT\_\_ and \_\_PROV\_\_ are variables created by the ``initprov'' cell magic and maintained by the ``prov'' cell magic and the provenance aware functions. The point here is that the users do not need to know the existence of these variables, so it is the kernel's job to add in the provenance related arguments.
+
+For expert users who would like to review the provenance captured so far and/or manipulate the provenance graph, they could do these by read and/or write the \emph{\_\_PROV\_\_} variable.
+
+\subsection{A concrete example}
+In this section, we walk through the whole process of the creation of a figure. The figure was generated based on a downloaded CSV file with the following IPython scripts:
+\begin{enumerate}
+	\item\noindent import sys
+	
+	\noindent sys.path.append('prov')
+	
+	\noindent import dataloader as dl
+	
+	\noindent import datatransformer as dt
+	
+	\noindent import datasaver as ds
+	
+	\noindent import dataplotter as dp
+	
+	\noindent import provmagic
+	
+	\noindent import numpy as np
+	\item \%\%initprov
+	\item csv\_content = dl.read\_csv('CDODiv2177686828992.txt', delimiter=' ')
+	\item dd = csv\_content[['YearMonth','HDD','CDD']]
+	\item dd.loc[:,'Year'] = dd['YearMonth']//100
+	\item del dd['YearMonth']
+	\item dd\_year = dt.group\_aggregate(dd, 'Year', np.sum)
+	\item cdd\_avg = dt.average(dd\_year['CDD'][0:31])
+	\item hdd\_avg = dt.average(dd\_year['HDD'][0:31])
+	\item dd\_year.loc[:, 'HDD'] = dd\_year['HDD']/hdd\_avg*100-100
+	\item dd\_year.loc[:, 'CDD'] = dd\_year['CDD']/cdd\_avg*100-100
+	\item ds.write\_csv(dd\_year, 'dd\_year.csv')
+	\item fig = dp.plot(dd\_year, kind='bar', figsize=(20,10))
+\end{enumerate}
+The downloaded CSV file, CDODiv2177686828992.txt, had the following content:
+\begin{quotation}\tt
+	\noindent ... YearMonth ... CDD \ \ \ \ HDD ...
+	 
+	\noindent ... \ \ \ 197001 ... \ \ 2 \ \ \ 1067 ...
+	 
+	\noindent ... \ \ \ 197002 ... \ \ 3 \ \ \ \ 763 ...
+	
+	\noindent ... 
+\end{quotation}
+
+% front end -- Jupyter notebooks
+%Jupyter Notebook is a strong candidate for the front end because it supports a lot of programming languages popular among scientists such as R and Python.
+% provenance capturing mechanism: parse Jupyter notebooks to extract provenance and construct provenance graphs
+%The file system provided by the operating system makes a store that is easy to manage.
+% resulting provenance graph: reproducibility check, bad node search
+%Sample provenance aware operators able to capture provenance for tables and figures in Chapter 4 of NCA 2014 report are implemented to complete the prototype.
+
+%A special operator is implemented to retrieve provenance graphs previously saved. 
 
 %We propose an objective evaluation measurement based on the Halstead complexity measures (\cite{halstead1977elements}, paraphrased in \cite{weyuker1988evaluating}), and we choose the task of data preparation for our evaluation. Data preparation loosely means indexing, organizing and optimizing data so they become structured in a form that 1) people can use and 2) software can consume. Figure~\ref{fig:data-analytics} shows how data preparation is related to other data analytics tasks\footnote{http://tw.rpi.edu/media/latest/DataAnalytics2015\_week1a.ppt [Retrived on May 11th, 2015]}. It is also called data munging and a sense of it could be obtained via reading any textbook talking about a data processing oriented programming language such as Perl \cite{cross2001data}.
 %
