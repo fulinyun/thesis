@@ -2,6 +2,7 @@ import pandas as pd
 from rdflib import Graph, URIRef, RDF, Namespace, Literal
 from rdflib.namespace import DC, XSD
 from datetime import datetime
+import urllib
 
 def write_csv(dataframe, csvoutput, delimiter=',', index=True, **kwargs): # namespace="", textdict = {}, uridict={}, provgraph=None
 	# record activity starting time
@@ -37,10 +38,13 @@ def write_csv(dataframe, csvoutput, delimiter=',', index=True, **kwargs): # name
 	else:
 		dftext = textdict['dataframe']
 	
-	if 1 in uridict:
-		csvoutputid = URIRef(uridict[1])
+	# since csvoutput is gonna be a new on-disk data object, generate a fresh URI for it
+	if 1 in textdict:
+		csvoutputtext = textdict[1]
 	else:
-		csvoutputid = URIRef(uridict['csvoutput'])
+		csvoutputtext = textdict['csvoutput']
+
+	csvoutputid = URIRef(namespace+freshurl(csvoutputtext))
 		
 	if 'pandas' in uridict:
 		libid = URIRef(uridict['pandas'])
@@ -63,4 +67,10 @@ def write_csv(dataframe, csvoutput, delimiter=',', index=True, **kwargs): # name
 	provgraph.add((aid, prov.generated, csvoutputid))
 	provgraph.add((csvoutputid, RDF.type, pub.OnDiskData))
 	provgraph.add((csvoutputid, DC.description, Literal("Data stored in file "+csvoutput)))
+
+def timestr():
+	return datetime.utcnow().strftime("_%Y_%m_%dT%H_%M_%SZ")
+
+def freshurl(name):
+	return urllib.quote_plus(name+timestr())
 

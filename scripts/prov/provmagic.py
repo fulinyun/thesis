@@ -6,6 +6,7 @@ from rdflib import Namespace, Literal
 from rdflib.namespace import DC
 from datetime import datetime
 import urllib
+import time
 
 @magics_class
 class ProvMagics(Magics):
@@ -26,6 +27,7 @@ class ProvMagics(Magics):
 			if args.verbose:
 				print("Actual code executed:\n"+rewritten_cell)
 			get_ipython().run_cell(rewritten_cell)
+			time.sleep(2)
 			rewritten_cell = ""
 
 		if rewritten_cell.strip() != "":
@@ -40,7 +42,8 @@ class ProvMagics(Magics):
 from rdflib.namespace import DC, NamespaceManager
 import operators
 if '__NAMESPACE__' not in globals():
-    __NAMESPACE__ = 'http://example.org/'
+	__NAMESPACE__ = 'http://example.org/'
+__OBJDICT__ = {}
 __URIDICT__ = {}
 __TEXTDICT__ = {}
 __PROV__ = Graph()
@@ -89,13 +92,15 @@ def rewrite(origline, line, verbose=True):
 				if '=' in argsl[i]:
 					[pname, text] = re.split("=", argsl[i])
 					pname = pname.strip()
-					text = text.strip()
+					text = text.strip().replace('"', '\\"')
 					rcode += "__TEXTDICT__['"+pname+"'] = \""+text+"\"\n"
-					rcode += "__URIDICT__['"+pname+"'] = __NAMESPACE__+'"+freshurl(pname)+"_a'\n"
+					rcode += "if \""+text+"\" in __OBJDICT__:\n\t__URIDICT__['"+pname+"'] = __OBJDICT__[\""+text+"\"]\n"
+					rcode += "else:\n\t__OBJDICT__[\""+text+"\"] = __URIDICT__['"+pname+"'] = __NAMESPACE__+'"+freshurl(text)+"_a'\n"
 				else:
-					text = argsl[i].strip()
+					text = argsl[i].strip().replace('"', '\\"')
 					rcode += "__TEXTDICT__["+str(i)+"] = \""+text+"\"\n"
-					rcode += "__URIDICT__["+str(i)+"] = __NAMESPACE__+'"+freshurl(text)+"_a'\n"
+					rcode += "if \""+text+"\" in __OBJDICT__:\n\t__URIDICT__["+str(i)+"] = __OBJDICT__[\""+text+"\"]\n"
+					rcode += "else:\n\t__OBJDICT__[\""+text+"\"] = __URIDICT__["+str(i)+"] = __NAMESPACE__+'"+freshurl(text)+"_a'\n"
 			rcode += "__TEXTDICT__['fun'] = \""+fun+"\"\n"
 			rcode += "__URIDICT__['fun'] = __NAMESPACE__+'"+freshurl(fun)+"'\n"
 			rcode += "__PROV__.add((URIRef(__URIDICT__['fun']), pub.code, Literal(\""+origline.replace('"', '\\"')+"\")))\n"
@@ -109,22 +114,26 @@ def rewrite(origline, line, verbose=True):
 			if '=' in argsl[i]:
 				[pname, text] = re.split("=", argsl[i])
 				pname = pname.strip()
-				text = text.strip()
+				text = text.strip().replace('"', '\\"')
 				rcode += "__TEXTDICT__['"+pname+"'] = \""+text+"\"\n"
-				rcode += "__URIDICT__['"+pname+"'] = __NAMESPACE__+'"+freshurl(pname)+"_a'\n"
+				rcode += "if \""+text+"\" in __OBJDICT__:\n\t__URIDICT__['"+pname+"'] = __OBJDICT__[\""+text+"\"]\n"
+				rcode += "else:\n\t__OBJDICT__[\""+text+"\"] = __URIDICT__['"+pname+"'] = __NAMESPACE__+'"+freshurl(text)+"_a'\n"
 			else:
-				text = argsl[i].strip()
+				text = argsl[i].strip().replace('"', '\\"')
 				rcode += "__TEXTDICT__["+str(i)+"] = \""+text+"\"\n"
-				rcode += "__URIDICT__["+str(i)+"] = __NAMESPACE__+'"+freshurl(text)+"_a'\n"
+				rcode += "if \""+text+"\" in __OBJDICT__:\n\t__URIDICT__["+str(i)+"] = __OBJDICT__[\""+text+"\"]\n"
+				rcode += "else:\n\t__OBJDICT__[\""+text+"\"] = __URIDICT__["+str(i)+"] = __NAMESPACE__+'"+freshurl(text)+"_a'\n"
 		rcode += "__TEXTDICT__['fun'] = \""+fun+"\"\n"
 		rcode += "__URIDICT__['fun'] = __NAMESPACE__+'"+freshurl(fun)+"'\n"
+		ret1 = ret
+		ret = findobj(ret)
 		rcode += "__TEXTDICT__['return'] = \""+ret+"\"\n"
-		rcode += "__URIDICT__['return'] = __NAMESPACE__+'"+freshurl(ret)+"'\n"
+		rcode += "__OBJDICT__[\""+ret+"\"] = __URIDICT__['return'] = __NAMESPACE__+'"+freshurl(ret)+"'\n"
 		rcode += "__PROV__.add((URIRef(__URIDICT__['fun']), pub.code, Literal(\""+origline.replace('"', '\\"')+"\")))\n"
 		funcall = fun+"("+allargs+", namespace=__NAMESPACE__, textdict=__TEXTDICT__, uridict=__URIDICT__, provgraph=__PROV__)"
 		rcode += "__RETURN__ = None\n"
 		rcode += "__RETURN__ = "+funcall
-		rcode += "\n" + ret + " = __RETURN__"
+		rcode += "\n" + ret1 + " = __RETURN__"
 		return rcode
 
 def matchfun(line):
@@ -210,12 +219,12 @@ def parseargs(allargs):
 				escape = True
 			elif c == '"' and not instring:
 				instring = True
-				quotation = '"'
+				quotation = c
 			elif c == '"' and instring and quotation == '"':
 				instring = False
 			elif c == "'" and not instring:
 				instring = True
-				quotation = "'"
+				quotation = c
 			elif c == "'" and instring and quotation == "'":
 				instring = False
 			elif c == '(' and not instring:
@@ -233,8 +242,34 @@ def parseargs(allargs):
 	ret.append(currentarg)
 	return ret
 
+def findobj(s):
+	ret = ""
+	instring = False
+	quotation = '"'
+	escape = False
+	for c in s:
+		if (c == '.' or c == '[') and not instring:
+			return ret
+		else:
+			ret += c
+			if escape:
+				escape = False
+			elif c == '\\':
+				escape = True
+			elif c == '"' and not instring:
+				instring = True
+				quotation = c
+			elif c == '"' and instring and quotation == '"':
+				instring = False
+			elif c == "'" and not instring:
+				instring = True
+				quotation = c
+			elif c == "'" and instring and quotation == "'":
+				instring = False
+	return ret
+
 def timestr():
-	return datetime.utcnow().strftime("_%A_%d_%B_%Y_%I_%M_%S_%p")
+	return datetime.utcnow().strftime("_%Y_%m_%dT%H_%M_%SZ")
 
 def freshurl(name):
 	return urllib.quote_plus(name+timestr())
