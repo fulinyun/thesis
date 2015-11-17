@@ -836,7 +836,7 @@ These provenance capturing actions are taken in addition to the normal actions p
 
 A kernel usually provides only the most basic operations such as value assignment, variable binding, logic and arithmetic operations, and conditional execution. More complicated computations are typically carried out by some provenance aware operator other than the kernel. In this case, the kernel knows the variable carrying the return value of the operation and all the arguments that could potentially be used by the operation, but it does not know the detailed usage of these arguments, neither does the kernel know the specific type of the operation. The operator needs to fill in the blanks where the kernel does not know about it.
 
-For example, suppose the read\_csv(input\_file)-->csv\_content operation is handled by a provenance aware operator instead of the kernel, the same list of triples need to be generated:
+For example, suppose the read\_csv(input\_file)$\rightarrow$csv\_content operation is handled by a provenance aware operator instead of the kernel, the same list of triples need to be generated:
 \begin{itemize}
 	\item (:read\_csv, rdf:type, pub:Loading)
 	\item (:read\_csv, pub:loaded, :input\_file)
@@ -845,7 +845,112 @@ For example, suppose the read\_csv(input\_file)-->csv\_content operation is hand
 \end{itemize}
 All the fresh URIs for read\_csv, input\_file and csv\_content must be provided by the kernel, the kernel will pass the dictionary of variable-URI mappings to the operator. The operator knows the relationships among these data objects, so it is responsible to generate all the triples with the URIs provided by the kernel. It can also generate more triples that describe useful information such as the programming language and the library dependency.
 
+Note that when generating URI for read\_csv, the URI is not for the function, but for the particular invocation of the function read\_csv, so later invocation of the same function will need different fresh URIs to differentiate among the different function invocations. The same rule holds for different references of the same data object generated at different occasions. Since the internal value changed, they are considered different data objects and need different URIs. Data objects on the left hand side of the operations (arguments of the operations) are considered ``read only'', so they should reuse their existing URIs if such URIs have been created for them.
+
 \subsection{A comprehensive example}
+Suppose we have the following list of operations:
+\begin{enumerate}
+	\item obtain\_data()$\rightarrow$input\_file
+	\item read\_csv(input\_file)$\rightarrow$csv\_content
+	\item transform\_data(csv\_content)$\rightarrow$plot\_ready\_data
+	\item save\_data(plot\_ready\_data)$\rightarrow$data\_file
+	\item plot\_data(plot\_ready\_data)$\rightarrow$figure
+\end{enumerate}
+, and they are all carried out by non-kernel operators. Below is a step-by-step illustration of how each operation should change the store. It shows the minimum set of triples every implementation of the framework needs to generate.
+
+Step 1: obtain\_data()$\rightarrow$input\_file. The kernel is responsible for parsing the operation, and generating fresh URIs :obtain\_data and :input\_file for the invocation of the obtain\_data() operation and the generated data object input\_file, respectively. The operator providing the obtain\_data function is responsible for generating the following triples based on the URIs given by the kernel to add to the store:
+\begin{itemize}
+	\item (:obtain\_data, rdf:type, pub:Obtaining)
+	\item (:obtain\_data, prov:generated, :input\_file)
+\end{itemize}
+Optionally it may also generate the following triple to explain the obtaining process:
+\begin{itemize}
+	\item (:obtain\_data, dct:description, "Filled out the data request form at \url{http://www7.ncdc.noaa.gov/CDO/CDODivisionalSelect.jsp#} with period: 1970.1--2010.12, and downloaded the requested data.")
+\end{itemize}
+and the following triple to describe the obtained data:
+\begin{itemize}
+	\item (:input\_file, rdf:type, pub:OnDiskData)
+	\item (:input\_file, pub:format, "CSV")
+	\item (:input\_file, dct:description, "Data in the CDODiv2177686828992.txt file.")
+\end{itemize}
+The operator may also describe the dataset it obtained data from, with some other ontology focusing on dataset description.
+
+Step 2: read\_csv(input\_file)$\rightarrow$csv\_content. The kernel is responsible for parsing the operation, and generating fresh URIs :read\_csv and :csv\_content for the operation and the generated data object, respectively. The URI for input\_file should be reused because it has not changed from when generated until it is passed as an argument of this operation. The provider of the read\_csv operation is responsible for generating the following triples:
+\begin{itemize}
+	\item (:read\_csv, rdf:type, pub:Loading)
+	\item (:read\_csv, pub:loaded, :input\_file)
+	\item (:read\_csv, prov:generated, :csv\_content)
+\end{itemize}
+Optionally, the operator may also generate some explanation text for the data loading activity:
+\begin{itemize}
+	\item (:read\_csv, dct:description, "Read CSV data in file CDODiv2177686828992.txt to variable csv\_content")
+\end{itemize}
+The file name is known by the operator since it is included in the input\_file argument. The variable name needs to be passed by the kernel to the operator. As will be shown in Section~\ref{sec:prototype}, at least in Python, there is a way to pass such ``hidden arguments'' in the background without bothering the user with mysterious additional arguments.
+
+The operator providing the read\_csv function may also provide additional description triples for the :input\_file data object from a different perspective from the data obtaining operator. In this case there is no such additional description to add.
+
+Finally, the operator may provide description for the :csv\_content data object:
+\begin{itemize}
+	\item (:csv\_content, rdf:type, pub:InMemoryData)
+	\item (:csv\_content, dct:description, "Data held by variable csv\_content.")
+\end{itemize}
+
+Step 3: transform\_data(csv\_content)$\rightarrow$plot\_ready\_data. The kernel should prepare fresh URIs for the transform\_data operation and the plot\_ready\_data object (let's say they are :transform\_data and :plot\_ready\_data), and reuse the existing URI for the csv\_content object (that is, :csv\_content). The operator should generate the following triples:
+\begin{itemize}
+	\item (:transform\_data, rdf:type, pub:Transformation)
+	\item (:transform\_data, pub:transformed, :csv\_content)
+	\item (:transform\_data, prov:generated, :plot\_ready\_data)
+\end{itemize}
+and it may optionally generate description of the operation:
+\begin{itemize}
+	\item (:transform\_data, dct:description, "Sum up values on columns CDD and HDD for each year, convert these sums into percentages relative to the average of the first 31 years, delete the remaining columns.")
+\end{itemize}
+In this example, the transform\_data operation is very problem specific and not useful to other use cases. In the real life, as will be shown in Section~\ref{sec:prototype}, such data transformation is usually decomposed into several general operations such as selecting certain columns (also called subsetting, slicing, and so on), calculating the average for a certain list of values, arithmetic calculation for each value in a list, and so on. Here we put these transformations together as one to avoid listing too many examples of the same kind of data generation operation and to make one complete example of the whole data processing workflow.
+
+The operator providing the transform\_data function may provide additional description of the csv\_content data object according to its knowledge about it. We omit it here. Finally, the operator may generate some triples to describe the data object it generated:
+\begin{itemize}
+	\item (:plot\_ready\_data, rdf:type, pub:InMemoryData)
+	\item (:plot\_ready\_data, dct:description, "Data held by variable :plot\_ready\_data.")
+\end{itemize}
+
+Step 4: save\_data(plot\_ready\_data)$\rightarrow$data\_file. Same URI generation jobs are to be done by the kernel. :save\_data for the operation and :data\_file for the generated data object should be ready after kernel does its job. :plot\_ready\_data should get reused. Based on these data object-URI mappings, the operator should generate the following triples:
+\begin{itemize}
+	\item (:save\_data, rdf:type, pub:Saving)
+	\item (:save\_data, pub:saved, :plot\_ready\_data)
+	\item (:save\_data, prov:generated, :data\_file)
+\end{itemize}
+and may also describe the operation with the triple:
+\begin{itemize}
+	\item (:save\_data, dct:description, "Save data held by the plot\_ready\_data variable to the file data.csv")
+\end{itemize}
+The save\_data function usually takes as an argument to specify the format of the file to store the data. This information may also be inferred from the extension of the file name given to the function.
+
+Finally, the operator may describe the generated data file by triples such as:
+\begin{itemize}
+	\item (:data\_file, rdf:type, pub:OnDiskData)
+	\item (:data\_file, pub:format, "CSV")
+	\item (:data\_file, dct:description, "Data in the file data.csv")
+\end{itemize}
+
+Step 5: plot\_data(plot\_ready\_data)$\rightarrow$figure. The kernel should generate the fresh URI :plot\_data for the operation and :figure for the generated result. The variable plot\_ready\_data has not changed since its creation, so the URI :plot\_ready\_data can still be reused here. The operator is responsible for generating the following triples:
+\begin{itemize}
+	\item (:plot\_data, rdf:type, pub:Visualization)
+	\item (:plot\_data, pub:visualized, :plot\_ready\_data)
+	\item (:plot\_data, prov:generated, :figure)
+\end{itemize}
+optionally plus the description of the operation:
+\begin{itemize}
+	\item (:plot\_data, dct:description, "Plotted data in variable plot\_ready\_data to generate figure.")
+\end{itemize}
+The description could get enriched by additional information provided by the arguments, such as the type of the plot and the size of the generated figure.
+
+Finally, description for the figure usually should be generated:
+\begin{itemize}
+	\item (:figure, rdf:type, pub:Figure)
+	\item (:figure, pub:format, "PNG")
+	\item (:figure, dct:description, "Figure plotted with arguments kind=bar, figsize=(20,10).")
+\end{itemize}
+If this figure gets adopted in the final publication, the author could assert that the figure in the publication is equivalent to :figure here with the owl:sameAs predicate. That is the reason why we assert the figure as an instance of pub:Figure (which is a subclass of pub:PublishedResult) although it may get discarded and end up not published.
 
 \subsection{Non-functional requirements}
 % recap the three requirements
@@ -857,6 +962,7 @@ All the fresh URIs for read\_csv, input\_file and csv\_content must be provided 
 
 
 \section{A proof-of-concept platform}
+\label{sec:prototype}
 % front end -- Jupyter notebooks
 Jupyter Notebook is a strong candidate for the front end because it supports a lot of programming languages popular among scientists such as R and Python.
 % provenance capturing mechanism: parse Jupyter notebooks to extract provenance and construct provenance graphs
