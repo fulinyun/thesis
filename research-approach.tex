@@ -1076,7 +1076,446 @@ The downloaded CSV file, CDODiv2177686828992.txt, had the following content:
 	
 	\noindent ... 
 \end{quotation}
+The columns not interested in this use case are omitted. The first block of scripts makes the cell magic functions and the provenance aware functions accessible from the Jupyter notebook (that is, the rest of the code). It also imports the numpy Python library to be used in the notebook.
 
+The second script item is a call of the \emph{initprov} cell magic. When the IPython kernel reads this line, it will invoke the initprov(self, line, cell) function defined in the provmagic module. The source code is available in the appendix. This function creates and initializes the provenance related global variables such as \_\_NAMESPACE\_\_, \_\_OBJDICT\_\_, \_\_TEXTDICT\_\_, \_\_URIDICT\_\_ and \_\_PROV\_\_. 
+
+The \_\_NAMESPACE\_\_ variable is the namespace for the local instances such as operations, expressions and data objects. Users can set its value simply by assigning the namespace string to the \_\_NAMESPACE\_\_ variable:
+
+\_\_NAMESPACE\_\_ = 'http://my.domain.org/'
+
+If not given, the initprov cell magic will set its value to \url{http://example.org/}, which is the case for this example.
+
+The \_\_OBJDICT\_\_ variable is a dictionary recording URIs for data objects involved in the Jupyter notebook. It is maintained by the IPython kernel with the \emph{prov} cell magic and used by provenance aware functions to ensure the consistency of URIs assigned to consecutive appearances of the same data object. If the object changed, a fresh URI should be assigned to it, otherwise the data object should reuse its existing URI to keep the RDF triples across different operations connected.
+
+The \_\_TEXTDICT\_\_ variable is a dictionary recording textual representations of function names, arguments and variables. Entries of this dictionary will be filled in by the IPython kernel with the \emph{prov} cell magic before each provenance aware function gets invoked. The dictionary will be passed as an argument to the provenance aware function to help the function create meaningful descriptions of the data objects it used and generated. Examples will be available when we explain the following scripts.
+
+The \_\_URIDICT\_\_ variable is a dictionary recording URIs of operations and data objects. It is also filled in by the IPython kernel with the \emph{prov} cell magic and used by provenance aware functions to generate correct RDF triples. Examples will be available in the explanation of the following scripts.
+
+The \_\_PROV\_\_ variable is an RDF graph playing the role of provenance store. All the generated provenance triples are added to this graph.
+
+The cell magics defined in the provmagic module all have the argument ``-v'' or ``--verbose''. When set, it makes the cell magic print the actual code executed behind the scene. If we replace the second script item with:
+\begin{quotation}
+\noindent\%\%initprov -v
+\end{quotation}
+The output of the cell will include the following information when executed:
+\begin{quotation}
+\noindent Actual code executed:
+
+\noindent from rdflib import Graph, Namespace, URIRef, Literal
+
+\noindent from rdflib.namespace import DC, NamespaceManager
+
+\noindent import operators
+
+\noindent if '\_\_NAMESPACE\_\_' not in globals():
+
+\noindent \_\_NAMESPACE\_\_ = 'http://example.org/'
+
+\noindent \_\_OBJDICT\_\_ = \{\}
+
+\noindent \_\_URIDICT\_\_ = \{\}
+
+\noindent \_\_TEXTDICT\_\_ = \{\}
+
+\noindent \_\_PROV\_\_ = Graph()
+
+\noindent pub = Namespace("\url{http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/}")
+
+\noindent prov = Namespace("\url{http://www.w3.org/ns/prov#}")
+
+\noindent example = Namespace(\_\_NAMESPACE\_\_)
+
+\noindent namespace\_manager = NamespaceManager(Graph())
+
+\noindent namespace\_manager.bind('pub', pub, override=False)
+
+\noindent namespace\_manager.bind('prov', prov, override=False)
+
+\noindent namespace\_manager.bind('dc', DC, override=False)
+
+\noindent namespace\_manager.bind('', example, override=False)
+
+\noindent \_\_PROV\_\_.namespace\_manager = namespace\_manager
+\end{quotation}
+which lets expert users know what exactly is going on and enables them to make changes.
+
+The \emph{initprov} cell magic calls the \emph{prov} magic function to deal with provenance aware operations in the cell, so users do not need to call the \emph{prov} magic if they write the scripts in the same cell. To enable provenance aware processing for a new cell, the user needs to call the \emph{prov} magic with ``\%\%prov''. We assume that all the following scripts were all written in the same cell in this example, so it is not necessary to call the \emph{prov} cell magic.
+
+When the kernel receives script item 3, it parses the line to recognize the provenance aware function all and rewrites the line to:
+\begin{quotation}
+	\noindent csv\_content = dl.read\_csv('CDODiv2177686828992.txt', delimiter=' ', namespace=\_\_NAMESPACE\_\_, textdict=\_\_TEXTDICT\_\_, uridict=\_\_URIDICT\_\_, provgraph=\_\_PROV\_\_)
+\end{quotation}
+before which entries are filled in to the dictionaries:
+\begin{quotation}
+	\noindent \_\_TEXTDICT\_\_ = \{\}
+	
+	\noindent \_\_TEXTDICT\_\_[0] = "'CDODiv2177686828992.txt'"
+	
+	\noindent if "'CDODiv2177686828992.txt'" in \_\_OBJDICT\_\_:
+	
+	\noindent \ \ \_\_URIDICT\_\_[0] = \_\_OBJDICT\_\_["'CDODiv2177686828992.txt'"]
+	
+	\noindent else:
+	
+	\noindent \ \ \_\_OBJDICT\_\_["'CDODiv2177686828992.txt'"] = \_\_URIDICT\_\_[0] = \_\_NAMESPACE\_\_+'\%27CDODiv2177...txt\%27\_2015\_11\_17T15\_16\_30Z\_a'
+	
+	\noindent \_\_TEXTDICT\_\_['delimiter'] = "' '"
+	
+	\noindent if "' '" in \_\_OBJDICT\_\_:
+	
+	\noindent \ \ \_\_URIDICT\_\_['delimiter'] = \_\_OBJDICT\_\_["' '"]
+	
+	\noindent else:
+	
+	\noindent \ \ \_\_OBJDICT\_\_["' '"] = \_\_URIDICT\_\_['delimiter'] = \_\_NAMESPACE\_\_+'\%27+\%27\_2015\_11\_17T15\_16\_30Z\_a'
+	
+	\noindent \_\_TEXTDICT\_\_['fun'] = "dl.read\_csv"
+	
+	\noindent \_\_URIDICT\_\_['fun'] = \_\_NAMESPACE\_\_+'dl.read\_csv\_2015\_11\_17T15\_16\_30Z'
+	
+	\noindent \_\_TEXTDICT\_\_['return'] = "csv\_content"
+	
+	\noindent \_\_OBJDICT\_\_["csv\_content"] = \_\_URIDICT\_\_['return'] = \_\_NAMESPACE\_\_+'csv\_content\_2015\_11\_17T15\_16\_30Z'
+\end{quotation}
+and the following RDF triple about the code of the operation is added to \_\_PROV\_\_:
+\begin{quotation}
+	\noindent (:dl.read\_csv\_2015\_11\_17T15\_16\_30Z, pub:code, "csv\_content = dl.read\_csv('CDODiv2177686828992.txt', delimiter=' ')")
+\end{quotation} 
+Variable names and execution times are used to create fresh URIs. Special entries are created for operations and return values. Based on the information created by the cell magic function and passed to the provenance aware read\_csv function, the function can create the following RDF triples (in Turtle format):
+\begin{quotation}
+	\noindent:dl.read\_csv\_2015\_11\_17T15\_16\_30Z a pub:Loading ;
+	
+	\noindent \ \ pub:language "Python" ;
+	
+	\noindent \ \ pub:code "csv\_content = dl.read\_csv('CDODiv2177686828992.txt', delimiter=' ')" ;
+	
+	\noindent \ \ dc:description "Read CSV data in file CDODiv2177686828992.txt to variable csv\_content" ;
+	
+	\noindent \ \ prov:startedAtTime "2015-11-17T15:16:30+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent \ \ prov:endedAtTime "2015-11-17T15:16:30+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent \ \ pub:loaded <\url{http://example.org/%27CDODiv2177686828992.txt%27_2015_11_17T15_16_30Z_a}> ;
+	
+	\noindent \ \ prov:used :pandas .
+	
+	\noindent \ \ prov:generated :csv\_content\_2015\_11\_17T15\_16\_30Z ;
+	
+	\noindent<\url{http://example.org/%27CDODiv2177686828992.txt%27_2015_11_17T15_16_30Z_a}> a pub:OnDiskData ;
+	
+	\noindent \ \ dc:description "Data stored in file CDODiv2177686828992.txt" .
+	
+	\noindent:pandas a pub:Library ;
+	
+	\noindent \ \ dc:description "The pandas Python library" .
+
+	\noindent:csv\_content\_2015\_11\_17T15\_16\_30Z a pub:InMemoryData ;
+	
+	\noindent \ \ dc:description "Data held by variable csv\_content" .	
+\end{quotation}
+
+Script item 4 would first be rewritten as a assign function call:
+\begin{quotation}
+	\noindent dd=operators.assign(csv\_content[['YearMonth','HDD','CDD']])
+\end{quotation}
+and then processed just like the previous script item and the following RDF triples would be generated:
+\begin{quotation}
+	\noindent:operators.assign\_2015\_11\_17T15\_16\_32Z a prov:Activity ;
+	
+	\noindent \ \ pub:language "Python" ;
+	
+	\noindent \ \ pub:code "dd = csv\_content[['YearMonth','HDD','CDD']]" ;
+	
+	\noindent \ \ dc:description "Assign expression csv\_content[['YearMonth','HDD','CDD']] to variable dd" ;
+	
+	\noindent \ \ prov:startedAtTime "2015-11-17T15:16:32+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent \ \ prov:endedAtTime "2015-11-17T15:16:32+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent \ \ prov:used <\url{http://example.org/csv_content%5B%5B%27YearMonth%27%2C%27HDD%27%2C%27CDD%27%5D%5D_2015_11_17T15_16_32Z_a}> .
+		
+	\noindent \ \ prov:generated :dd\_2015\_11\_17T15\_16\_32Z ;
+	
+	\noindent<\url{http://example.org/csv_content%5B%5B%27YearMonth%27%2C%27HDD%27%2C%27CDD%27%5D%5D_2015_11_17T15_16_32Z_a}> a pub:InMemoryData ;
+		
+	\noindent\ \ dc:description "Expression csv\_content[['YearMonth','HDD','CDD']]" .
+
+	\noindent:dd\_2015\_11\_17T15\_16\_32Z a prov:Entity ;
+
+	\noindent\ \ dc:description "Data or result held by variable dd" .
+\end{quotation}
+We could see that the assign function knows less about its activity type, argument and return value than the read\_csv function because it is more general: the right hand side of the assignment operation could be data to load or to transform, but also could be result instead of data, so the type of the activity and the usage of the argument are both unknown to the assign function. The same uncertainty holds for the return value.
+
+Script item 5 is also an assignment, which would add the following triples to \_\_PROV\_\_:
+\begin{quotation}
+	\noindent :operators.assign\_2015\_11\_17T15\_16\_35Z a prov:Activity ;
+	
+	\noindent\ \ pub:language "Python" ;
+	
+	\noindent\ \ pub:code "dd.loc[:,'Year'] = dd['YearMonth']//100" ;
+	
+	\noindent\ \ dc:description "Assign expression dd['YearMonth']//100 to variable dd" ;
+	
+	\noindent\ \ prov:startedAtTime "2015-11-17T15:16:35+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:endedAtTime "2015-11-17T15:16:35+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:used <\url{http://example.org/dd%5B%27YearMonth%27%5D%2F%2F100_2015_11_17T15_16_35Z_a}> .
+	
+	\noindent\ \ prov:generated :dd\_2015\_11\_17T15\_16\_35Z ;
+	
+	\noindent<http://example.org/dd%5B%27YearMonth%27%5D%2F%2F100_2015_11_17T15_16_35Z_a> a pub:InMemoryData ;
+	
+	\noindent\ \ dc:description "Expression dd['YearMonth']//100" .
+	
+	\noindent:dd\_2015\_11\_17T15\_16\_35Z a prov:Entity ;
+	
+	\noindent\ \ dc:description "Data or result held by variable dd" .
+\end{quotation}
+The thing worth noticing here is that the data object of the left hand side, dd, gets recognized from the expression dd.loc[:,'Year'] by the cell magic function and its URI (:dd\_2015\_11\_17T15\_16\_35Z) gets recorded in the \_\_OBJDICT\_\_ dictionary, so that the consecutive uses of the dd object as a whole (as opposed to a part of it such as dd['YearMonth']) would point to this URI instead of creating new URIs as long as dd does not change during the course.
+
+Script item 6 is a deletion operation, it would first be converted into:
+\begin{quotation}
+	\noindent dd=operators.delete(dd,'YearMonth')
+\end{quotation}
+and then get executed as a function invocation. The following triples would get generated:
+\begin{quotation}
+	\noindent :operators.delete\_2015\_11\_17T15\_16\_38Z a pub:Transformation ;
+	
+	\noindent\ \ pub:language "Python" ;
+	
+	\noindent\ \ pub:code "del dd['YearMonth']" ;
+	
+	\noindent\ \ dc:description "Delete dd['YearMonth']" ;
+	
+	\noindent\ \ prov:startedAtTime "2015-11-17T15:16:38+00:00"\^{}\^{}xsd:dateTime .
+	
+	\noindent\ \ prov:endedAtTime "2015-11-17T15:16:38+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ pub:transformed :dd\_2015\_11\_17T15\_16\_35Z ;
+	
+	\noindent\ \ prov:generated :dd\_2015\_11\_17T15\_16\_38Z ;
+	
+	\noindent:dd\_2015\_11\_17T15\_16\_35Z a pub:InMemoryData ;
+
+	\noindent\ \ dc:description "Variable dd" .
+
+	\noindent:dd\_2015\_11\_17T15\_16\_38Z a pub:InMemoryData ;
+	
+	\noindent\ \ dc:description "Data held by variable dd" .
+\end{quotation}
+Since dd is used as a whole in the rewritten delete function invocation, its URI gets reused with the help of the \_\_OBJDICT\_\_ dictionary, then dd, as a generated data object, gets a fresh URI :dd\_2015\_11\_17T15\_16\_38Z.
+
+Script items 7, 8 and 9 are all function invocations and would generate the following triples:
+\begin{quotation}
+	\noindent:dt.group\_aggregate\_2015\_11\_17T15\_16\_40Z a pub:Transformation ;
+	
+	\noindent\ \ pub:language "Python" ;
+	
+	\noindent\ \ pub:code "dd\_year = dt.group\_aggregate(dd, 'Year', np.sum)" ;
+	
+	\noindent\ \ dc:description "Group data in data frame dd by key(s) 'Year' and aggregate by function np.sum to get data in dd\_year" ;
+	
+	\noindent\ \ prov:startedAtTime "2015-11-17T15:16:40+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:endedAtTime "2015-11-17T15:16:40+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ pub:transformed :dd\_2015\_11\_17T15\_16\_38Z ;
+	
+	\noindent\ \ prov:used :numpy, :pandas .
+	
+	\noindent\ \ prov:generated :dd\_year\_2015\_11\_17T15\_16\_40Z ;
+	
+	\noindent:dd\_year\_2015\_11\_17T15\_16\_40Z a pub:InMemoryData ;
+	
+	\noindent\ \ dc:description "Data held by variable or expression dd\_year" .
+	
+	\noindent:numpy a pub:Library ;
+	
+	\noindent\ \ dc:description "The numpy Python library" .
+	
+	\noindent:dt.average\_2015\_11\_17T15\_16\_59Z a pub:Transformation ;
+	
+	\noindent\ \ pub:language "Python" ;
+	
+	\noindent\ \ pub:code "cdd\_avg = dt.average(dd\_year['CDD'][0:31])" ;
+	
+	\noindent\ \ dc:description "Get the average of data in list dd\_year['CDD'][0:31] and save it at cdd\_avg" ;
+	
+	\noindent\ \ prov:startedAtTime "2015-11-17T15:16:59+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:endedAtTime "2015-11-17T15:16:59+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ pub:transformed <\url{http://example.org/dd_year%5B%27CDD%27%5D%5B0%3A31%5D_2015_11_17T15_16_59Z_a}> ;
+		
+	\noindent\ \ prov:used :numpy .
+	
+	\noindent\ \ prov:generated :cdd\_avg\_2015\_11\_17T15\_16\_59Z ;
+	
+	\noindent<\url{http://example.org/dd_year%5B%27CDD%27%5D%5B0%3A31%5D_2015_11_17T15_16_59Z_a}> a pub:InMemoryData ;
+
+	\noindent\ \ dc:description "Data held by variable or expression dd\_year['CDD'][0:31]" .
+	
+	\noindent:cdd\_avg\_2015\_11\_17T15\_16\_59Z a pub:InMemoryData ;
+
+	\noindent\ \ dc:description "Data held by variable or expression cdd\_avg" .
+		
+	\noindent:dt.average\_2015\_11\_17T15\_17\_01Z a pub:Transformation ;
+	
+	\noindent\ \ pub:language "Python" ;
+	
+	\noindent\ \ pub:code "hdd\_avg = dt.average(dd\_year['HDD'][0:31])" ;
+	
+	\noindent\ \ dc:description "Get the average of data in list dd\_year['HDD'][0:31] and save it at hdd\_avg" ;
+	
+	\noindent\ \ prov:startedAtTime "2015-11-17T15:17:01+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:endedAtTime "2015-11-17T15:17:01+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ pub:transformed <\url{http://example.org/dd_year%5B%27HDD%27%5D%5B0%3A31%5D_2015_11_17T15_17_01Z_a}> ;
+		
+	\noindent\ \ prov:used :numpy .
+	
+	\noindent\ \ prov:generated :hdd\_avg\_2015\_11\_17T15\_17\_01Z ;
+	
+	\noindent<\url{http://example.org/dd_year%5B%27HDD%27%5D%5B0%3A31%5D_2015_11_17T15_17_01Z_a}> a pub:InMemoryData ;
+	
+	\noindent\ \ dc:description "Data held by variable or expression dd\_year['HDD'][0:31]" .
+	
+	\noindent:hdd\_avg\_2015\_11\_17T15\_17\_01Z a pub:InMemoryData ;
+	
+	\noindent\ \ dc:description "Data held by variable or expression hdd\_avg" .	
+\end{quotation}
+
+Script items 10 and 11 are two assignments and would generate the following triples:
+\begin{quotation}
+	\noindent:operators.assign\_2015\_11\_17T15\_17\_03Z a prov:Activity ;
+	
+	\noindent\ \ pub:language "Python" ;
+	
+	\noindent\ \ pub:code "dd\_year.loc[:, 'HDD'] = dd\_year['HDD']/hdd\_avg*100-100" ;
+	
+	\noindent\ \ dc:description "Assign expression dd\_year['HDD']/hdd\_avg*100-100 to variable dd\_year" ;
+	
+	\noindent\ \ prov:startedAtTime "2015-11-17T15:17:03+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:endedAtTime "2015-11-17T15:17:03+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:used <\url{http://example.org/dd_year%5B%27HDD%27%5D%2Fhdd_avg%2A100-100_2015_11_17T15_17_03Z_a}> .
+		
+	\noindent\ \ prov:generated :dd\_year\_2015\_11\_17T15\_17\_03Z ;
+	
+	\noindent<\url{http://example.org/dd_year%5B%27HDD%27%5D%2Fhdd_avg%2A100-100_2015_11_17T15_17_03Z_a}> a pub:InMemoryData ;
+	
+	\noindent\ \ dc:description "Expression dd\_year['HDD']/hdd\_avg*100-100" .
+	
+	\noindent:dd\_year\_2015\_11\_17T15\_17\_03Z a prov:Entity ;
+	
+	\noindent\ \ dc:description "Data or result held by variable dd\_year" .
+	
+	\noindent:operators.assign\_2015\_11\_17T15\_17\_05Z a prov:Activity ;
+	
+	\noindent\ \ pub:language "Python" ;
+	
+	\noindent\ \ pub:code "dd\_year.loc[:, 'CDD'] = dd\_year['CDD']/cdd\_avg*100-100" ;
+	
+	\noindent\ \ dc:description "Assign expression dd\_year['CDD']/cdd\_avg*100-100 to variable dd\_year" ;
+	
+	\noindent\ \ prov:startedAtTime "2015-11-17T15:17:05+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:endedAtTime "2015-11-17T15:17:05+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:used <\url{http://example.org/dd_year%5B%27CDD%27%5D%2Fcdd_avg%2A100-100_2015_11_17T15_17_05Z_a}> .
+		
+	\noindent\ \ prov:generated :dd\_year\_2015\_11\_17T15\_17\_05Z ;
+	
+	\noindent<\url{http://example.org/dd_year%5B%27CDD%27%5D%2Fcdd_avg%2A100-100_2015_11_17T15_17_05Z_a}> a pub:InMemoryData ;
+	
+	\noindent\ \ dc:description "Expression dd\_year['CDD']/cdd\_avg*100-100" .
+
+	\noindent:dd\_year\_2015\_11\_17T15\_17\_05Z a prov:Entity ;
+	
+	\noindent\ \ dc:description "Data held by variable or expression dd\_year",
+\end{quotation}
+
+Script item 12 is a procedure invocation. It would be rewritten to:
+\begin{quotation}
+	\noindent ds.write\_csv(dd\_year, 'dd\_year.csv', namespace=\_\_NAMESPACE\_\_, textdict=\_\_TEXTDICT\_\_, uridict=\_\_URIDICT\_\_, provgraph=\_\_PROV\_\_)
+\end{quotation}
+The content of the dictionaries passed as arguments are the same as for the case of function invocations, but without the \emph{return} entries because procedures do not have return values. The write\_csv procedure knows that the dd\_year.csv file would be the generated data object and would generate the following RDF triples:
+\begin{quotation}
+	\noindent:ds.write\_csv\_2015\_11\_17T15\_17\_13Z a pub:Saving ;
+	
+	\noindent\ \ pub:language "Python" ;
+	
+	\noindent\ \ pub:code "ds.write\_csv(dd\_year, 'dd\_year.csv')" ;
+	
+	\noindent\ \ dc:description "Save data in dd\_year to file dd\_year.csv" ;
+	
+	\noindent\ \ prov:startedAtTime "2015-11-17T15:17:13+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:endedAtTime "2015-11-17T15:17:13+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ pub:saved :dd\_year\_2015\_11\_17T15\_17\_05Z ;
+
+	\noindent\ \ prov:used :pandas .
+	
+	\noindent\ \ prov:generated <\url{http://example.org/%27dd_year.csv%27_2015_11_17T15_17_13Z}> ;
+	
+	\noindent:dd\_year\_2015\_11\_17T15\_17\_05Z a pub:InMemoryData.
+	
+	\noindent\ \ dc:description "Data or result held by variable dd\_year" .
+	
+	\noindent<\url{http://example.org/%27dd_year.csv%27_2015_11_17T15_17_13Z}> a pub:OnDiskData ;
+	
+	\noindent\ \ dc:description "Data stored in file dd\_year.csv" .
+\end{quotation}
+The write\_csv procedure provided more specific descriptions of the dd\_year variable than the general assignment operation.
+
+The last script item is again a function invocation, but this time it generates a result instead of a data object, as shown by the following RDF triples generated:
+\begin{quotation}
+	\noindent:dp.plot\_2015\_11\_17T15\_17\_22Z a pub:Visualization ;
+	
+	\noindent\ \ pub:language "Python" ;
+	
+	\noindent\ \ pub:code "fig = dp.plot(dd\_year, kind='bar', figsize=(20,10))" ;
+	
+	\noindent\ \ dc:description "Visualize data in dd\_year with the matplotlib.pyplot library" ;
+	
+	\noindent\ \ prov:startedAtTime "2015-11-17T15:17:22+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ prov:endedAtTime "2015-11-17T15:17:22+00:00"\^{}\^{}xsd:dateTime ;
+	
+	\noindent\ \ pub:visualized :dd\_year\_2015\_11\_17T15\_17\_05Z ;
+	
+	\noindent\ \ prov:used :matplotlib.pyplot, :pandas .
+	
+	\noindent\ \ prov:generated :fig\_2015\_11\_17T15\_17\_22Z ;
+	
+	\noindent:matplotlib.pyplot a pub:Library ;
+	
+	\noindent\ \ dc:description "The matplotlib.pyplot Python library" .
+	
+	\noindent:fig\_2015\_11\_17T15\_17\_22Z a pub:PublishedResult ;
+	
+	\noindent\ \ dc:description "Figure held by variable fig" .
+\end{quotation}
+To display the result figure in the Jupyter notebook, the user just need to input the following lines in a new cell:
+\begin{quotation}
+\noindent\%pylab inline
+
+\noindent fig
+\end{quotation}
+The user could also save the figure to a file with the following command:
+\begin{quotation}
+	\noindent fig.savefig('dd\_year.png')
+\end{quotation}
+To review the RDF triples in the store so far, the user just need to input the following command:
+\begin{quotation}
+	\noindent print(\_\_PROV\_\_.serialize(format='n3'))
+\end{quotation}
+The above three code cells are examples of invoking operations without tracking provenance.
 % front end -- Jupyter notebooks
 %Jupyter Notebook is a strong candidate for the front end because it supports a lot of programming languages popular among scientists such as R and Python.
 % provenance capturing mechanism: parse Jupyter notebooks to extract provenance and construct provenance graphs
