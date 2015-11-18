@@ -5,6 +5,9 @@ from rdflib.namespace import DC, XSD
 from datetime import datetime
 
 def group_aggregate(dataframe, keys, aggregation=np.sum, **kwargs): # namespace="", textdict = {}, uridict={}, provgraph=None
+	if 'namespace' not in kwargs:
+		return dataframe.groupby(keys).aggregate(aggregation)
+
 	# record activity starting time
 	stime = datetime.utcnow()
 
@@ -84,6 +87,9 @@ def group_aggregate(dataframe, keys, aggregation=np.sum, **kwargs): # namespace=
 	return ret
 
 def average(li, **kwargs):
+	if 'namespace' not in kwargs:
+		return np.average(li)
+
 	# record activity starting time
 	stime = datetime.utcnow()
 

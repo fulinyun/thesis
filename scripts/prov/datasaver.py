@@ -5,6 +5,10 @@ from datetime import datetime
 import urllib
 
 def write_csv(dataframe, csvoutput, delimiter=',', index=True, **kwargs): # namespace="", textdict = {}, uridict={}, provgraph=None
+	if 'namespace' not in kwargs:
+		dataframe.to_csv(csvoutput, sep = delimiter, index = index)
+		return
+
 	# record activity starting time
 	stime = datetime.utcnow()
 

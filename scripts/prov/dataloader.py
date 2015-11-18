@@ -4,6 +4,9 @@ from rdflib.namespace import DC, XSD
 from datetime import datetime
 
 def read_csv(csvinput, delimiter=',', skipinitialspace=True, **kwargs): # namespace="", textdict = {}, uridict={}, provgraph=None
+	if 'namespace' not in kwargs:
+		return pd.read_csv(csvinput, delimiter = delimiter, skipinitialspace=skipinitialspace)
+
 	# record activity starting time
 	stime = datetime.utcnow()
 

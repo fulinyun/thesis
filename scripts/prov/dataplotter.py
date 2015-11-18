@@ -5,6 +5,10 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 def plot(dataframe, kind, figsize, **kwargs): # namespace="", textdict = {}, uridict={}, provgraph=None
+	if 'namespace' not in kwargs:
+		plt.style.use('ggplot')
+		return dataframe.plot(kind=kind, figsize=figsize).get_figure()
+		
 	# record activity starting time
 	stime = datetime.utcnow()
 
