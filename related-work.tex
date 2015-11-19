@@ -52,6 +52,8 @@ In the area of biomedical research, Bustin in \cite{bustin2015reproducibility} p
 
 Workflow systems such as VisTrails \cite{freire2014reproducibility}, Kepler \cite{ludascher2006scientific}, Taverna \cite{wolstencroft2013taverna} and ReproZip \cite{chirigati2013reprozip} %will be discussed in detail in the final thesis.
 
+
+
 \section{Provenance for research publications}
 \subsection{Models for publication structure}
 \cite{taboada2006rhetorical} covers rhetorical structure theory
@@ -60,7 +62,25 @@ Workflow systems such as VisTrails \cite{freire2014reproducibility}, Kepler \cit
 %And more to come after proposal...
 
 \subsection{Models for Publication Preparing Process}
-PROV-O\footnote{http://www.w3.org/TR/prov-o/} and ProvONE\footnote{http://vcvcomputing.com/provone/provone.html} %will be discussed in the final thesis.
+OPM~\cite{moreau2011open}
+PROV-O\footnote{http://www.w3.org/TR/prov-o/} and 
+D-PROV~\cite{missier2013d}
+Costa et al.~\cite{costa2013capturing}
+Belhajjame et al.\footnote{Wf4ever Research Object Model: http://wf4ever.github.io/ro/}
+
+ProvONE\footnote{http://vcvcomputing.com/provone/provone.html} integrated the work of Missier et al.'s D-PROV, Costa et al.'s and Belhajjame et al.'s Wf4ever. It is designed to serve the scientific workflow community, so it has workflow specific concepts such as \emph{Ports} and \emph{Channels}. Figure~\ref{fig:provone} shows the major concepts defined in the ProvONE ontology.
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{provone.png}
+	\caption{ProvONE Conceptual Model UML Diagram}
+	\label{fig:provone}
+\end{figure}
+Different from the ProvONE model, our model does not include specific concepts for workflows: it describes any operation implementable with scripts in a certain programming language with properties \emph{pub:language} and \emph{pub:code}, and any other operation with property \emph{dct:description}. Actually pub:DataGeneration and pub:ResultGeneration could be asserted as subclasses of provone:Execution so that provenance graphs in PROV-PUB-O and ProvONE are interoperable: in ProvONE, code could be found in the \emph{Program} objects of the prov:hadPlan property of the prov:qualifiedAssociation property of \emph{Execution} objects; in PROV-PUB-O, code is the pub:code property of \emph{DataGeneration/ResultGeneration} objects, which are also \emph{Execution} objects. 
+
+ %will be discussed in the final thesis.
+Zhao et al.~\cite{zhao2006applying} about prospective and retrospective provenance
+
+Freire et al.~\cite{freire2006managing} about process provenance or workflow evolution
 
 \section{Ontology usability evaluation}
 Ontology usability evaluation is an aspect of the more general task of ontology evaluation. As mentioned in \ref{subsec:evaluation}, ontology evaluation starts with checking completeness, consistency and conciseness of ontologies (e.g., \cite{gruninger1995methodology} and \cite{gomez2001evaluation}), so called \emph{deductive approaches} in 
