@@ -32,7 +32,7 @@ Gentleman and Lang in \cite{gentleman2007statistical} proposed the idea of a \em
 
 Apparently, very few researchers have adopted the communication of research compendiums, as pointed out by Stodden in \cite{stodden2014enabling}. Most, if not all, of the problems listed in the \emph{Quick Answers to Knee-Jerk Objections} section of \cite{donoho2009reproducible} still remain in the way. For example, \emph{reproducibility takes time and effort}, although it may save us time in the long run. \emph{No one else does it, so I won't get any credit for it.} Creating compendiums instead of just papers really look wasting at the first sight. The list of problems goes on and on.
 
-But the cost of not work reproducibly is creeping and hurting really badly despite the fact that it is somewhat hard to work in this way. In her talk in 2011 \cite{stodden2011establishing}, Stodden argued that the lack of transparency is hurting the credibility of scientific research based on her observation in the field of statistics.
+But the cost of not working reproducibly is creeping and hurting really badly despite the fact that it is somewhat hard to work in this way. In her talk in 2011 \cite{stodden2011establishing}, Stodden argued that the lack of transparency is hurting the credibility of scientific research based on her observation in the field of statistics.
 
 In the area of biomedical research, Bustin in \cite{bustin2015reproducibility} pointed out that there is increasing concern about the reliability of biomedical research. It is estimated that up to 85\% of research funding is wasted in unreliable research.
 
@@ -46,12 +46,11 @@ In the area of biomedical research, Bustin in \cite{bustin2015reproducibility} p
 
 
 \section{Provenance capturing approaches}
-\cite{groth2009recording} presents five characteristics of provenance information, namely immutable, meaning intact after creation, attributable, meaning clear responsibility, autonomously creatable, meaning created by the most appropriate agent, finalizable, meaning clear timing of completeness, and process reflecting, meaning able to reflect the whole process leading to the final product. It also presents the concept of p-assertions first defined in \cite{groth2006architecture} and the six key actors in provenance-aware systems, namely application, sender, receiver, asserter, recorder and provenance store.
+Groth and Moreau in \cite{groth2009recording} presented five characteristics of high quality process documentation (that is, the provenance information) for results produced by distributed systems, namely \emph{immutable}, meaning intact after creation, \emph{attributable}, meaning clear responsibility, \emph{autonomously creatable}, meaning created by the most appropriate agent, \emph{finalizable}, meaning clear timing of completeness, and \emph{process reflecting}, meaning able to reflect the whole process leading to the final product. They also presented the concept of p-assertions first defined in their earlier work with others \cite{groth2006architecture} and the six key actors in provenance-aware systems, namely application, sender, receiver, asserter, recorder and provenance store. They described PReP --- the P-assertion Recording Protocol based on these actors and the model of applications as actors communicating via message passing. Groth and Moreau's approach is specially tailored for distributed computing scenarios, where actor model proposed by Agha et al.~\cite{agha1985actors,agha1997foundation} fits quite well. The framework specification of this thesis (see Section~\ref{sec:framework}) is based on the simple model of an application as a sequence of operation invocations carried out by operators. Our proof-of-concept prototype (to be described in Section~\ref{sec:prototype}) and case study (see Chapter~\ref{ch:case-study} for details) shows it is sufficient for research publication result preparation.
 
 \cite{miles2011prime} presents a provenance question driven methodology for provenance capturing.
 
-Workflow systems such as VisTrails \cite{freire2014reproducibility}, Kepler \cite{ludascher2006scientific}, Taverna \cite{wolstencroft2013taverna} and ReproZip \cite{chirigati2013reprozip} %will be discussed in detail in the final thesis.
-
+Workflow systems such as VisTrails \cite{freire2014reproducibility}, Kepler \cite{ludascher2006scientific}, Taverna \cite{wolstencroft2013taverna} and ReproZip \cite{chirigati2013reprozip} represent software components able to create data artifacts as \emph{program} nodes with input and output \emph{ports} connected with each other through \emph{channels}, as summarized in the ProvONE ontology\footnote{The ProvONE ontology. Available at http://purl.dataone.org/provone-v1-dev, accessed on November 18th, 2015.}. These systems allow reuse of workflows as long as the users are using the same system as the workflow creator. The provenance of a particular data artifact would be the specific \emph{execution} sequence of a set of programs. Program nodes in workflows are unified in terms of input and output ports so that they are more ready to get reused than normal programs. A workflow actually represents program components in a more intuitive way than a set of program source code files. Data provenance is a by-product rather than the major focus. Workflow creators could only record program execution related information and are not allowed to arbitrarily manipulate the provenance graph.
 
 
 \section{Provenance for research publications}
@@ -59,6 +58,7 @@ Workflow systems such as VisTrails \cite{freire2014reproducibility}, Kepler \cit
 \cite{taboada2006rhetorical} covers rhetorical structure theory
 \cite{groza2007salt} semantically annotates \LaTeX \ source files so that roles played by each part of the publication are made explicit.
 \cite{clark2013micropublications} micropublications: a semantic model for claims, evidence, arguments and annotations in biomedical communications.
+\cite{mons2009nano} nano-publication
 %And more to come after proposal...
 
 \subsection{Models for Publication Preparing Process}
@@ -68,13 +68,14 @@ D-PROV~\cite{missier2013d}
 Costa et al.~\cite{costa2013capturing}
 Belhajjame et al.\footnote{Wf4ever Research Object Model: http://wf4ever.github.io/ro/}
 
-ProvONE\footnote{http://vcvcomputing.com/provone/provone.html} integrated the work of Missier et al.'s D-PROV, Costa et al.'s and Belhajjame et al.'s Wf4ever. It is designed to serve the scientific workflow community, so it has workflow specific concepts such as \emph{Ports} and \emph{Channels}. Figure~\ref{fig:provone} shows the major concepts defined in the ProvONE ontology.
+ProvONE\footnote{The ProvONE ontology. Available at http://purl.dataone.org/provone-v1-dev, accessed on November 18th, 2015.} integrated the work of Missier et al.'s D-PROV, Costa et al.'s and Belhajjame et al.'s Wf4ever. Although workflows are modeled as a type of programs, the ProvONE ontology uses workflow terms such as \emph{ports} and \emph{channels} to describe programs, so the scientific workflow community is likely to adopt the conceptualization of ProvONE quite readily. Figure~\ref{fig:provone} shows the major concepts defined in the ProvONE ontology.
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{provone.png}
 	\caption{ProvONE Conceptual Model UML Diagram}
 	\label{fig:provone}
 \end{figure}
+In ProvONE, the \emph{Program} class is a subclass of prov:Plan
 Different from the ProvONE model, our model does not include specific concepts for workflows: it describes any operation implementable with scripts in a certain programming language with properties \emph{pub:language} and \emph{pub:code}, and any other operation with property \emph{dct:description}. Actually pub:DataGeneration and pub:ResultGeneration could be asserted as subclasses of provone:Execution so that provenance graphs in PROV-PUB-O and ProvONE are interoperable: in ProvONE, code could be found in the \emph{Program} objects of the prov:hadPlan property of the prov:qualifiedAssociation property of \emph{Execution} objects; in PROV-PUB-O, code is the pub:code property of \emph{DataGeneration/ResultGeneration} objects, which are also \emph{Execution} objects. 
 
  %will be discussed in the final thesis.
