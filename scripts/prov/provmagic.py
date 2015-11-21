@@ -27,7 +27,6 @@ class ProvMagics(Magics):
 			if args.verbose:
 				print("Actual code executed:\n"+rewritten_cell)
 			get_ipython().run_cell(rewritten_cell)
-			time.sleep(2)
 			rewritten_cell = ""
 
 		if rewritten_cell.strip() != "":
@@ -135,6 +134,15 @@ def rewrite(origline, line, verbose=True):
 		rcode += "__RETURN__ = "+funcall
 		rcode += "\n" + ret1 + " = __RETURN__"
 		return rcode
+
+urlset = set()
+
+def freshurl(name):
+	ret = urllib.quote_plus(name+timestr())
+	while ret in urlset:
+		ret += "1"
+	urlset.add(ret)
+	return ret
 
 def matchfun(line):
 	line = stripcomment(line).strip()
@@ -270,9 +278,6 @@ def findobj(s):
 
 def timestr():
 	return datetime.utcnow().strftime("_%Y_%m_%dT%H_%M_%SZ")
-
-def freshurl(name):
-	return urllib.quote_plus(name+timestr())
 
 ip = get_ipython()
 ip.register_magics(ProvMagics)
