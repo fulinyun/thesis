@@ -2,9 +2,10 @@
 \label{research-approach}
 
 % three requirements of the proposed authoring paradigm
-
+This chapter describes how we solve the problems encountered by researchers who lack the knowledge of proper provenance to capture for reproducing their research results, and cannot afford the distractions caused and efforts required by existing provenance capture practices. An ontology named PROV-PUB-O has been designed to represent knowledge of proper provenance to capture for reproducible research results. It is described in Section~\ref{sec:ontology} A framework that captures provenance and stores it in PROV-PUB-O is specified in Section~\ref{sec:framework}, which fits any result generated through a sequence of invocations of operations and keeps the requirement of user involvement to the minimum. Finally, an implemented proof-of-concept prototype is described in Section~\ref{sec:prototype} to give an example of an authoring platform that is compliant with the framework.
 
 \section{PROV-PUB-O: a provenance ontology for research publications}
+\label{sec:ontology}
 This section presents the approach to the creation of an ontology for capturing provenance in the process of preparing research publications. The ontology is divided into two parts. 
 
 The first part --- Section~\ref{subsec:structure} --- describes the structure of a research publication. We base our work on the Document Components Ontology (DoCO), which is one of the Semantic Publishing and Referencing Ontologies (SPAR). SPAR focuses a lot on modeling citations and bibliographic references. Four out of the eight ontologies in SPAR deal with citations and bibliographic references. (They are CiTO, the Citation Typing Ontology, FaBiO, the FRBR-aligned Bibliographic Ontology, BiRO, the Bibliographic Reference Ontology, and C4O, the Citation Counting and Context Characterization Ontology.) So SPAR is good for modeling the linkage between publications. 
@@ -12,7 +13,7 @@ The first part --- Section~\ref{subsec:structure} --- describes the structure of
 %why we need to model document structure
 In this thesis we focus on the reproducibility of a certain publication, so we do not delve deep into citations and bibliographic references as they have nothing to do with the computational experiments presented in the current publication. We model the structure of a research publication because experimental results must reside somewhere in the publication. Textual elements in the publication provide contextual information and explanation for the reported results. Although these elements are not parts of the process leading to the reported results, they are documentation that help readers to correctly interpret the results, so we include structural elements of research publications in the provenance.
 
-We do not want an ontology with as many classes, properties and constraints as in DoCO. The idea is to select the minimal set of ontology elements from DoCO and define subclasses and properties to get a small ontology just sufficient for the purpose of describing the reported result (such as figure and table) containing parts of the research publications in the context of document components. For example, we just want to describe Figure X resides in Section Y which is part of Chapter Z which is part of Document W, and we do not need the capability of checking whether Section Y is a valid section by constraints such as ``sections cannot be back matters or body matters or chapters or ...'' 
+The designing guideline of document structure modeling is to select the minimal set of ontology elements from DoCO and define subclasses and properties to get a small ontology just sufficient for the purpose of describing and locating the reported result (such as figure and table). Descriptions of results include their labels and captions, and locations of results are represented in terms of their containers that are parts of the research publications and document components. Although the many constraints found in DoCO strictly define the meanings of its concepts and the logical relations between them, we avoid as many of them as possible to make the ontology contain less distractions other than its main purpose. For example, we just want to describe Figure X resides in Section Y which is part of Chapter Z which is part of Document W, and we do not include the constraints (and actually a distraction, since it is irrelevant to the main purpose of the ontology) that assert things such as ``sections cannot be back matters or body matters or chapters or ...'' 
 
 The second part --- Section~\ref{subsec:process} --- describes the process leading to the reported results. It is a specialization of the W3C Provenance Ontology (PROV-O) for the use case of research publication preparation. We base the development of PROV-PUB-O on PROV-O because using general provenance ontologies such as PROV-O proves to be an effective way to keep track of the lineage of the source data and the changing processes leading to the final results. 
 
@@ -37,7 +38,7 @@ These principles are based on intuitions. The first principle, minimalism on cla
 
 The second principle, rich on properties, is based on the assumption that people have very different ways of saying the relations between class instances. For example, the part-whole relation between a figure B and a publication A may be represented as ``A contains a chapter (that contains a section) that contains B'' or ``A has a figure B''. Some people may prefer swapping the positions of A and B and saying ``B is in A'', so if we force the users to use only one way of saying a certain relation by providing in the ontology only one way of saying it, users are likely to find the ontology very cumbersome to use. This is very different from the situation of having a lot of classes, because each class usually represents a distinct type of things, but properties can provide alternative ways of achieving the same linking among classes. The more the number of classes, the more time it takes to find the right ones to use; the more alternative ways of linking classes, the less time it takes to find a proper way, and the more likely a preferable way is found. In PROV-PUB-O/S, shortcut properties are introduced to allow users to represent for example a figure is in a publication directly, instead of forcing the users to express the same meaning with a figure-section-chapter-publication chain of part-whole relations. 
 
-The third principle, leaving the decision for dependencies to the users, is a natural corollary of the first principle, because subclassing or equivalent-classing means to force the user who wants to use a certain class in the ontology in question to use another class from another ontology, since instances of the class wanted automatically become also instances of the other class in the other ontology. It is virtually adding more classes, and maybe more constraints along with these classes to the ontology in question. Making small ontologies depend on a much larger ontology exposes the users to the complicated class system of the latter and steepens the learning curve of the small ontology dramatically. In PROV-PUB-O/S, subclassing assertions are only suggested in comments and not included in the ontology source file but put in separate bridging ontologies for the users familiar with the depending ontologies to choose to use.
+The third principle, leaving the decision for dependencies to the users, is a natural follow-up of the first principle, because subclassing or equivalent-classing means to force the user who wants to use a certain class in the ontology in question to use another class from another ontology, since instances of the class wanted automatically become also instances of the other class in the other ontology. It is virtually adding more classes, and maybe more constraints along with these classes to the ontology in question. Making small ontologies depend on a much larger ontology exposes the users to the complicated class system of the latter and steepens the learning curve of the small ontology dramatically. In PROV-PUB-O/S, subclassing assertions are only suggested in comments and not included in the ontology source file but put in separate bridging ontologies for the users familiar with the depending ontologies to choose to use.
 
 % how these principles are followed
 Rather than starting from scratch, we refer to existing models for document structures to get the common vocabulary to follow. Document structure models such as the Document Components Ontology (DoCO)\footnote{DoCO, the Document Components Ontology: \url{http://purl.org/spar/doco}, accessed on October 10th, 2015} are usually based on structural patterns \cite{di2014dealing} and rhetorical structure theory (RST) \cite{taboada2006rhetorical}.
@@ -212,48 +213,6 @@ To capture these changes of data, four classes are defined in PROV-PUB-O/P: pub:
 
 %To further define specialized activities under and beyond the above three categories, we performed a case study on the 5 figures and 3 tables in Chapter 4 of the National Climate Assessment Report published in 2014 (NCA 2014). 
 
-\subsubsection{Case study on the figures and tables in Chapter 4 of NCA 2014}
-\label{sec:case}
-After a careful scrutiny of the 5 figures and 3 tables in Chapter 4 of NCA 2014, the following two types of recurring result generation paradigms are summarized:
-\begin{itemize}
-	\item Direct reuse of an existing result such as a figure. For example, Figure~4.1 in NCA 2014, ``Paths of Hurricanes Katrina and Rita Relative to Oil and Gas Production Facilities'', is just a slight adaptation of Figure~3 in the ``Natural Gas: Factors Affecting Prices and Potential Impacts on Consumers (GAO-06-420T)'' report. We argue that if both reports have their results recorded in provenance graphs with PROV-PUB-O/S, a much precise citation of the Figure~3 of the latter report could be provided in the previous report. We capture this kind of result generation process with the pub:Reuse class, which is a subclass of the prov:Activity class. This class is not a subclass of the ``change of data'' class pub:DataChange, because it does not actually happen on data, but on results.
-	\item Step-by-step process including the initial download and possibly syntactical manipulation, the intermediate slicing, transformation and/or analysis, and the final plotting and/or summarization. For example, Figure~4.2 in NCA 2014, ``Increase in Cooling Demand and Decrease in Heating Demand'', is generated by downloading source data from a landing page on the NOAA National Climate Data Center Website by filling out a data request form, and then following the processing method described in the caption of the figure, followed by a plotting step not described at all.
-\end{itemize}
-Interesting findings from this case study include:
-\begin{itemize}
-	\item Physical changes of data can be quite complicated and yet easily overlooked. For example, to obtain a copy of the data used to generate Figure~4.2, the interested reader needs to somehow find the link to another page containing a data request form the landing page of the data source provided by the authors. For Figure~4.4, ``Projected Changes in Seasonal Precipitation'', downloading the source data requires the reader to register at the Website and wait for the approval of the administrator of the Website, which took me 4 days. The information about how to fill out data request forms and about the registration process is missing in the provenance graph for NCA 2014.
-	\item Syntactical changes of data can be avoided by properly using the function of format selection provided by the data portals. For example, the data request form at \url{http://www7.ncdc.noaa.gov/CDO/CDODivisionalSelect.jsp#} for the data source of Figure~4.2 has an option group to let the users select the format of the requested data file, and space separated values are ready to be used by Python and R scripts without any further syntactical changes on the downloaded data.
-	\item Textual descriptions of semantical changes can easily introduce ambiguity. If data processing code is not provided, the textual description of what the code is doing is easily ambiguous and thus it is not implementable by the readers. For example, the generating activity of Figure~4.3 has the following execution plan: 
-	\begin{quotation}
-		1. For each model at each grid point, the number of cooling degree days under the higher emissions scenario (A2) was calculated for two periods: 1971-2000 and 2021-2050. 
-		
-		2. At each grid point, the number of cooling degree days was computed for both time periods by averaging the following models:
-		- cgcm3\_t47
-		
-		- cgcm3\_t63
-		
-		- cnrm
-		
-		- echam5
-		
-		- echo
-		
-		- gfdl\_2.1
-		
-		- hadcm3
-		
-		- pcm
-		
-		3. At each grid point, the difference in the number of cooling degree days was calculated for 2021-2050 minus 1971-2000.
-		
-		4. Data were plotted for all grid points.
-		
-	\end{quotation}
-	where the first step, according to the Figure~4.2 caption, ``Cooling degree days are defined as the number of degrees that a day's average temperature is above 65$^{\circ}$F'', yet the dataset has no ``average temperature'' variable, but only max and min temperature values. How the number of cooling degree days is calculated is unclear.
-\end{itemize}
-
-The details of the case study of Chapter 4 of NCA 2014 report can be found in the appendix of this thesis.
-
 \subsubsection{The common generating process of published results}
 Based on the case study on the figures and tables in Chapter 4 of the NCA 2014 report, we summarized the following five common stages of result generation:
 \begin{enumerate}
@@ -293,7 +252,7 @@ The pub:DataGeneration class is defined as a subclass of prov:Entity and is the 
 
 Semiotic framework based subclasses of pub:DataChange follows, that is, pub:PhysicalChange, pub:SyntacticalChange and pub:SemanticalChange, which we have already described earlier. 
 
-The next four classes, pub:Obtaining, pub:Loading, pub:Saving and pub:Transformation, are derived from the case study we have performed. The pub:Obtaining class represents data obtaining activities. Subclasses conforming naming conventions of specific domains are expected to get defined in extensions of PROV-PUB-O/P. In the earth science domain, for example, a ``Download'' subclass of pub:Obtaining would probably receive common acceptance. The pub:Obtaining class could be asserted as a subclass of pub:PhysicalChange and/or pub:SyntacticalChange according to application specific conditions. The pub:Loading class represents data loading activities that read data from disk to memory. This class should probably be asserted as a subclass of both pub:PhysicalChange and pub:SyntacticalChange, but we did not put these assertions in PROV-PUB-O/P because these assertions still might be undesirable in some use cases. The pub:Transformation class represents all general data transformation activities. Subclasses conforming naming conventions in various domains are expected to get defined in extensions of PROV-PUB-O/P. For example, ``subsetting'', ``slicing'', ``projection'' and ``filtering'' are four transformations commonly used in the earth science domain.
+The next four classes, pub:Obtaining, pub:Loading, pub:Saving and pub:Transformation, are derived from the case study we have performed (see Chapter~\ref{ch:case-study} for details). The pub:Obtaining class represents data obtaining activities. Subclasses conforming naming conventions of specific domains are expected to get defined in extensions of PROV-PUB-O/P. In the earth science domain, for example, a ``Download'' subclass of pub:Obtaining would probably receive common acceptance. The pub:Obtaining class could be asserted as a subclass of pub:PhysicalChange and/or pub:SyntacticalChange according to application specific conditions. The pub:Loading class represents data loading activities that read data from disk to memory. This class should probably be asserted as a subclass of both pub:PhysicalChange and pub:SyntacticalChange, but we did not put these assertions in PROV-PUB-O/P because these assertions still might be undesirable in some use cases. The pub:Transformation class represents all general data transformation activities. Subclasses conforming naming conventions in various domains are expected to get defined in extensions of PROV-PUB-O/P. For example, ``subsetting'', ``slicing'', ``projection'' and ``filtering'' are four transformations commonly used in the earth science domain.
 
 The last class listed above, pub:Library, represents those software utilities or tools used in the process of generating data and results. The detailed information about the software could be described with a software description ontology such as the OntoSoft ontology \cite{gil2015ontosoft}.
 
@@ -820,7 +779,7 @@ The meaning of this operation is that a function of an operator with N arguments
 \begin{equation}
 \textrm{plus}(x, y)\rightarrow z
 \end{equation}
-We do not allow the function to change some of its arguments as a side effect, this demand could be fulfilled by rewriting the function definition to move these arguments to the return side, in which case the return would have these changed arguments all held in some data structure such as a list or a dictionary.
+We do not allow the function to change some of its arguments as a side effect, this demand can be fulfilled by rewriting the function definition to move these arguments to the return side, in which case the return will have these changed arguments all held in some data structure such as a list or a dictionary.
 
 Here we follow the kernel language approach described in Chapter 2.3 of the book written by Peter Van Roy and Seif Haridi~\cite{van2004concepts}. Table 2.1 in this chapter summarizes all the basic operations needed by a general programming language, thus these operations must be sufficient for creating results in research publications.
 
@@ -841,7 +800,7 @@ In fact, the kernel language defined in Table 2.1 in \cite{van2004concepts} coul
 The differences are:
 \begin{itemize}
 	\item Variable creation and binding are in one step (this is the case for functional programming languages, and is adopted by Python and R), so there is no separate variable creation step.
-	\item Procedure applications are replaced by operation invocations. To convert a procedure application to an operation invocation, we just need to move those arguments that would be changed to the return value side (the $r$ side).
+	\item Procedure applications are replaced by operation invocations. To convert a procedure application to an operation invocation, we just need to move those arguments to be changed to the return value side (the $r$ side).
 	\item Conditional and pattern matching statements are removed, they must be written in the form of operation invocations.
 \end{itemize}
 In fact, variable binding and value assignment could also be written in the form of operation invocations. Thus the program could be further simplified to just a sequence of operation invocations: variable binding could be rewritten as the kernel operation ``bind($<x>_2$)$\rightarrow <x>_1$'', and value assignment could be written as ``assign($<v>$)$\rightarrow <x>$''. Therefore, $<x>_2\rightarrow <x>_1$ and $<v>\rightarrow<x>$ could be seen as the syntactical sugar provided by certain kernels. Certain kernels could allow conditional statements and pattern matching statements and many more conveniences implemented in this manner. That is, they are actually operation invocations to the kernel.
@@ -1012,7 +971,7 @@ In the next section, we will describe a prototype that is compliant with the fra
 
 % capturing mechanism that does not require user involvement
 
-\section{A proof-of-concept platform}
+\section{A proof-of-concept prototype}
 \label{sec:prototype}
 Based on the framework specification described in the last section, we implemented a prototype which has Jupyter Notebook as its front end, IPython as its kernel operator, several Python modules wrapping the functions of pandas, numpy and matplotlib.pyplot Python libraries as its data processing operators, and a Graph object of the rdflib library as its provenance store. The Python programming language is used to showcase the concept here, but Jupyter Notebook is language agnostic and kernels and operators could be implemented for other languages in the same manner.
 
@@ -1036,7 +995,7 @@ where $\textrm{file}(a_1)$ is the on-disk data object with file name $a_1$.
 
 The third form, assignment, covers data and result generation operations achieved through Python operators. Examples are arithmetic operations such as ``$+$'', ``$-$'', ``$\times$'' and ``$\div$'', logical operators such as ``and'' and ``or'', and member access operators such as ``.'' and ``[]''. $r$ in the third form is usually an expression containing these Python operators, and this form is first reduced to $l = \textrm{assign}(r)$ (in the first form) where assign is a built-in function implemented within the kernel implemented in an IPython cell magic function called ``prov''.
 
-The fourth form, deletion, specifically covers the operations achieved through the Python del operator. One example is to use this operator to drop a column in a data frame. When reading an operation in this form, the kernel would rewrite it to $o = \textrm{delete}(o, k)$ (in the first form) and execute, where delete is a built-in function implemented within the kernel implemented in the same ``prov'' IPython cell magic.
+The fourth form, deletion, specifically covers the operations achieved through the Python del operator. One example is to use this operator to drop a column in a data frame. When reading an operation in this form, the kernel rewrites it to $o = \textrm{delete}(o, k)$ (in the first form) and execute, where delete is a built-in function implemented within the kernel implemented in the same ``prov'' IPython cell magic.
 
 Operations written in the first four forms are all provenance aware, but there are some Python scripts that do not have meaningful provenance to capture. Examples are inspection of data objects and manipulating the provenance store content. The fifth form is for such provenance-unaware operations. Users could decide whether to capture provenance or not with the ``prov'' IPython cell magic that is responsible for rewriting scripts in the third and fourth forms.
 
@@ -1056,7 +1015,7 @@ The \emph{**kwargs} (key word arguments) in the argument lists are for provenanc
 \begin{quotation}
 \noindent\texttt{csv\_content = read\_csv('CDODiv2177686828992.txt', delimiter=' ')}
 \end{quotation}
-The actual code gets executed would be:
+The actual code gets executed is:
 \begin{quotation}
 	\noindent...
 	
@@ -1119,7 +1078,7 @@ The \_\_NAMESPACE\_\_ variable is the namespace for the local instances such as 
 
 If not given, the initprov cell magic will set its value to \url{http://example.org/}, which is the case for this example.
 
-The \_\_OBJDICT\_\_ variable is a dictionary recording URIs for data objects involved in the Jupyter notebook. It is maintained by the IPython kernel with the \emph{prov} cell magic and used by provenance aware functions to ensure the consistency of URIs assigned to consecutive appearances of the same data object. If the object changed, a fresh URI should be assigned to it, otherwise the data object should reuse its existing URI to keep the RDF triples across different operations connected.
+The \_\_OBJDICT\_\_ variable is a dictionary recording URIs for data objects involved in the Jupyter notebook. It is maintained by the IPython kernel with the \emph{prov} cell magic and used by provenance aware functions to ensure the consistency of URIs assigned to consecutive appearances of the same data object. If the object changed, a fresh URI will be assigned to it, otherwise the data object will reuse its existing URI to keep the RDF triples across different operations connected.
 
 The \_\_TEXTDICT\_\_ variable is a dictionary recording textual representations of function names, arguments and variables. Entries of this dictionary will be filled in by the IPython kernel with the \emph{prov} cell magic before each provenance aware function gets invoked. The dictionary will be passed as an argument to the provenance aware function to help the function create meaningful descriptions of the data objects it used and generated. Examples will be available when we explain the following scripts.
 
@@ -1248,11 +1207,11 @@ Variable names and execution times are used to create fresh URIs. Special entrie
 	\noindent \ \ dc:description "Data held by variable csv\_content" .	
 \end{quotation}
 
-Script item 4 would first be rewritten as a assign function call:
+Script item 4 is first rewritten as a assign function call:
 \begin{quotation}
 	\noindent dd=operators.assign(csv\_content[['YearMonth','HDD','CDD']])
 \end{quotation}
-and then processed just like the previous script item and the following RDF triples would be generated:
+and then processed just like the previous script item and the following RDF triples will be generated:
 \begin{quotation}
 	\noindent:operators.assign\_2015\_11\_17T15\_16\_32Z a prov:Activity ;
 	
@@ -1278,9 +1237,9 @@ and then processed just like the previous script item and the following RDF trip
 
 	\noindent\ \ dc:description "Data or result held by variable dd" .
 \end{quotation}
-We could see that the assign function knows less about its activity type, argument and return value than the read\_csv function because it is more general: the right hand side of the assignment operation could be data to load or to transform, but also could be result instead of data, so the type of the activity and the usage of the argument are both unknown to the assign function. The same uncertainty holds for the return value.
+We see that the assign function knows less about its activity type, argument and return value than the read\_csv function because it is more general: the right hand side of the assignment operation could be data to load or to transform, but also could be result instead of data, so the type of the activity and the usage of the argument are both unknown to the assign function. The same uncertainty holds for the return value.
 
-Script item 5 is also an assignment, which would add the following triples to \_\_PROV\_\_:
+Script item 5 is also an assignment, which adds the following triples to \_\_PROV\_\_:
 \begin{quotation}
 	\noindent :operators.assign\_2015\_11\_17T15\_16\_35Z a prov:Activity ;
 	
@@ -1306,13 +1265,13 @@ Script item 5 is also an assignment, which would add the following triples to \_
 	
 	\noindent\ \ dc:description "Data or result held by variable dd" .
 \end{quotation}
-The thing worth noticing here is that the data object of the left hand side, dd, gets recognized from the expression dd.loc[:,'Year'] by the cell magic function and its URI (:dd\_2015\_11\_17T15\_16\_35Z) gets recorded in the \_\_OBJDICT\_\_ dictionary, so that the consecutive uses of the dd object as a whole (as opposed to a part of it such as dd['YearMonth']) would point to this URI instead of creating new URIs as long as dd does not change during the course.
+The thing worth noticing here is that the data object of the left hand side, dd, gets recognized from the expression dd.loc[:,'Year'] by the cell magic function and its URI (:dd\_2015\_11\_17T15\_16\_35Z) gets recorded in the \_\_OBJDICT\_\_ dictionary, so that the consecutive uses of the dd object as a whole (as opposed to a part of it such as dd['YearMonth']) will point to this URI instead of creating new URIs as long as dd does not change during the course.
 
-Script item 6 is a deletion operation, it would first be converted into:
+Script item 6 is a deletion operation, it is first converted into:
 \begin{quotation}
 	\noindent dd=operators.delete(dd,'YearMonth')
 \end{quotation}
-and then get executed as a function invocation. The following triples would get generated:
+and then get executed as a function invocation. The following triples get generated:
 \begin{quotation}
 	\noindent :operators.delete\_2015\_11\_17T15\_16\_38Z a pub:Transformation ;
 	
@@ -1340,7 +1299,7 @@ and then get executed as a function invocation. The following triples would get 
 \end{quotation}
 Since dd is used as a whole in the rewritten delete function invocation, its URI gets reused with the help of the \_\_OBJDICT\_\_ dictionary, then dd, as a generated data object, gets a fresh URI :dd\_2015\_11\_17T15\_16\_38Z.
 
-Script items 7, 8 and 9 are all function invocations and would generate the following triples:
+Script items 7, 8 and 9 are all function invocations and generate the following triples:
 \begin{quotation}
 	\noindent:dt.group\_aggregate\_2015\_11\_17T15\_16\_40Z a pub:Transformation ;
 	
@@ -1421,7 +1380,7 @@ Script items 7, 8 and 9 are all function invocations and would generate the foll
 	\noindent\ \ dc:description "Data held by variable or expression hdd\_avg" .	
 \end{quotation}
 
-Script items 10 and 11 are two assignments and would generate the following triples:
+Script items 10 and 11 are two assignments and generate the following triples:
 \begin{quotation}
 	\noindent:operators.assign\_2015\_11\_17T15\_17\_03Z a prov:Activity ;
 	
@@ -1472,11 +1431,11 @@ Script items 10 and 11 are two assignments and would generate the following trip
 	\noindent\ \ dc:description "Data held by variable or expression dd\_year",
 \end{quotation}
 
-Script item 12 is a procedure invocation. It would be rewritten to:
+Script item 12 is a procedure invocation. It is rewritten to:
 \begin{quotation}
 	\noindent ds.write\_csv(dd\_year, 'dd\_year.csv', namespace=\_\_NAMESPACE\_\_, textdict=\_\_TEXTDICT\_\_, uridict=\_\_URIDICT\_\_, provgraph=\_\_PROV\_\_)
 \end{quotation}
-The content of the dictionaries passed as arguments are the same as for the case of function invocations, but without the \emph{return} entries because procedures do not have return values. The write\_csv procedure knows that the dd\_year.csv file would be the generated data object and would generate the following RDF triples:
+The content of the dictionaries passed as arguments are the same as for the case of function invocations, but without the \emph{return} entries because procedures do not have return values. The write\_csv procedure knows that the dd\_year.csv file is the generated data object and generates the following RDF triples:
 \begin{quotation}
 	\noindent:ds.write\_csv\_2015\_11\_17T15\_17\_13Z a pub:Saving ;
 	
