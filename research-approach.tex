@@ -8,20 +8,20 @@ This chapter describes how we solve the problems encountered by researchers who 
 \label{sec:ontology}
 This section presents the approach to the creation of an ontology for capturing provenance in the process of preparing research publications. The ontology is divided into two parts. 
 
-The first part --- Section~\ref{subsec:structure} --- describes the structure of a research publication. We base our work on the Document Components Ontology (DoCO), which is one of the Semantic Publishing and Referencing Ontologies (SPAR) \cite{peroni2014semantic}. SPAR focuses a lot on modeling citations and bibliographic references. Four out of the eight ontologies in SPAR deal with citations and bibliographic references. (They are CiTO, the Citation Typing Ontology, FaBiO, the FRBR-aligned Bibliographic Ontology, BiRO, the Bibliographic Reference Ontology, and C4O, the Citation Counting and Context Characterization Ontology.) So SPAR is good for modeling the linkage between publications. 
+The first part --- presented in Section~\ref{subsec:structure} --- describes the structure of a research publication. We base our work on the Document Components Ontology (DoCO), which is one of the Semantic Publishing and Referencing Ontologies (SPAR) \cite{peroni2014semantic}. SPAR focuses a lot on modeling citations and bibliographic references. Four out of the eight ontologies in SPAR deal with citations and bibliographic references. (They are CiTO, the Citation Typing Ontology, FaBiO, the FRBR-aligned Bibliographic Ontology, BiRO, the Bibliographic Reference Ontology, and C4O, the Citation Counting and Context Characterization Ontology.) So SPAR is good for modeling the linkage between publications. 
 
 %why we need to model document structure
 In this thesis we focus on the reproducibility of a certain publication, so we do not delve deep into citations and bibliographic references as they have nothing to do with the computational experiments presented in the current publication. We model the structure of a research publication because experimental results must reside somewhere in the publication. Textual elements in the publication provide contextual information and explanation for the reported results. Although these elements are not parts of the process leading to the reported results, they are documentation that help readers to correctly interpret the results, so we include structural elements of research publications in the provenance.
 
 The designing guideline of document structure modeling is to select the minimal set of ontology elements from DoCO and define subclasses and properties to get a small ontology just sufficient for the purpose of describing and locating the reported result (such as figure and table). Descriptions of results include their labels and captions, and locations of results are represented in terms of their containers that are parts of the research publications and document components. Although the many constraints found in DoCO strictly define the meanings of its concepts and the logical relations between them, we avoid as many of them as possible to make the ontology contain less distractions other than its main purpose. For example, we just want to describe Figure X resides in Section Y which is part of Chapter Z which is part of Document W, and we do not include the constraints (and actually a distraction, since it is irrelevant to the main purpose of the ontology) that assert things such as ``sections cannot be back matters or body matters or chapters or ...'' 
 
-The second part --- Section~\ref{subsec:process} --- describes the process leading to the reported results. It is a specialization of the W3C Provenance Ontology (PROV-O) for the use case of research publication preparation. We base the development of PROV-PUB-O on PROV-O because using general provenance ontologies such as PROV-O proves to be an effective way to keep track of the lineage of the source data and the changing processes leading to the final results. 
+The second part --- presented in Section~\ref{subsec:process} --- describes the process leading to the reported results. It is a specialization of the W3C Provenance Ontology (PROV-O) for the use case of research publication preparation. We base the development of PROV-PUB-O on PROV-O because using general provenance ontologies such as PROV-O proves to be an effective way to keep track of the lineage of the source data and the changing processes leading to the final results. 
 
-The goal of the specialization is to make the specialized ontology, namely PROV-PUB-O, detailed enough to enable the creation of \emph{executable provenance graphs} (EPGs). In an EPG, the semantics of each element in the process leading to the reported results is well defined, so the replication of the process becomes straightforward. Moreover, the process described with an EPG can even be used to validate the scientific conclusions by allowing readers to adapt the experiment reported in the paper and carry out their own studies.
+The goal of the specialization is to make the specialized ontology detailed enough to represent the research result generating process in a reproducible manner and at the same time, general enough to represent provenance of results generated in any possible way. The ontology is able to represent the semantics of each element in the process leading to the reported results unambiguously to enable reproduction of the research results in question. Any provenance graph compliant with the ontology is able to be reviewed to decide whether sufficient provenance has been recorded and whether the results in the graph are reproducible. At the same time, the ontology is designed without any a prior assumption about the research result generating methods. The design follows a method agnostic approach to make the ontology applicable to any means of generating research results.
 
-PROV-PUB-O is further divided into two smaller ontologies: PROV-PUB-O/S for the structural model and PROV-PUB-O/P for the process model. We divide PROV-PUB-O in this way because we find that PROV-PUB-O/S alone can be used by publishing agents to describe typical research publications. 
+%PROV-PUB-O is further divided into two smaller ontologies: PROV-PUB-O/S for the structural model and PROV-PUB-O/P for the process model. We divide PROV-PUB-O in this way because we find that PROV-PUB-O/S alone can be used by publishing agents to describe typical research publications. 
 
-The hypothesis to justify for PROV-PUB-O is that it is more usable than PROV-O in modeling research publication preparation process in the domain of earth science for the purpose of replicating data transformation processes and validating scientific conclusions.
+%The hypothesis to justify for PROV-PUB-O is that it is more usable than PROV-O in modeling research publication preparation process in the domain of earth science for the purpose of replicating data transformation processes and validating scientific conclusions.
 
 \subsection{PROV-PUB-O/S: publication structure modeling}
 \label{subsec:structure}
@@ -77,51 +77,8 @@ In addition to the changes above, PROV-PUB-O/S is much smaller than DoCO in its 
 \end{itemize}
 This follows the principles of minimalism on classes and rich on properties.
 
-The resulting PROV-PUB-O/S ontology\footnote{PROV-PUB-O/S is not officially published and is temporarily hosted at \url{http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s.ttl}, accessed on October 10th, 2015.} follows a minimalist approach on class definitions to be a small ontology just sufficient for the purpose of describing the results and the parts of the research publications that contain them. Figure~\ref{fig:prov-pub-s-classes} and Figure~\ref{fig:prov-pub-s-properties} shows the classes and properties in PROV-PUB-O/S, respectively.
+Details of the the resulting PROV-PUB-O/S ontology\footnote{PROV-PUB-O/S is not officially published and is temporarily hosted at \url{http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s.ttl}, accessed on October 10th, 2015.} can be found in Chapter~\ref{ch:ontologies}.
 
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-s-classes.png}
-	\caption{Classes in PROV-PUB-O/S}
-	\label{fig:prov-pub-s-classes}
-\end{figure}
-
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-s-properties.png}
-	\caption[Properties in PROV-PUB-O/S]{Properties in PROV-PUB-O/S, where pub:is{Role}Of represents the role indicating properties such as pub:isIntroductionOf, pub:isAbstractOf, and so on}
-	\label{fig:prov-pub-s-properties}
-\end{figure}
-
-
-An important conceptual deviation of PROV-PUB-O/S from DoCO is that in DoCO, tables and figures are considered blocks of documents the same way as chapters and sections, but in PROV-PUB-O/S, they are considered research results instead of normal document parts. Other block elements such as chapters and sections are also considered result containers in PROV-PUB-O/S. They are defined to serve the function of locating interesting results in research publications. We stop our document part modeling at the section level because sections are the most fine-grained elements that have (numerical) labels such as ``Section 2.1.1'' and/or captions such as ``PROV-PUB-O/S: publication structure modeling''. This is not the case for paragraphs and sentences. Note that subsections of a section is also instances of pub:Section. 
-%Minimalism here means to only define a set of ontology elements that must be defined together to ensure their proper function, so PROV-PUB-O/S does not 
-%assert any of its classes to be a subclass or equivalent class of a class from another ontology if that assertion is not necessary for PROV-PUB-O/S to 
-%function properly.
-
-Four types of published results are defined in PROV-PUB-O/S: tables, figures, lists and textually described results. 
-
-PROV-PUB-O/S can also be used together with the BibTeX ontology\footnote{The BibTeX ontology: \url{<http://purl.org/net/nknouf/ns/bibtex>}, accessed on October 10th, 2015.} or the Bibliographic Ontology\footnote{The Bibliographic Ontology: \url{<http://purl.org/ontology/bibo/>}, accessed on October 10th, 2015.}. Since no subclassing link to the related ontologies is hard coded in PROV-PUB-O/S, the users have the choice of whether 
-to link PROV-PUB-O/S with these three ontologies (and thus depend on them) and to what extent. 
-
-Two typical ways of linking PROV-PUB-O/S with its related ontologies are subclassing and double-classing. Subclassing means to assert that a class in PROV-PUB-O/S is a subclass of 
-a class in one of the related ontologies. For example, the user could optionally assert that pubs:Chapter is a subclass of 
-doco:Chapter to make every instance of pubs:Chapter automatically also an instance of doco:Chapter. Double-classing means to assert that an instance of 
-a PROV-PUB-O/S class is also an instance of another class in a related ontology. For example, an instance can be asserted as both a pubs:Publication 
-and a bibo:Document.
-
-Following the principle of ``Leaving the decision for dependencies to the users'', mentioned at the beginning of this section, subclassing and double-classing suggestions are given for each class in PROV-PUB-O/S 
-in case the user of the ontology 
-wants to reuse the classes and constraints defined in the related ontologies.
-
-Three bridging 
-ontologies\footnote{Like PROV-PUB-O itself, these bridging ontologies are not officially published yet, and are temporarily hosted at \url{http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s-doco.ttl}, \url{http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s-bibtex.ttl} and 
-\url{http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-s-bibo.ttl}, accessed on October 10th, 2015.} are provided in case a user wants to accept all the suggested subclassing links from
-PROV-PUB-O/S to one of its related ontologies. Each bridging ontology is exclusively composed of assertions of the form ``pubs:X rdfs:subClassOf doco:Y'' 
-such as ``pubs:Chapter rdfs:subClassOf doco:Chapter''. Double-classing suggestions cannot be encoded in the form of bridging ontologies because they do 
-not require any assertion at the schema level.
-
-There are existing ontologies, such as the GCIS ontology \cite{ma2014ontology}, that also have classes to represent document components such as chapters, but we prefer not reusing from such application ontologies because PROV-PUB-O/S is considered to be a general ontology for all kinds of research publications, and it is logical to have application ontologies make subclassing and/or equivalent-classing assertions to general or domain ontologies, but not the other way around.
 %The general hypothesis to justify here is that PROV-PUB-O/S are more usable than DoCO for the task of describing the structure of a research publication, and a specific hypothesis is that properties in PROV-PUB-O/S are more usable than their corresponding rhetorical concepts in DoCO for describing publication components. We conducted user survey to collect opinions about pairs of RDF statement groups such as
 %\begin{quote}
 %	\begin{tabular}{l}
@@ -137,12 +94,11 @@ There are existing ontologies, such as the GCIS ontology \cite{ma2014ontology}, 
 \subsubsection{Lessons learnt}
 The three principles of designing a usable ontology --- minimalism on classes, rich on properties and leaving the decision for dependencies to the users --- is developed as we had finished the conceptual modeling and started writing the ontology in Turtle format, which was considered just a ``finishing up'' work. Documentation requires numerous decisions to make about wordings, definitions or even formatting. The workload increases quickly with the number of classes and dependencies in the form of subclassing or equivalent-classing. One change may trigger a whole lot of change all over the ontology to keep it consistent.
 
-Online and standalone tools are helpful in decreasing the amount of manual work in creating and formatting ontology files and creating documentation. EasyRdf\footnote{EasyRdf converter: http://www.easyrdf.org/converter, accessed on October 10th, 2015.} was used to convert ontologies in RDF/XML format to Turtle format. rdfEditor\footnote{rdfEditor: https://bitbucket.org/dotnetrdf/dotnetrdf/wiki/UserGuide/Tools/rdfEditor, accessed on October 10th, 2015.} was used to edit and validate the ontology files. Make sure to end each namespace properly with a slash (`/') or hash (`\#') character, since editors do not check for errors of this kind, and namespaces not properly ended would yield incorrect IRIs such as \url{<http://purl.org/ontology/biboDocument>} instead of \url{<http://purl.org/ontology/bibo/Document>}. LODE\footnote{Live OWL Documentation Environment: http://www.essepuntato.it/lode, accessed on October 10th, 2015.} was used to generate the draft of documentation for the ontologies. HTML Formatter\footnote{Free HTML Formatter: http://www.freeformatter.com/html-formatter.html, accessed on October 10th, 2015.} was used to format the draft documentation generated by LODE, and Word Wrap\footnote{Free online word wrap: http://appincredible.com/online/word-wrap/, accessed on October 10th, 2015.} was used to format the ontology file for inclusion in the appendix of this thesis.
-
+Online and standalone tools are helpful in decreasing the amount of manual work in creating and formatting ontology files and creating documentation. EasyRdf\footnote{EasyRdf converter: http://www.easyrdf.org/converter, accessed on October 10th, 2015.} was used to convert ontologies in RDF/XML format to Turtle format. rdfEditor\footnote{rdfEditor: https://bitbucket.org/dotnetrdf/dotnetrdf/wiki/UserGuide/Tools/rdfEditor, accessed on October 10th, 2015.} was used to edit and validate the ontology files. Make sure to end each namespace properly with a slash (`/') or hash (`\#') character, since editors do not check for errors of this kind, and namespaces not properly ended would yield incorrect IRIs such as \url{<http://purl.org/ontology/biboDocument>} instead of \url{<http://purl.org/ontology/bibo/Document>}. LODE\footnote{Live OWL Documentation Environment: http://www.essepuntato.it/lode, accessed on October 10th, 2015.} was used to generate the draft of documentation for the ontologies. HTML Formatter\footnote{Free HTML Formatter: http://www.freeformatter.com/html-formatter.html, accessed on October 10th, 2015.} was used to format the draft documentation generated by LODE.
 
 \subsection{PROV-PUB-O/P: Result generating process modeling}
 \label{subsec:process}
-Results in research publications often are quite separated from the underlying collection and analysis of data. The grand goal of keeping track of provenance is to enable the readers to understand the process the authors have gone through to produce the reported results from the collected data.
+Results in research publications often are quite separated from the underlying collection, transformation and analysis of data. The goal of keeping track of provenance is to enable the readers to understand the process the authors have gone through to produce the reported results from the collected data.
 
 Provenance describes the lineage of the source data and the changing processes leading to the final results for readers to correctly interpret report content. Provenance also enables readers to evaluate the credibility of the reported results by digging into the software in use, operations that have been taken, source data and responsible agents.
 
@@ -209,7 +165,7 @@ Interesting activities in the process of preparing research papers are all the c
 \end{itemize}
 Each of the above changes corresponds to a certain way of data usage.
 
-To capture these changes of data, four classes are defined in PROV-PUB-O/P: pub:DataChange for the general changes of data, pub:PhysicalChange for physical changes that keep data ``as is'' and only change the locations and access permissions of data, pub:SyntacticalChange for syntactical changes that keep the logical content of data intact and only change the formats and encodings of data, and pub:SemanticalChange for semantical changes that change the actual logical content of data. For most of the changes of data, it is the semantical changes that are of interest. If all these changes are marked and later queried, it would provide quite useful information of the published result generation process. However, physical changes and syntactical changes can also be critical for certain use cases. The case study we conducted on the 5 figures and 3 tables in Chapter 4 of NCA 2014 report (see Chapter~\ref{ch:case-study} for details) showed that where the authors downloaded their source data and in what way the data were serialized play important roles in fully capturing the provenance of these figures and tables. In the cases where data analysis and transformation are straightforward or standardized, natural language descriptions of semantical changes could take the place of fully fledged source code containing pub:SemanticalChange activities, but the descriptions of the download and syntactical manipulation steps are easily overlooked and often insufficient for reproducing the published results. 
+To capture these changes of data, four classes are defined in PROV-PUB-O/P: pub:DataGeneration for the general changes of data, pub:PhysicalChange for physical changes that keep data ``as is'' and only change the locations and access permissions of data, pub:SyntacticalChange for syntactical changes that keep the logical content of data intact and only change the formats and encodings of data, and pub:SemanticalChange for semantical changes that change the actual logical content of data. For most of the changes of data, it is the semantical changes that are of interest. If all these changes are marked and later queried, it would provide quite useful information of the published result generation process. However, physical changes and syntactical changes can also be critical for certain use cases. The case study we conducted on the 5 figures and 3 tables in Chapter 4 of NCA 2014 report (see Chapter~\ref{ch:case-study} for details) showed that where the authors downloaded their source data and in what way the data were serialized play important roles in fully capturing the provenance of these figures and tables. In the cases where data analysis and transformation are straightforward or standardized, natural language descriptions of semantical changes could take the place of fully fledged source code containing pub:SemanticalChange activities, but the descriptions of the download and syntactical manipulation steps are easily overlooked and often insufficient for reproducing the published results. 
 
 %To further define specialized activities under and beyond the above three categories, we performed a case study on the 5 figures and 3 tables in Chapter 4 of the National Climate Assessment Report published in 2014 (NCA 2014). 
 
@@ -226,110 +182,10 @@ We recognized three categories of changes of data earlier in this thesis. In the
 
 The three categories of changes of data (physical, syntactical and semantical) are intended to be used to label data changing activities in a domain and application independent way. When we defined more data changing activities, we tried to use the words that keep the ontology domain and application independent to the greatest extent. However, biases coming from our knowledge and experience and the case study we have done are inevitable. Commonly agreed vocabularies within a certain community or group are expected to be introduced as extensions to PROV-PUB-O/P.
 
-\subsubsection{PROV-PUB-O/P specification}
-Based on the principles of minimalism on classes, rich on properties and leaving the decision for dependencies to the users, as well as the semiotic framework and the case study mentioned above, we define the following classes and properties in PROV-PUB-O/P:
+Details of the the resulting PROV-PUB-O/P ontology\footnote{PROV-PUB-O/P is not officially published and is temporarily hosted at \url{http://orion.tw.rpi.edu/~fulinyun/ontology/prov-pub/prov-pub-p.ttl}, accessed on October 10th, 2015.} can be found in Chapter~\ref{ch:ontologies}.
 
-{\noindent\emph{Classes about data:}}
-\begin{itemize}
-	\item pub:Data
-	\item pub:InMemoryData
-	\item pub:OnDiskData
-\end{itemize}
-We define pub:Data as a subclass of prov:Entity, and pub:InMemoryData and pub:OnDiskData are defined as subclasses of pub:Data. They represent data residing in memory and on disk, respectively.
-{\noindent\emph{Classes about data generation:}}
-\begin{itemize}
-	\item pub:DataGeneration
-	\item pub:PhysicalChange
-	\item pub:SyntacticalChange
-	\item pub:SemanticalChange
-	\item pub:Obtaining
-	\item pub:Loading
-	\item pub:Saving
-	\item pub:Transformation
-	\item pub:Library
-\end{itemize}
-The pub:DataGeneration class is defined as a subclass of prov:Entity and is the most general class representing data generation activities. 
-
-Semiotic framework based subclasses of pub:DataChange follows, that is, pub:PhysicalChange, pub:SyntacticalChange and pub:SemanticalChange, which we have already described earlier. 
-
-The next four classes, pub:Obtaining, pub:Loading, pub:Saving and pub:Transformation, are derived from the case study we have performed (see Chapter~\ref{ch:case-study} for details). The pub:Obtaining class represents data obtaining activities. Subclasses conforming naming conventions of specific domains are expected to get defined in extensions of PROV-PUB-O/P. In the earth science domain, for example, a ``Download'' subclass of pub:Obtaining would probably receive common acceptance. The pub:Obtaining class could be asserted as a subclass of pub:PhysicalChange and/or pub:SyntacticalChange according to application specific conditions. The pub:Loading class represents data loading activities that read data from disk to memory. This class should probably be asserted as a subclass of both pub:PhysicalChange and pub:SyntacticalChange, but we did not put these assertions in PROV-PUB-O/P because these assertions still might be undesirable in some use cases. The pub:Transformation class represents all general data transformation activities. Subclasses conforming naming conventions in various domains are expected to get defined in extensions of PROV-PUB-O/P. For example, ``subsetting'', ``slicing'', ``projection'' and ``filtering'' are four transformations commonly used in the earth science domain.
-
-The last class listed above, pub:Library, represents those software utilities or tools used in the process of generating data and results. The detailed information about the software could be described with a software description ontology such as the OntoSoft ontology \cite{gil2015ontosoft}.
-
-Users are expected to either define subclasses of these data changing activities to fit their specific needs or overlook the subclasses of pub:DataChange and pub:ResultGeneration. That is, they could extend PROV-PUB-O/P with more data changing subclasses such as ``subsetting'', ``slicing'', ``projection'' and ``filtering'', or if they do not need classes so specific, they could just use pub:DataChange to capture every data changing activities involved in their use cases.
-
-\noindent\emph{Classes about result generation:}
-\begin{itemize}
-	\item pub:ResultGeneration
-	\item pub:Visualization
-	\item pub:Analysis
-	\item pub:Reuse
-\end{itemize}
-These four classes represent the general result generation activity and three general ways of result generation, namely visualization typically used to create figures, analysis typically used to create tables, lists and textually described results, and reuse that generate a new result by reusing an existing one. The latter three are all subclasses of the first.
-	
-We define change of data as an activity that used data to generate data, and result generation as an activity that used data to generate results.
-	
-The pub:Library class are also likely to be used by result generation activities. We just do not list it here to avoid duplication.
-	
-Just like the classes about data generation, users are expected to either extend this part by defining more specific subclasses or overlook the two subclasses and just use pub:ResultGeneration according to their needs.
-
-Figure~\ref{fig:prov-pub-p-entity} and Figure~\ref{fig:prov-pub-p-activity} show the extensions on prov:Entity and prov:Activity in PROV-PUB-O/P, respectively.
-\begin{figure}
-	\centering
-	\includegraphics[width=.8\textwidth]{model/ontology/prov-pub/prov-pub-p-entity.png}
-	\caption{Entities defined in PROV-PUB-O/P}
-	\label{fig:prov-pub-p-entity}
-\end{figure}
-\begin{figure}
-	\centering
-	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-p-activity.png}
-	\caption{Activities defined in PROV-PUB-O/P}
-	\label{fig:prov-pub-p-activity}	
-\end{figure}
-
-{\noindent\emph{Properties about using data and results:}}
-\begin{itemize}
-	\item pub:obtained
-	\item pub:loaded
-	\item pub:saved
-	\item pub:transformed%subset slice project filter map...
-	\item pub:visualized
-	\item pub:analyzed
-	\item pub:reused
-\end{itemize}
-These are sub-properties of prov:used to allow domain-specific ways of describing data and result usage methods. Their names indicate the correspondence between these properties and the data changing and result generation activities mentioned above. For example, pub:obtained is expected to be used with the pub:Obtaining activity. These properties can also be considered ``shortcuts'' to replace the use of prov:qualifiedUsage. For example, the following usage written in PROV-O
-\begin{quotation}
-:activity1 prov:qualifiedUsage [
-
-  \hspace{2em}prov:entity :data1;
-  
-  \hspace{2em}dcterms:description "transform"
-
-].
-\end{quotation}
-could be written in PROV-PUB-O/P as
-\begin{quotation}
-:activity1 pub:transformed :data1.
-\end{quotation}
-Figure~\ref{fig:prov-pub-p-usage} shows the sub-properties of prov:used that are defined in PROV-PUB-O/P.
-\begin{figure}
-	\includegraphics[width=\textwidth]{model/ontology/prov-pub/prov-pub-p-usage.png}
-	\caption{Sub-properties of prov:used defined in PROV-PUB-O/P}
-	\label{fig:prov-pub-p-usage}
-\end{figure}
-
-\noindent\emph{Annotations about change of data and result generation:}
-\begin{itemize}
-	\item pub:format
-	\item pub:language% --- the programming language used in the data changing activity.
-	\item pub:code% --- the code in a certain programming language for changing the data. It is recommended that only succinct code that invokes helper functions are included, and the detailed implementation of these helper functions be modeled as pub:Library instances used by data changing activities.
-	\item dcterms:description% --- the textual description of the data processing method. 
-\end{itemize}
-These four annotations are used to describe 1) the format in which on-disk data are, 2) the programming language used in a certain data changing or result generation activity, 3) the code in a certain programming language for changing the data or generating the result and 4) the data processing method in natural language. For the pub:code annotation, it is recommended that only succinct code that invokes helper functions are included, and the detailed implementation code of these helper functions be modeled as pub:Library instances used by the activity in question.
-
-We believe users of PROV-PUB-O/P will benefit from dependencies to PROV-O in forms of subclasses and sub-properties --- after all, this is the very reason we design PROV-PUB-O/P as a specialization of PROV-O --- so we include these assertions in PROV-PUB-O/P.
-
-The specialized ontology is not only helpful in describing the provenance, but it also enables the construction of executable provenance graphs to preserve the data product preparing process at a level that is detailed enough to be replicable.
+\subsection{Reproducibility checking}
+Given a provenance graph in PROV-PUB-O, tracing the generation process of a published result corresponds to following the alternating \emph{was generated by} and (a sub-property of) \emph{used} edges from the result node in the graph, and checking the code and descriptions of each node to evaluate its reproducibility if it is an entity node, or its executability if it is an activity node. An entity is reproducible in two situations: either it is not generated by any activity and described sufficiently without any ambiguity on what it is, or the recursive tracing of its generation process shows it is reproducible. Whether an activity is executable depends on two factors: whether itself is sufficiently described with properties such as (programming) \emph{language}, \emph{code} and \emph{description}, and whether all the entities it used are reproducible. 
 
 Figure~\ref{fig:prov-pub-example} shows a sample usage of PROV-PUB-O/P to describe the generation process of a figure very similar with Figure~4.2 in NCA 2014. The obtaining operation, ``:obtain\_data'', generated the on-disk data, ``:csv\_file''. The details of how the data were obtained are described in the textual description, ``dct:description'' of the activity. Then the loading operation, ``:load\_data'', loaded the on-disk data into memory as an in-memory data object, ``csv\_content'', which was then transformed by the transformation operation, ``:transform\_data'', to generate data ``:percent'', which were ready for the visualization operation, ``:plot\_data'', to visualize and generate the published result in the form of a figure: ``:figure4\_2''. 
 
@@ -341,8 +197,7 @@ Figure~\ref{fig:prov-pub-example} shows a sample usage of PROV-PUB-O/P to descri
 	%\comment{to replace this figure with a more developed one}
 \end{figure}
 
-\subsection{Reproducibility checking}
-Given a provenance graph in PROV-PUB-O, tracing the generation process of a published result corresponds to following the alternating \emph{was generated by} and (a sub-property of) \emph{used} edges from the result node in the graph, and checking the code and descriptions of each node to evaluate its reproducibility if it is an entity node, or its executability if it is an activity node. An entity is reproducible in two situations: either it is not generated by any activity and described sufficiently without any ambiguity on what it is, or the recursive tracing of its generation process shows it is reproducible. Whether an activity is executable depends on two factors: whether itself is sufficiently described with properties such as (programming) \emph{language}, \emph{code} and \emph{description}, and whether all the entities it used are reproducible. In Figure~\ref{fig:prov-pub-example}, for example, the reproducibility of :figure4\_2 could be reviewed by looking at :plot\_data and checking if it is executable since it is an activity, then looking at :percent and checking if it is reproducible since it is used by the :plot\_data activity. The tracing would go on until we reach entities that was not generated such as :pandas, and activities that did not use any entities such as :obtain\_data.
+In Figure~\ref{fig:prov-pub-example}, the reproducibility of :figure4\_2 could be reviewed by looking at :plot\_data and checking if it is executable since it is an activity, then looking at :percent and checking if it is reproducible since it is used by the :plot\_data activity. The tracing would go on until we reach entities that was not generated such as :pandas, and activities that did not use any entities such as :obtain\_data.
 
 
 %The hypothesis we would like to justify here is that sub-properties of prov:used are more usable than prov:used itself in the use case of creating executable provenance graphs in the domain of earth science.
@@ -1039,7 +894,9 @@ where \_\_NAMESPACE\_\_, \_\_TEXTDICT\_\_, \_\_URIDICT\_\_ and \_\_PROV\_\_ are 
 For expert users who would like to review the provenance captured so far and/or manipulate the provenance graph, they could do these by read and/or write the \emph{\_\_PROV\_\_} variable.
 
 \subsection{A concrete example}
-In this section, we walk through the whole process of the creation of a figure. The figure was generated based on a downloaded CSV file with the following IPython scripts:
+In this section, we walk through the whole process of the creation of a figure. The source code for this example is available in Appendix~\ref{ap:prototype}. 
+
+The figure was generated based on a downloaded CSV file with the following IPython scripts:
 \begin{enumerate}
 	\item\noindent import sys
 	
@@ -1081,7 +938,7 @@ The downloaded CSV file, CDODiv2177686828992.txt, had the following content:
 \end{quotation}
 The columns not of interest in this use case are omitted. The first block of scripts makes the cell magic functions and the provenance aware functions accessible from the Jupyter notebook (that is, the rest of the code). It also imports the NumPy Python library to be used in the notebook.
 
-The second script item is a call of the \emph{initprov} cell magic. When the IPython kernel reads this line, it will invoke the initprov(self, line, cell) function defined in the provmagic module. The source code is available in the appendix. This function creates and initializes the provenance related global variables such as \_\_NAMESPACE\_\_, \_\_OBJDICT\_\_, \_\_TEXTDICT\_\_, \_\_URIDICT\_\_ and \_\_PROV\_\_. 
+The second script item is a call of the \emph{initprov} cell magic. When the IPython kernel reads this line, it will invoke the initprov(self, line, cell) function defined in the provmagic module. This function creates and initializes the provenance related global variables such as \_\_NAMESPACE\_\_, \_\_OBJDICT\_\_, \_\_TEXTDICT\_\_, \_\_URIDICT\_\_ and \_\_PROV\_\_. 
 
 The \_\_NAMESPACE\_\_ variable is the namespace for the local instances such as operations, expressions and data objects. Users can set its value simply by assigning the namespace string to the \_\_NAMESPACE\_\_ variable:
 
